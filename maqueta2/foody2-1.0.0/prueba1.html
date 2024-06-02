@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login y Registro con Cookies</title>
+    <style>
+        #loggedInStatus {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .alert {
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Registro</h2>
+<form id="registerForm">
+    <label for="registerUsername">Usuario:</label>
+    <input type="text" id="registerUsername" name="registerUsername" required>
+    <br>
+    <label for="registerPassword">Contraseña:</label>
+    <input type="password" id="registerPassword" name="registerPassword" required>
+    <br>
+    <button type="submit">Registrarse</button>
+</form>
+
+<h2>Iniciar Sesión</h2>
+<form id="loginForm">
+    <label for="loginUsername">Usuario:</label>
+    <input type="text" id="loginUsername" name="loginUsername" required>
+    <br>
+    <label for="loginPassword">Contraseña:</label>
+    <input type="password" id="loginPassword" name="loginPassword" required>
+    <br>
+    <button type="submit">Iniciar Sesión</button>
+</form>
+
+<div id="loggedInStatus">
+    <!-- Aquí se mostrará si el usuario ha iniciado sesión o no -->
+    <p id="loginMessage"></p>
+</div>
+
+<script>
+    // Función para manejar el registro de un usuario
+    function register(username, password) {
+        console.log('Registrando usuario...');
+        setCookie('username', username, '/');
+        setCookie('password', password, '/');
+        console.log('Valor de la cookie username:', getCookie('username'));
+        console.log('Valor de la cookie password:', getCookie('password'));
+        document.getElementById('registerForm').reset(); // Limpiar el formulario después del registro
+        showMessage('¡Usuario registrado correctamente!', 'success');
+    }
+
+    // Función para manejar el inicio de sesión
+    function login(username, password) {
+        console.log('Iniciando sesión...');
+        console.log('Valor de la cookie username:', getCookie('username'));
+        console.log('Valor de la cookie password:', getCookie('password'));
+        if (getCookie('username') === username && getCookie('password') === password) {
+            showMessage('¡Sesión iniciada correctamente!', 'success');
+            return true; // Las credenciales son válidas
+        } else {
+            showMessage('Usuario o contraseña incorrectos', 'danger');
+            return false; // Las credenciales son incorrectas
+        }
+    }
+
+    // Función para mostrar un mensaje
+    function showMessage(message, type) {
+        document.getElementById('loginMessage').innerHTML = message;
+        showAlert(message, type);
+    }
+
+    // Función para mostrar alertas
+    function showAlert(message, type) {
+        var alertElement = document.createElement('div');
+        alertElement.className = 'alert alert-' + type;
+        alertElement.textContent = message;
+        document.body.appendChild(alertElement);
+
+        // Desaparecer después de unos segundos
+        setTimeout(function() {
+            alertElement.parentNode.removeChild(alertElement);
+        }, 5000);
+    }
+
+    // Función para establecer una cookie
+    function setCookie(name, value, path, options = {}) {
+        options = {
+            path: path,
+            ...options
+        }; 
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+        document.cookie = updatedCookie;
+    }
+
+    // Función para obtener el valor de una cookie
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + encodeURIComponent(name) + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    // Manejar el evento de submit del formulario de registro
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let username = document.getElementById('registerUsername').value.trim();
+        let password = document.getElementById('registerPassword').value.trim();
+        register(username, password);
+    });
+
+    // Manejar el evento de submit del formulario de inicio de sesión
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let username = document.getElementById('loginUsername').value.trim();
+        let password = document.getElementById('loginPassword').value.trim();
+        login(username, password);
+    });
+</script>
+</body>
+</html>
