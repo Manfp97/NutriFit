@@ -295,7 +295,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="assets/js/main.js"></script>
 
-<script>
+        <script>
             // Al cargar la página
             window.onload = function () {
                 // Obtener el nombre de usuario almacenado en la cookie 'username'
@@ -337,8 +337,6 @@
                 document.cookie = 'username=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
 
 
-
-
                 // Redirigir al usuario a la página de inicio de sesión
                 window.location.href = '/maqueta2/foody2-1.0.0/index.html';
             }
@@ -348,7 +346,7 @@
                 var matches = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
                 return matches ? decodeURIComponent(matches[1]) : undefined;
             }
-</script>
+        </script>
 
 
 
