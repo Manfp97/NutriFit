@@ -5,3 +5,5 @@ y
 Imaqueta2/SaasCandy-1.0.0/elaadmin-master/elaadmin-master/menucliente.html,2\8\2897174ddc10103b25ce1ea624d09d0abd680b14
 V
 &maqueta2/foody2-1.0.0/nuevo-login.html,8\d\8dca40b9bcdb073e0f1d40b850f97fa564e8e133
+P
+ maqueta2/foody2-1.0.0/index.html,1\e\1eb7252b1bba6a35f9fcc4da0efb7aa661d96944
