@@ -151,13 +151,12 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Mi Usuario</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Notificaciones <span class="count">13</span></a>
-
-                            <a class="nav-link" href="/maqueta2/SaasCandy-1.0.0/elaadmin-master/elaadmin-master/ajustes.html"><i class="fa fa -cog"></i>Ajustes</a>
-
-                            <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Cerrar Sesión</a>
+                            <a class="nav-link" id="usernameLink" href="#"><i class="fa fa-user"></i> Mi Usuario</a>
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notificaciones <span
+                                    class="count">13</span></a>
+                            <a class="nav-link" href="ajustes.html"><i class="fa fa-cog"></i> Ajustes</a>
+                            <a class="nav-link" id="logoutLink" href="#"><i class="fa fa-power-off"></i> Cerrar
+                                Sesión</a>
                         </div>
                     </div>
 
@@ -299,7 +298,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+           // Al cargar la página
+           window.onload = function () {
+               // Obtener el nombre de usuario almacenado en la cookie 'username'
+               var username = getCookie('username');
+
+               // Mostrar u ocultar el enlace de usuario según si hay un nombre de usuario presente
+               if (username) {
+                   var usernameElement = document.getElementById('usernameLink');
+                   usernameElement.innerText = "Mi Usuario (" + username + ")";
+                   usernameElement.style.cursor = 'pointer'; // Añadir un puntero para indicar que es clicable
+               } else {
+                   // Redirigir al usuario a la página de inicio de sesión si no hay un nombre de usuario presente
+                   window.location.href = '/maqueta2/foody2-1.0.0/nuevo-login.html';
+               }
+           };
+
+           // Obtener el enlace de cerrar sesión
+           var logoutLink = document.getElementById('logoutLink');
+
+           // Agregar un evento de clic al enlace de cerrar sesión
+           logoutLink.addEventListener('click', function () {
+               // Llamar a la función logout para cerrar la sesión del usuario
+               logout();
+           });
+
+           // Función para cerrar sesión
+           function logout() {
+
+               var cookies = document.cookie.split(';');
+
+               // Bucle a través de todas las cookies y eliminarlas
+               for (var i = 0; i < cookies.length; i++) {
+                   var cookie = cookies[i];
+                   var eqPos = cookie.indexOf('=');
+                   var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                   document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
+               }
+
+               document.cookie = 'username=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
 
 
+
+
+               // Redirigir al usuario a la página de inicio de sesión
+               window.location.href = '/maqueta2/foody2-1.0.0/index.html';
+           }
+
+           // Función para obtener el valor de una cookie
+           function getCookie(name) {
+               var matches = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+               return matches ? decodeURIComponent(matches[1]) : undefined;
+           }
+    </script>
 </body>
 </html>
