@@ -15,3 +15,21 @@ u
 Emaqueta2/SaasCandy-1.0.0/elaadmin-master/elaadmin-master/alertas.html,b\2\b24aa1026a7ecf4ca5bc359b473464cc4ef0871c
 u
 Emaqueta2/SaasCandy-1.0.0/elaadmin-master/elaadmin-master/ajustes.html,0\6\06ccfcaaa282ad072985090d0cae2913bd69e8bd
+N
+maqueta2/foody2-1.0.0/404.html,9\d\9dfd574011b067d63658692f5985e0013e633b5c
+P
+ maqueta2/foody2-1.0.0/about.html,1\f\1f5d2810d68521c09c33ceebae372852b13f3f7b
+O
+maqueta2/foody2-1.0.0/blog.html,7\a\7a785fa9a1af69670af13cc3bd7a497602fd843f
+R
+"maqueta2/foody2-1.0.0/contact.html,6\4\6442c750dba0afbb0e218ff4e7cd934313115439
+R
+"maqueta2/foody2-1.0.0/feature.html,5\a\5abea3bb5cee92035b30cb92a91ff560e746a8f0
+R
+"maqueta2/foody2-1.0.0/product.html,3\4\342719c73051aaa985178616214fcfb18f1be39e
+]
+-maqueta2/foody2-1.0.0/pruebajmaproductos.html,5\a\5a7d151af0f5599820173f4da82f7395bae84fd8
+V
+&maqueta2/foody2-1.0.0/testimonial.html,2\2\2216142c57ff37a7c1022039b37c7dcec36ee585
+T
+$maqueta2/foody2-1.0.0/protected.html,5\8\5855a28b8e04584d2eb8a581a86dbe8623b358db
