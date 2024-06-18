@@ -6,20 +6,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
-@Table(name="clientes")
+@Table(name="usuarios")
 @Getter
 @Setter
 //@NoArgsConstructor
 @ToString
-public class Cliente {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idcliente", nullable = false)
-    private Integer idcliente;
+    @Column(name = "idusuario", nullable = false)
+    private Integer idusuario;
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -49,22 +48,20 @@ public class Cliente {
 
          @OneToMany es la otra parte de la relación @ManyToOne
 
-         El CASO DE USO es que un cliente puede tener varias citas. Por tanto, creamos en la Entidad Cliente una
+         El CASO DE USO es que un usuario puede tener varias citas. Por tanto, creamos en la Entidad usuario una
          propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
 
      */
+    @OneToOne(mappedBy="idcliente")
+    private Cliente cliente;
 
-
-    @OneToOne(mappedBy ="idusuario")
-    private Usuario usuario;
-
+    @OneToOne(mappedBy="usuario")
+    private Roles roles;
 
     // Constructores
-    public Cliente() {
+    public Usuario() {
         this.ultimaModificacion = LocalDateTime.now();
     }
-
-
 
     @PrePersist
     public void prePersist() {
