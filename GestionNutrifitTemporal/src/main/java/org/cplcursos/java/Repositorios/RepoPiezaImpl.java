@@ -1,12 +1,11 @@
 package org.cplcursos.java.Repositorios;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Pieza;
-import org.cplcursos.java.Entidades.Proveedor;
+import org.cplcursos.java.Entidades.Producto;
 
 import java.util.List;
 
-public class RepoPiezaImpl implements Repo<Pieza> {
+public class RepoPiezaImpl implements Repo<Producto> {
     /*
         El repositorio utiliza el EntityManager, pero sabemos que hay que cerrarlo después de ser utilizado.
         Si lo cerramos en cualquiera de los métodos del repositorio, no podrá ser utilizado de nuevo en posteriores
@@ -20,19 +19,19 @@ public class RepoPiezaImpl implements Repo<Pieza> {
     }
 
     @Override
-    public List<Pieza> listar(Integer num) {
-        return em.createQuery("SELECT pz FROM Pieza pz", Pieza.class)
+    public List<Producto> listar(Integer num) {
+        return em.createQuery("SELECT pz FROM Producto pz", Producto.class)
                 .setMaxResults(num)
                 .getResultList();
     }
 
     @Override
-    public Pieza porId(Integer id) {
-        return em.find(Pieza.class, id);
+    public Producto porId(Integer id) {
+        return em.find(Producto.class, id);
     }
 
     @Override
-    public void guardar(Pieza pieza) {
+    public void guardar(Producto pieza) {
         try {
             em.getTransaction().begin();
             if (pieza.getId() != null && pieza.getId() > 0) {

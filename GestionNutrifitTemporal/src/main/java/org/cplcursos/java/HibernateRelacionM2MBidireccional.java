@@ -1,8 +1,8 @@
 package org.cplcursos.java;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Pieza;
-import org.cplcursos.java.Entidades.Proveedor;
+import org.cplcursos.java.Entidades.Producto;
+import org.cplcursos.java.Entidades.Proveedores;
 import org.cplcursos.java.Servicios.ServicioApp;
 import org.cplcursos.java.Servicios.ServicioAppImpl;
 import org.cplcursos.java.util.JpaUtil;
@@ -15,11 +15,11 @@ public class HibernateRelacionM2MBidireccional {
         ServicioApp srvcapp = new ServicioAppImpl(em);
 
         System.out.println("------------------ Buscamos un proveedor para añadirle una pieza --------------");
-        Proveedor prov = srvcapp.porIdProv(2).get();
+        Proveedores prov = srvcapp.porIdProv(2).get();
         System.out.println(prov);
         // creo piezas para el proveedor
-        Pieza pz1 = new Pieza("PZ1","Pieza uno");
-        Pieza pz2 = new Pieza("PZ2","Pieza dos");
+        Producto pz1 = new Producto("PZ1","Pieza uno");
+        Producto pz2 = new Producto("PZ2","Pieza dos");
         // añadimos las piezas al proveedor
         prov.nuevaPieza(pz1);
         srvcapp.guardarPieza(pz1);

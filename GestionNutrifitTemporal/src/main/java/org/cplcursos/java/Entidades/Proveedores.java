@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name="proveedores")
-public class Proveedor {
+public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,20 +22,20 @@ public class Proveedor {
     private String nombre;
 
     @ManyToMany
-    @JoinTable(name="proveedorespiezas",
+    @JoinTable(name="proveedoresproductos",
             joinColumns={@JoinColumn(name="id_Prov")},
-            inverseJoinColumns={@JoinColumn(name="id_pieza")})
-    private Set<Pieza> piezas = new HashSet<>();
+            inverseJoinColumns={@JoinColumn(name="id_productos")})
+    private Set<producto> productos = new HashSet<>();
 
     // Helpers
-    public void nuevaPieza(Pieza pz) {
-        this.piezas.add(pz);
-        pz.getProveedores().add(this);
+    public void nuevoProducto(Producto pr) {
+        this.producto.add(pr);
+        pr.getProveedores().add(this);
     }
 
-    public void eliminarPieza(Pieza pz){
-        this.piezas.remove(pz);
-        pz.getProveedores().remove(this);
+    public void eliminarProducto(Producto pr){
+        this.producto.remove(pr);
+        pr.getProveedores().remove(this);
     }
 
     // Auxiliares

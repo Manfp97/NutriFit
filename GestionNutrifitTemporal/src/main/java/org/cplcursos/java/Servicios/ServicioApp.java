@@ -16,15 +16,15 @@ public interface ServicioApp {
     void guardarAlb(Albaran alb);
     void eliminarAlb(Integer id);
 
-    List<Cita> listaCitas();
-    Optional<Cita> porIdCita(Integer id);
-    void guardarCita(Cita cita);
+    List<Clase_Clientes> listaCitas();
+    Optional<Clase_Clientes> porIdCita(Integer id);
+    void guardarCita(Clase_Clientes claseClientes);
 
-    List<Proveedor> listaProv(Integer num);
-    Optional<Proveedor> porIdProv(Integer id);
-    void guardarProv(Proveedor prov);
+    List<Proveedores> listaProv(Integer num);
+    Optional<Proveedores> porIdProv(Integer id);
+    void guardarProv(Proveedores prov);
 
-    List<Pieza> listaPiezas(Integer num);
-    Optional<Pieza> porIdPieza(Integer id);
-    void guardarPieza(Pieza pz);
+    List<Producto> listaPiezas(Integer num);
+    Optional<Producto> porIdPieza(Integer id);
+    void guardarPieza(Producto pz);
 }
