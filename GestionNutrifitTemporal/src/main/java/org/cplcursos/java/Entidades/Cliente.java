@@ -3,19 +3,15 @@ package org.cplcursos.java.Entidades;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name="clientes")
+@Table(name = "clientes")
 @Getter
 @Setter
-//@NoArgsConstructor
-@ToString
 public class Cliente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idcliente", nullable = false)
@@ -36,35 +32,18 @@ public class Cliente {
     @Column(name = "emilio", length = 50)
     private String emilio;
 
-    @Column(name="creadoel")
+    @Column(name = "creadoEl")
     private LocalDateTime creadoEl;
 
-    @Column(name="ultimamodificacion")
+    @Column(name = "ultimaModificacion")
     private LocalDateTime ultimaModificacion;
 
-    /*
-         La relación @OneToMany permite que una entidad se relacione con múltiples instancias de otra.
-         La propiedad que define la relación debe anotarse con @OneToMany y debe indicar mediante la cláusula
-         "mappedBy" cuál es la propiedad de la entidad relacionada que sirve de nexo.
-
-         @OneToMany es la otra parte de la relación @ManyToOne
-
-         El CASO DE USO es que un cliente puede tener varias citas. Por tanto, creamos en la Entidad Cliente una
-         propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
-
-     */
-
-
-    @OneToOne(mappedBy ="idusuario")
+    @OneToOne(mappedBy = "idusuario")
     private Usuario usuario;
 
-
     // Constructores
-    public Cliente() {
-        this.ultimaModificacion = LocalDateTime.now();
-    }
 
-
+    // Se elimina el constructor por redundancia
 
     @PrePersist
     public void prePersist() {
@@ -75,6 +54,4 @@ public class Cliente {
     public void preMerge() {
         this.ultimaModificacion = LocalDateTime.now();
     }
-
-
 }
