@@ -1,11 +1,17 @@
 package org.cplcursos.java.Entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name="contacto_dietas")
 public class contacto_dietas {
     @Id
     @Column(name = "idcontacto_dieta")
@@ -17,8 +23,10 @@ public class contacto_dietas {
     @Column(name = "horario")
     private LocalDateTime horario;
 
-    @OneToMany (mappedBy = "idcontacto_dieta")
-    private <List>Dieta dieta;
+    @OneToMany (mappedBy = "iddieta")
+    private Dieta dieta;
 
-    @
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 }
