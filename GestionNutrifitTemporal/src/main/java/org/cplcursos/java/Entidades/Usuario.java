@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "idusuario", nullable = false)
+    private Integer idusuario;
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -52,7 +52,7 @@ public class Usuario {
          propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
 
      */
-    @OneToOne(mappedBy="usuario")
+    @OneToOne(mappedBy="idcliente")
     private Cliente cliente;
 
     @OneToOne(mappedBy="usuario")

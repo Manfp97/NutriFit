@@ -18,8 +18,8 @@ import java.util.List;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "idcliente", nullable = false)
+    private Integer idcliente;
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -53,15 +53,18 @@ public class Cliente {
          propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
 
      */
-    @OneToOne(mappedBy = "cliente")
-    private Usuario usuario;
 
+
+    @OneToOne(mappedBy ="idusuario")
+    private Usuario usuario;
 
 
     // Constructores
     public Cliente() {
         this.ultimaModificacion = LocalDateTime.now();
     }
+
+
 
     @PrePersist
     public void prePersist() {
