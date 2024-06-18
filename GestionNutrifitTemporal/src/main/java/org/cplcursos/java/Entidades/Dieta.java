@@ -35,4 +35,8 @@ public class Dieta {
     @OneToOne (mappedBy = "id_progreso")
     private progresion_dietas progresionDietas;
 
+    @ManyToOne
+    @JoinColumn(name = "id_contactodieta")
+    private contacto_dietas id_contactodieta;
+
 }
