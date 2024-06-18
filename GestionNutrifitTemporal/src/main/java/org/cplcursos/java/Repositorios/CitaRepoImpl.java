@@ -1,12 +1,11 @@
 package org.cplcursos.java.Repositorios;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Albaran;
-import org.cplcursos.java.Entidades.Cita;
+import org.cplcursos.java.Entidades.Clase_Clientes;
 
 import java.util.List;
 
-public class CitaRepoImpl implements Repo<Cita>{
+public class CitaRepoImpl implements Repo<Clase_Clientes>{
     private EntityManager em;
 
     public CitaRepoImpl(EntityManager em) {
@@ -14,25 +13,25 @@ public class CitaRepoImpl implements Repo<Cita>{
     }
 
     @Override
-    public List<Cita> listar(Integer num) {
-        return em.createQuery("SELECT  FROM Cita", Cita.class)
+    public List<Clase_Clientes> listar(Integer num) {
+        return em.createQuery("SELECT  FROM Cita", Clase_Clientes.class)
                 .setMaxResults(num)
                 .getResultList();
     }
 
     @Override
-    public Cita porId(Integer id) {
-        return em.find(Cita.class, id);
+    public Clase_Clientes porId(Integer id) {
+        return em.find(Clase_Clientes.class, id);
     }
 
     @Override
-    public void guardar(Cita cita) {
+    public void guardar(Clase_Clientes claseClientes) {
         try {
             em.getTransaction().begin();
-            if (cita.getId() != null && cita.getId() > 0) {
-                em.merge(cita);
+            if (claseClientes.getId() != null && claseClientes.getId() > 0) {
+                em.merge(claseClientes);
             } else {
-                em.persist(cita);
+                em.persist(claseClientes);
             }
             em.getTransaction().commit();
         } catch (Exception e) {

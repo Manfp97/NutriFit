@@ -1,12 +1,11 @@
 package org.cplcursos.java.Repositorios;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Albaran;
-import org.cplcursos.java.Entidades.Proveedor;
+import org.cplcursos.java.Entidades.Proveedores;
 
 import java.util.List;
 
-public class RepoProvImpl implements Repo<Proveedor>{
+public class RepoProvImpl implements Repo<Proveedores>{
     /*
         El repositorio utiliza el EntityManager, pero sabemos que hay que cerrarlo después de ser utilizado.
         Si lo cerramos en cualquiera de los métodos del repositorio, no podrá ser utilizado de nuevo en posteriores
@@ -20,19 +19,19 @@ public class RepoProvImpl implements Repo<Proveedor>{
     }
 
     @Override
-    public List<Proveedor> listar(Integer num) {
-        return em.createQuery("SELECT p FROM Proveedor p", Proveedor.class)
+    public List<Proveedores> listar(Integer num) {
+        return em.createQuery("SELECT p FROM Proveedores p", Proveedores.class)
                 .setMaxResults(num)
                 .getResultList();
     }
 
     @Override
-    public Proveedor porId(Integer id) {
-        return em.find(Proveedor.class, id);
+    public Proveedores porId(Integer id) {
+        return em.find(Proveedores.class, id);
     }
 
     @Override
-    public void guardar(Proveedor proveedor) {
+    public void guardar(Proveedores proveedor) {
         try {
             em.getTransaction().begin();
             if (proveedor.getId() != null && proveedor.getId() > 0) {

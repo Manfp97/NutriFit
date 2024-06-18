@@ -57,11 +57,11 @@ public class Cliente {
     private List<Albaran> albaranes;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cita> citas;
+    private List<Clase_Clientes> claseClientes;
 
     // Constructores
     public Cliente() {
-        this.citas = new ArrayList<>();
+        this.claseClientes = new ArrayList<>();
     }
 
     @PrePersist

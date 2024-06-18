@@ -2,7 +2,7 @@ package org.cplcursos.java.Servicios;
 
 import jakarta.persistence.EntityManager;
 import org.cplcursos.java.Entidades.Albaran;
-import org.cplcursos.java.Entidades.Cita;
+import org.cplcursos.java.Entidades.Clase_Clientes;
 import org.cplcursos.java.Entidades.Cliente;
 import org.cplcursos.java.Repositorios.AlabranRepoImpl;
 import org.cplcursos.java.Repositorios.CitaRepoImpl;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ServicioAppImpl implements ServicioApp{
     private Repo<Cliente> repoCli;
     private Repo<Albaran> repoAlb;
-    private Repo<Cita> repoCita;
+    private Repo<Clase_Clientes> repoCita;
 
     public ServicioAppImpl(EntityManager em) {
         this.repoCli = new ClienteRepoImpl(em);
@@ -64,12 +64,12 @@ public class ServicioAppImpl implements ServicioApp{
     }
 
     @Override
-    public Optional<Cita> porIdCita(Integer id) {
+    public Optional<Clase_Clientes> porIdCita(Integer id) {
         return Optional.ofNullable(repoCita.porId(id));
     }
 
     @Override
-    public void guardarCita(Cita cita) {
-        repoCita.guardar(cita);
+    public void guardarCita(Clase_Clientes claseClientes) {
+        repoCita.guardar(claseClientes);
     }
 }
