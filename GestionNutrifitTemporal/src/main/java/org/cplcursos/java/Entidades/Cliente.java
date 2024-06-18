@@ -56,7 +56,7 @@ public class Cliente {
 
 
     @OneToOne(mappedBy ="idusuario")
-    private Usuario usuario;
+    private Usuario idusuario;
 
 
     // Constructores
