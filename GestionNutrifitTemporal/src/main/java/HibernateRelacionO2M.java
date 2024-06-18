@@ -36,15 +36,15 @@ public class HibernateRelacionO2M {
         // Elegimos el cliente al que le vamos a asignar las citas
         Cliente cli = em.find(Cliente.class, 3);
         // Creamos las citas
-        Cita cita1 = new Cita(LocalDateTime.now());
-        Cita cita2 = new Cita(LocalDateTime.now());
-        cita1.setCliente(cli);
-        cita2.setCliente(cli);
+        Clase_Clientes claseClientes1 = new Clase_Clientes(LocalDateTime.now());
+        Clase_Clientes claseClientes2 = new Clase_Clientes(LocalDateTime.now());
+        claseClientes1.setCliente(cli);
+        claseClientes2.setCliente(cli);
         // Las asignamos al cliente
-        cli.getCitas().add(cita1);
-        srvcapp.guardarCita(cita1);
-        cli.getCitas().add(cita2);
-        srvcapp.guardarCita(cita2);
+        cli.getClaseClientes().add(claseClientes1);
+        srvcapp.guardarCita(claseClientes1);
+        cli.getClaseClientes().add(claseClientes2);
+        srvcapp.guardarCita(claseClientes2);
         srvcapp.guardar(cli);
 
         System.out.println(srvcapp.porId(3).get());
