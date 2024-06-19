@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name="clientes")
@@ -38,6 +36,9 @@ public class Cliente {
 
     @OneToOne(mappedBy = "clientes")
     private Carrito carrito;
+
+    @OneToOne(mappedBy = "idcontacto_entrenamiento")
+    private Contacto_entrenamiento idcontacto_entrenamiento;
 
 
     // Constructores

@@ -19,32 +19,12 @@ public class Proveedores {
     @Column(name = "idproveedores", nullable = false)
     private Integer idproveedores;
 
-    private String nombre;
 
-    @ManyToMany
-    @JoinTable(name="proveedoresproductos",
-            joinColumns={@JoinColumn(name="id_Prov")},
-            inverseJoinColumns={@JoinColumn(name="id_productos")})
-    private Set<producto> productos = new HashSet<>();
+    @ManyToOne
+    @Column(name = "id_producto")
+    private Tienda id_producto;
 
-    // Helpers
-    public void nuevoProducto(Producto pr) {
-        this.producto.add(pr);
-        pr.getProveedores().add(this);
-    }
-
-    public void eliminarProducto(Producto pr){
-        this.producto.remove(pr);
-        pr.getProveedores().remove(this);
-    }
-
-    // Auxiliares
-    @Override
-    public String toString() {
-        return "Proveedor{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", piezas=" + piezas +
-                '}';
-    }
 }
+
+
+
