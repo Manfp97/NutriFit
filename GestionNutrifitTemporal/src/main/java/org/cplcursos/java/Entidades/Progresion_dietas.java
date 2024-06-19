@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name="progresion_dietas")
-public class progresion_dietas {
+public class Progresion_dietas {
     @Id
     @Column(name = "id_progreso")
     private Integer id_progreso;

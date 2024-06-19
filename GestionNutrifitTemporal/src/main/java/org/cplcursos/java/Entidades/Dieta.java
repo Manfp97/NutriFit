@@ -30,13 +30,13 @@ public class Dieta {
     private String planificacion_frecuencia;
 
     @OneToMany(mappedBy = "dieta_iddieta")
-    private detalles_dietas detalles_dietas;
+    private Detalles_dietas detalles_dietas;
 
     @OneToOne (mappedBy = "id_progreso")
-    private progresion_dietas progresionDietas;
+    private Progresion_dietas progresionDietas;
 
     @ManyToOne
     @JoinColumn(name = "id_contactodieta")
-    private contacto_dietas id_contactodieta;
+    private Contacto_dietas id_contactodieta;
 
 }

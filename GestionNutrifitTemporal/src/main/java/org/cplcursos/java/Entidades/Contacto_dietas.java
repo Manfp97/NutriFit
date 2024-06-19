@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Table(name="contacto_dietas")
-public class contacto_dietas {
+public class Contacto_dietas {
     @Id
     @Column(name = "idcontacto_dieta")
     private int idcontacto_dieta;

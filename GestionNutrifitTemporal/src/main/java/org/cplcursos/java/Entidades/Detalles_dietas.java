@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 @Setter
 @NoArgsConstructor
 @Table(name="detalles_dietas")
-public class detalles_dietas {
+public class Detalles_dietas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dieta_iddieta", nullable = false)
