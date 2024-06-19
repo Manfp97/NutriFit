@@ -35,7 +35,7 @@ public class Detalles_cliente {
     private String genero;
 
 
-    @OneToOne(mappedBy = "detalles_clientes")
+    @OneToOne(mappedBy = "idcliente")
     @JoinColumn(name = "idcliente")
     private Cliente cliente;
 }

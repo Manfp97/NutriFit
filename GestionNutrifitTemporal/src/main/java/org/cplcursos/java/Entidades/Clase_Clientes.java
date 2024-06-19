@@ -23,4 +23,16 @@ public class Clase_Clientes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empleado", nullable = false)
     private Integer id_empleado;
+
+    @ManyToOne
+    @Column(name = "idclase_colectiva")
+    private Clase_Colectiva clase_colectiva;
+
+    @ManyToOne
+    @Column(name = "idcliente")
+    private Cliente idcliente;
+
+    @ManyToOne
+    @Column(name = "carrito_idcarrito")
+    private Cliente carrito_idcarrito;
     }

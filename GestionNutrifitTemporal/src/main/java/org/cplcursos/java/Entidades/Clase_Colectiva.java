@@ -31,4 +31,7 @@ public class Clase_Colectiva {
 
     @Column(name = "limite_reservas")
     private Byte limite_reservas;
+
+    @OneToMany(mappedBy = "id")
+    private Clase_Clientes id;
 }
