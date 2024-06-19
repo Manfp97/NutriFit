@@ -16,8 +16,8 @@ import java.util.Set;
 public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "idproveedores", nullable = false)
+    private Integer idproveedores;
 
     private String nombre;
 

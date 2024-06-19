@@ -58,6 +58,9 @@ public class Cliente {
     @OneToOne(mappedBy ="idusuario")
     private Usuario idusuario;
 
+    @OneToOne(mappedBy = "id_carrito")
+    private Carrito carrito;
+
 
     // Constructores
     public Cliente() {
