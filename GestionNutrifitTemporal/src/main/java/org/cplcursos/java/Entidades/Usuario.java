@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 
 
 @Entity
@@ -23,23 +22,15 @@ public class Usuario {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @Column(name = "direccion", length = 80)
+    @Column(name = "contraseña", length = 25)
     private String direccion;
 
-    @Column(name = "dni", length = 10)
-    private String dni;
+    @Column(name = "activo")
+    private Integer activo;
 
-    @Column(name = "edad")
-    private Byte edad;
+    @Column(name = "email", length = 50)
+    private String email;
 
-    @Column(name = "emilio", length = 50)
-    private String emilio;
-
-    @Column(name="creadoel")
-    private LocalDateTime creadoEl;
-
-    @Column(name="ultimamodificacion")
-    private LocalDateTime ultimaModificacion;
 
     /*
          La relación @OneToMany permite que una entidad se relacione con múltiples instancias de otra.
@@ -60,18 +51,7 @@ public class Usuario {
 
     // Constructores
     public Usuario() {
-        this.ultimaModificacion = LocalDateTime.now();
-    }
 
-    @PrePersist
-    public void prePersist() {
-        this.creadoEl = LocalDateTime.now();
     }
-
-    @PreUpdate
-    public void preMerge() {
-        this.ultimaModificacion = LocalDateTime.now();
-    }
-
 
 }
