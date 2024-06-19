@@ -32,7 +32,4 @@ public class Clase_Clientes {
     @Column(name = "idcliente")
     private Cliente idcliente;
 
-    @ManyToOne
-    @Column(name = "carrito_idcarrito")
-    private Cliente carrito_idcarrito;
     }
