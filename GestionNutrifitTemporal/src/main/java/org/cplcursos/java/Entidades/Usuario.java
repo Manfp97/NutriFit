@@ -52,7 +52,7 @@ public class Usuario {
          propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
 
      */
-    @OneToOne(mappedBy="idcliente")
+    @OneToOne(mappedBy="usuarios")
     private Cliente cliente;
 
     @OneToOne(mappedBy="usuario")

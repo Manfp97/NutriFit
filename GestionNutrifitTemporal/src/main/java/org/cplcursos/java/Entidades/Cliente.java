@@ -21,28 +21,7 @@ public class Cliente {
     @Column(name = "idcliente", nullable = false)
     private Integer idcliente;
 
-    @Column(name = "nombre", nullable = false, length = 45)
-    private String nombre;
-
-    @Column(name = "direccion", length = 80)
-    private String direccion;
-
-    @Column(name = "dni", length = 10)
-    private String dni;
-
-    @Column(name = "edad")
-    private Byte edad;
-
-    @Column(name = "emilio", length = 50)
-    private String emilio;
-
-    @Column(name="creadoel")
-    private LocalDateTime creadoEl;
-
-    @Column(name="ultimamodificacion")
-    private LocalDateTime ultimaModificacion;
-
-    /*
+        /*
          La relación @OneToMany permite que una entidad se relacione con múltiples instancias de otra.
          La propiedad que define la relación debe anotarse con @OneToMany y debe indicar mediante la cláusula
          "mappedBy" cuál es la propiedad de la entidad relacionada que sirve de nexo.
@@ -54,30 +33,16 @@ public class Cliente {
 
      */
 
-
-    @OneToOne(mappedBy ="idusuario")
+    @OneToOne(mappedBy ="clientes")
     private Usuario idusuario;
 
-    @OneToOne(mappedBy = "id_carrito")
+    @OneToOne(mappedBy = "clientes")
     private Carrito carrito;
 
 
     // Constructores
     public Cliente() {
-        this.ultimaModificacion = LocalDateTime.now();
+
     }
-
-
-
-    @PrePersist
-    public void prePersist() {
-        this.creadoEl = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preMerge() {
-        this.ultimaModificacion = LocalDateTime.now();
-    }
-
 
 }
