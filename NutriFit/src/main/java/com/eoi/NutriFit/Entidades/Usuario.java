@@ -1,4 +1,4 @@
-package org.cplcursos.java.Entidades;
+package com.eoi.NutriFit.Entidades;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,24 +16,20 @@ import java.time.LocalDateTime;
 @ToString
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idusuario", nullable = false)
-    private Integer idusuario;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 45)
-    private String nombre;
+    @Column(name = "nombreUsuario", nullable = false, length = 100)
+    private String nombreUsuario;
 
-    @Column(name = "direccion", length = 80)
-    private String direccion;
+    @Column(name = "password", nullable = false, length = 250)
+    private String password;
 
-    @Column(name = "dni", length = 10)
-    private String dni;
+    @Basic(optional = false)
+    private boolean activo = true;
 
-    @Column(name = "edad")
-    private Byte edad;
 
-    @Column(name = "email", length = 50)
-    private String email;
 
     @Column(name="creadoel")
     private LocalDateTime creadoEl;
@@ -52,26 +48,16 @@ public class Usuario {
          propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
 
      */
-    @OneToOne(mappedBy="idcliente")
-    private Cliente cliente;
+    @OneToOne()
+    private Cliente clienteUsuario;
 
-    @OneToOne(mappedBy="usuario")
+    @OneToOne()
     private Roles roles;
 
-    // Constructores
-    public Usuario() {
-        this.ultimaModificacion = LocalDateTime.now();
-    }
+    @OneToOne()
+    private DetalleUsuario detalleUsuario;
 
-    @PrePersist
-    public void prePersist() {
-        this.creadoEl = LocalDateTime.now();
-    }
 
-    @PreUpdate
-    public void preMerge() {
-        this.ultimaModificacion = LocalDateTime.now();
-    }
 
 
 }

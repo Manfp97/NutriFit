@@ -25,5 +25,5 @@ public class Cliente {
 
     @OneToOne(mappedBy = "idcontacto_entrenamiento")
     private Contacto_entrenamiento idcontacto_entrenamiento;
-    
+
 }
