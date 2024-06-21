@@ -14,9 +14,9 @@ import java.text.DecimalFormat;
 @Table(name="detalles_dietas")
 public class DetallesDieta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dieta_iddieta", nullable = false)
-    private Integer dieta_iddieta;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "cantidad")
     private DecimalFormat cantidad;

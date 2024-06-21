@@ -11,11 +11,12 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="Dieta")
+@Table(name="dietas")
 public class Dieta {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer iddieta;
+    private Integer id;
 
     @Column (name = "objetivos")
     private String objetivos;
@@ -23,8 +24,8 @@ public class Dieta {
     @Column (name = "categoria")
     private String categoria;
 
-    @Column (name = "recursos_multimedia")
-    private Blob recursos_multimedia;
+    @Lob
+    private byte [] recursos_multimedia;
 
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;

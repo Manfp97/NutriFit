@@ -9,11 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="progresion_dietas")
+@Table(name="progresiones_dietas")
 public class ProgresionDieta {
     @Id
-    @Column(name = "id_progreso")
-    private Integer id_progreso;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "peso_incial")
     private Integer peso_incial;

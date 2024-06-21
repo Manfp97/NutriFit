@@ -12,7 +12,7 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="Entrenamiento")
+@Table(name="entrenamientos")
 public class Entrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

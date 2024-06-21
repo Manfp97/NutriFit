@@ -11,12 +11,12 @@ import java.text.DecimalFormat;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="Detalles_entrenamientos")
+@Table(name="detalles_entrenamientos")
 public class DetallesEntrenamiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_detalles", nullable = false)
-    private Integer id_detalles;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "volumen_repeticiones")
     private Integer volumen_repeticiones;

@@ -9,12 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="Progresiones_entrenamientos")
+@Table(name="progresiones_entrenamientos")
 public class ProgresionesEntrenamiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "entrenamientos_identrenamiento", nullable = false)
-    private Integer entrenamientos_identrenamiento;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "estado_fisico_anterior")
     private String estado_fisico_anterior;

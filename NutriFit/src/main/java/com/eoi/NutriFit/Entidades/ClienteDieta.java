@@ -11,11 +11,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="contacto_dietas")
+@Table(name="clientes_dietas")
 public class ClienteDieta {
     @Id
-    @Column(name = "idcontacto_dieta")
-    private int idcontacto_dieta;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Column(name = "detalles_dietas")
     private String detalles_dietas;
