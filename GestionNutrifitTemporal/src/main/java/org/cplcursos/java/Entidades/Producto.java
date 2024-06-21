@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cplcursos.java.Entidades.Carrito;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,19 +16,22 @@ import java.util.Set;
 @Table(name="productos")
 public class Producto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     private String codigo;
     private String nombre;
 
-    @ManyToMany(mappedBy = "producto")
-    private Set<Proveedores> proveedores = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "producto_carrito",
+            joinColumns = @JoinColumn(name = "idproducto",foreignKey=@ForeignKey(name = "Fk_producto_carrito_producto")),
+            inverseJoinColumns = @JoinColumn(name = "idcarrito",foreignKey=@ForeignKey(name = "Fk_producto_carrito_carrito"))
+    )
+    Set<Carrito> carritos = new HashSet<>();
 
-    public Producto(String codigo, String nombre){
-        this.codigo = codigo;
-        this.nombre = nombre;
-    }
+    @OneToMany()
+    private Proveedores productoproveedor;
 
 }

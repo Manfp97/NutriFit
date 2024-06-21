@@ -15,15 +15,15 @@ import java.sql.Blob;
 @Table(name="Entrenamiento")
 public class Entrenamiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "identrenamiento", nullable = false)
-    private Integer identrenamiento;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "categoria")
     private String categoria;
 
-    @Column(name = "recursos_multimedia")
-    private Blob recursosMultimedia;
+    @Lob
+    private byte [] recursos_multimedia;
 
     @Column(name = "grupo_muscular")
     private String grupoMuscular;
@@ -34,15 +34,19 @@ public class Entrenamiento {
     @Column(name = "planificacion_frecuencia")
     private String planificacionFrecuencia;
 
-    @ManyToOne
-    @Column(name = "idcontacto_entrenamiento")
-    private Contacto_entrenamiento idcontactoentrenamiento;
 
-    @OneToMany(mappedBy = "entrenamientos_identrenamiento")
-    private Progresiones_entrenamientos entrenamientos_identrenamiento;
 
-    @ManyToOne
-    @Column(name = "id_detalles")
-    private Detalles_entrenamientos id_detalles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "iddetallesentrenamiento",foreignKey=@ForeignKey(name = "Fk_detallesentrenamiento_entrenamiento"))
+    private DetallesEntrenamiento DetallesEntrenamiento;
+
+    @OneToMany
+    private ProgresionesEntrenamiento entrenamientos_identrenamiento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idprogresionentrenamiento",foreignKey=@ForeignKey(name = "Fk_progresionentrenamiento_entrenamiento"))
+    private ProgresionesEntrenamiento ProgresionesEntrenamiento;
+
+
 
 }

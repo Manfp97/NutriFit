@@ -11,7 +11,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name="detalles_clientes")
-public class Detalles_cliente {
+public class DetallesCliente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "altura", nullable = false)
     private Double altura;
@@ -34,8 +38,12 @@ public class Detalles_cliente {
     @Column(name = "genero", length = 20)
     private String genero;
 
+    @Column(name = "edad")
+    private Integer edad;
 
-    @OneToOne(mappedBy = "idcliente")
+
+    @OneToOne(mappedBy = "id")
     @JoinColumn(name = "idcliente")
     private Cliente cliente;
+
 }

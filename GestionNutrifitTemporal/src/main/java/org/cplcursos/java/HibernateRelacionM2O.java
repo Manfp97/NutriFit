@@ -1,7 +1,6 @@
 package org.cplcursos.java;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Albaran;
 import org.cplcursos.java.Entidades.Cliente;
 import org.cplcursos.java.Servicios.ServicioApp;
 import org.cplcursos.java.Servicios.ServicioAppImpl;

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,23 +18,19 @@ import java.text.DecimalFormat;
 @Table(name="carrito")
 public class Carrito {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrito", nullable = false)
-    private Integer id_carrito;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @Column(name = "lista_articulos")
-    private String lista_articulos;
+    @OneToOne(mappedBy = "carrito")
+    private Cliente clientecarrito;
 
-    @Column(name = "precio_total")
-    private DecimalFormat precio_total;
-
-    @Column(name = "pagado")
-    private boolean pagado;
-
-    @OneToOne(mappedBy = "idcliente")
-    private Cliente cliente;
-
-    @OneToMany(mappedBy = "id_producto")
-    private Tienda tienda;
+    @ManyToMany
+    @JoinTable(
+            name = "carrito_producto",
+            joinColumns = @JoinColumn(name = "idcarrito",foreignKey=@ForeignKey(name = "Fk_carritp_producto_carrito")),
+            inverseJoinColumns = @JoinColumn(name = "idprodcuto",foreignKey=@ForeignKey(name = "Fk_carrito_producto_producto"))
+    )
+    Set<Producto> productos = new HashSet<>();
 
 }

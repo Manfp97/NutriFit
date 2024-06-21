@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
@@ -15,16 +12,11 @@ import java.util.Set;
 @Table(name="proveedores")
 public class Proveedores {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idproveedores", nullable = false)
     private Integer idproveedores;
 
-
-    @ManyToOne
-    @Column(name = "id_producto")
-    private Tienda id_producto;
-
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "idproductoproveedor",foreignKey=@ForeignKey(name = "Fk_proveedor_producto"))
+private Producto productoproveedor;
 }
-
-
-

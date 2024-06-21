@@ -5,31 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 //@ToString
 @Table(name="ClaseClientes")
-public class Clase_Clientes {
+public class SesionClientes {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_empleado", nullable = false)
-    private Integer id_empleado;
-
-    @ManyToOne
-    @Column(name = "idclase_colectiva")
-    private Clase_Colectiva clase_colectiva;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idsesioncolectivasesionclientes",foreignKey=@ForeignKey(name = "Fk_colectiva_cliente"))
+    private SesionColectiva idsesioncolectiva;
 
     @ManyToOne
     @Column(name = "idcliente")
     private Cliente idcliente;
 
-    }
+
+}

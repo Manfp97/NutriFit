@@ -1,7 +1,6 @@
 package org.cplcursos.java.Repositorios;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Albaran;
 
 import java.util.List;
 

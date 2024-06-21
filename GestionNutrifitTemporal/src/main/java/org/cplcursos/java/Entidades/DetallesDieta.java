@@ -12,11 +12,11 @@ import java.text.DecimalFormat;
 @Setter
 @NoArgsConstructor
 @Table(name="detalles_dietas")
-public class Detalles_dietas {
+public class DetallesDieta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dieta_iddieta", nullable = false)
-    private Integer dieta_iddieta;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "cantidad")
     private DecimalFormat cantidad;
@@ -24,7 +24,9 @@ public class Detalles_dietas {
     @Column(name = "detalles_alimentos")
     private String detalles_alimentos;
 
-    @ManyToOne
-    @JoinColumn(name = "iddieta")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "iddieta",foreignKey=@ForeignKey(name = "Fk_detalles_dieta"))
     private Dieta dieta;
+
 }

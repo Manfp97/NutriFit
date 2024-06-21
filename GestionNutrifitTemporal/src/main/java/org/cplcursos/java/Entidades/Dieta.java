@@ -11,11 +11,12 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="Dieta")
+@Table(name="dieta")
 public class Dieta {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer iddieta;
+    private Integer id;
 
     @Column (name = "objetivos")
     private String objetivos;
@@ -29,14 +30,18 @@ public class Dieta {
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
 
-    @OneToMany(mappedBy = "dieta_iddieta")
-    private Detalles_dietas detalles_dietas;
 
-    @OneToOne (mappedBy = "id_progreso")
-    private Progresion_dietas progresionDietas;
 
-    @ManyToOne
-    @JoinColumn(name = "id_contactodieta")
-    private Contacto_dietas id_contactodieta;
+    @OneToMany
+    private DetallesDieta detalles_dietas;
+
+    @OneToOne
+    private ProgresionDieta progresionDietas;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idcontactodieta",foreignKey=@ForeignKey(name = "Fk_contactodieta_dieta"))
+    private DetallesDieta detalles_contactodieta;
+
 
 }

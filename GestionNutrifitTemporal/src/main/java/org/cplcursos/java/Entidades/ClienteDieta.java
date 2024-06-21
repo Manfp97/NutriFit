@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Table(name="contacto_dietas")
-public class Contacto_dietas {
+public class ClienteDieta {
     @Id
-    @Column(name = "idcontacto_dieta")
-    private int idcontacto_dieta;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "detalles_dietas")
     private String detalles_dietas;
@@ -23,10 +24,16 @@ public class Contacto_dietas {
     @Column(name = "horario")
     private LocalDateTime horario;
 
-    @OneToMany (mappedBy = "iddieta")
+
+    @OneToMany
     private Dieta dieta;
+
+    @OneToOne(mappedBy = "id")
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    private Cliente idcliente;
+
+
 }
