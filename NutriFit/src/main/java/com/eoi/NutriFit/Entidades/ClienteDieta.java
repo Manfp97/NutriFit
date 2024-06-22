@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Table(name="clientes_dietas")
+//Falta el id de cliente || relacion many to one|| falta el id de dieta many to one ||
+//Es necesario crear un indice unico que afecte a los campos cliente y dieta
 public class ClienteDieta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -19,8 +19,8 @@ public class Cliente {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(mappedBy ="clienteUsuario")
-    private Usuario usuario;
+    @OneToOne
+    private Usuario usuarioCliente;
 
     @OneToOne()
     private Carrito carrito;

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name="progresiones_entrenamientos")
+//Entrenamientos tiene un detalle || OneToOne debe de ser --- De entrenamientos a progresiones es un OneToMany
 public class ProgresionesEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
