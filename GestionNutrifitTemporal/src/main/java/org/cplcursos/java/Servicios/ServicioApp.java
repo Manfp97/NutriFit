@@ -16,9 +16,9 @@ public interface ServicioApp {
     void guardarAlb(Albaran alb);
     void eliminarAlb(Integer id);
 
-    List<Clase_Clientes> listaCitas();
-    Optional<Clase_Clientes> porIdCita(Integer id);
-    void guardarCita(Clase_Clientes claseClientes);
+    List<SesionClientes> listaCitas();
+    Optional<SesionClientes> porIdCita(Integer id);
+    void guardarCita(SesionClientes claseClientes);
 
     List<Proveedores> listaProv(Integer num);
     Optional<Proveedores> porIdProv(Integer id);

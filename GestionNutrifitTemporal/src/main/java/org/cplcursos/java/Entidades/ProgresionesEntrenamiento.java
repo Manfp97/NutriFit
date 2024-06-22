@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name="Progresiones_entrenamientos")
-public class Progresiones_entrenamientos {
+public class ProgresionesEntrenamiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "entrenamientos_identrenamiento", nullable = false)
-    private Integer entrenamientos_identrenamiento;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "estado_fisico_anterior")
     private String estado_fisico_anterior;
@@ -22,8 +22,10 @@ public class Progresiones_entrenamientos {
     @Column(name = "progresion_actual")
     private String progresion_actual;
 
-    @ManyToOne
-    @Column(name = "identrenamiento")
-    private Entrenamiento identrenamiento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idprogresion_entrenamiento",foreignKey=@ForeignKey(name = "Fk_progresion_entrenamiento"))
+    private Entrenamiento entrenamiento;
+
 
 }

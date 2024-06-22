@@ -36,8 +36,8 @@ public class HibernateRelacionO2M {
         // Elegimos el cliente al que le vamos a asignar las citas
         Cliente cli = em.find(Cliente.class, 3);
         // Creamos las citas
-        Clase_Clientes claseClientes1 = new Clase_Clientes(LocalDateTime.now());
-        Clase_Clientes claseClientes2 = new Clase_Clientes(LocalDateTime.now());
+        SesionClientes claseClientes1 = new SesionClientes(LocalDateTime.now());
+        SesionClientes claseClientes2 = new SesionClientes(LocalDateTime.now());
         claseClientes1.setCliente(cli);
         claseClientes2.setCliente(cli);
         // Las asignamos al cliente

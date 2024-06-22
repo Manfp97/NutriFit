@@ -1,11 +1,11 @@
 package org.cplcursos.java.Repositorios;
 
 import jakarta.persistence.EntityManager;
-import org.cplcursos.java.Entidades.Clase_Clientes;
+import org.cplcursos.java.Entidades.SesionClientes;
 
 import java.util.List;
 
-public class CitaRepoImpl implements Repo<Clase_Clientes>{
+public class CitaRepoImpl implements Repo<SesionClientes>{
     private EntityManager em;
 
     public CitaRepoImpl(EntityManager em) {
@@ -13,19 +13,19 @@ public class CitaRepoImpl implements Repo<Clase_Clientes>{
     }
 
     @Override
-    public List<Clase_Clientes> listar(Integer num) {
-        return em.createQuery("SELECT  FROM Cita", Clase_Clientes.class)
+    public List<SesionClientes> listar(Integer num) {
+        return em.createQuery("SELECT  FROM Cita", SesionClientes.class)
                 .setMaxResults(num)
                 .getResultList();
     }
 
     @Override
-    public Clase_Clientes porId(Integer id) {
-        return em.find(Clase_Clientes.class, id);
+    public SesionClientes porId(Integer id) {
+        return em.find(SesionClientes.class, id);
     }
 
     @Override
-    public void guardar(Clase_Clientes claseClientes) {
+    public void guardar(SesionClientes claseClientes) {
         try {
             em.getTransaction().begin();
             if (claseClientes.getId() != null && claseClientes.getId() > 0) {

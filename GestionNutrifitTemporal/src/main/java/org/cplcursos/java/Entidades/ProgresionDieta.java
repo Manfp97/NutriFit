@@ -10,10 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name="progresion_dietas")
-public class Progresion_dietas {
+public class ProgresionDieta {
     @Id
-    @Column(name = "id_progreso")
-    private Integer id_progreso;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "peso_incial")
     private Integer peso_incial;
@@ -21,7 +22,9 @@ public class Progresion_dietas {
     @Column(name = "peso_objetivo")
     private Integer peso_objetivo;
 
-    @OneToOne (mappedBy = "iddieta")
+
+
+    @OneToOne (mappedBy = "id")
     private Dieta dieta;
 
 

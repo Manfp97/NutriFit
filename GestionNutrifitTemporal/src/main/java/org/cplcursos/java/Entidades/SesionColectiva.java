@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 //@ToString
 @Table(name="ClaseColectiva")
-public class Clase_Colectiva {
+public class SesionColectiva {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_clase_colectiva", nullable = false)
-    private Integer id_clase_colectiva;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "tipo_clase" , nullable = false , length = 45)
     private String tipo_clase;
@@ -32,6 +32,8 @@ public class Clase_Colectiva {
     @Column(name = "limite_reservas")
     private Byte limite_reservas;
 
-    @OneToMany(mappedBy = "id")
-    private Clase_Clientes id;
+
+    @OneToMany
+    private SesionClientes sesionClientes;
+
 }
