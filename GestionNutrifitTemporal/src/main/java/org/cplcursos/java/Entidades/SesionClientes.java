@@ -25,5 +25,5 @@ public class SesionClientes {
     @Column(name = "idcliente")
     private Cliente idcliente;
 
-
+hgffgjytjyt
 }
