@@ -28,7 +28,7 @@ public class Dieta {
     private String categoria;
 
     @Lob
-    private byte [] recursos_multimedia;
+    private byte [] recursos_multimedia;                //
 
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
