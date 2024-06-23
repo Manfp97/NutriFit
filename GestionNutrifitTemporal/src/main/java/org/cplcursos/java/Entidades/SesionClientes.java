@@ -24,5 +24,5 @@ public class SesionClientes {
     @ManyToOne
     @Column(name = "idcliente")
     private Cliente idcliente;
-    
+
 }

@@ -38,19 +38,19 @@ public class Cliente {
     private Set<ClienteEntrenamiento> clienteEntrenamientos_entrenador;
 
     //Usuario cliente recetado por Usuario dietista
-    @OneToMany(mappedBy = "clienterecetado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ClienteDieta> clienteDietas_recetado;
 
     //Usuario dietista receta a cliente
-    @OneToMany(mappedBy = "dietistacliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ClienteDieta> clienteDietas_dietista;
 
     //Usuario cliente citado por Usuario empleado
-    @OneToMany(mappedBy = "clientecitado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<SesionClientes> sesionClientes_citado;
 
     //Usuario empleado cita a cliente
-    @OneToMany(mappedBy = "empleadocliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<SesionClientes> sesionClientes_empleado;
 
 }
