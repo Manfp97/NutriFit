@@ -12,6 +12,7 @@ import java.sql.Blob;
 @Setter
 @NoArgsConstructor
 @Table(name="dietas")
+//Crear onetomany hacia progresiones || crear onetoone con detalles dietas
 public class Dieta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
