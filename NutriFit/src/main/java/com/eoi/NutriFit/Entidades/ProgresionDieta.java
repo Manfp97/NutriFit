@@ -1,5 +1,6 @@
 package com.eoi.NutriFit.Entidades;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +10,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="progresiones_dietas")
+@Table(name="progresion_dietas")
 public class ProgresionDieta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "peso_incial")
@@ -23,11 +24,9 @@ public class ProgresionDieta {
     private Integer peso_objetivo;
 
 
-    /*
-    @OneToOne (mappedBy = "iddieta")
-    private Dieta dieta;
 
+    @OneToOne (mappedBy = "id")
+    private org.cplcursos.java.Entidades.Dieta dieta;
 
-     */
 
 }

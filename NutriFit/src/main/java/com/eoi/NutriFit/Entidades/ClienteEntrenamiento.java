@@ -12,10 +12,7 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="clientes_entrenamientos")
-//En la siguiente tutoria aprender a crear indices e indices unicos
-//Es necesario crear el many to one con entrenamientos y crear un indice unico que afecte a los campos cliente entrenado
-//y entrenamiento
+@Table(name="clienteentrenamiento")
 public class ClienteEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

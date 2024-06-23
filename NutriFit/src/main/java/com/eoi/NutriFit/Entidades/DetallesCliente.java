@@ -41,10 +41,9 @@ public class DetallesCliente {
     @Column(name = "edad")
     private Integer edad;
 
-/*
-    @OneToOne(mappedBy = "idcliente")
+
+    @OneToOne(mappedBy = "id")
     @JoinColumn(name = "idcliente")
     private Cliente cliente;
 
- */
 }

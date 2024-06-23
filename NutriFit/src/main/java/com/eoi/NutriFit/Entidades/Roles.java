@@ -1,5 +1,6 @@
 package com.eoi.NutriFit.Entidades;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,18 +22,8 @@ public class Roles {
     private String nombreRol;
 
 
-    /*
-         La relación @OneToMany permite que una entidad se relacione con múltiples instancias de otra.
-         La propiedad que define la relación debe anotarse con @OneToMany y debe indicar mediante la cláusula
-         "mappedBy" cuál es la propiedad de la entidad relacionada que sirve de nexo.
 
-         @OneToMany es la otra parte de la relación @ManyToOne
-
-         El CASO DE USO es que un usuario puede tener varias citas. Por tanto, creamos en la Entidad usuario una
-         propiedad que representa el conjunto -en este caso, como un List<>- de instancias de Albaran.
-
-     */
-    @OneToOne(mappedBy="roles")
+    @OneToMany
     private Usuario usuario;
 
 

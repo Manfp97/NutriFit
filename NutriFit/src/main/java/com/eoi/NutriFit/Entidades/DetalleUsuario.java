@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
+
 @Entity
-@Table(name="detalles_usuario")
+@Table(name="detalleusuario")
 @Getter
 @Setter
 @ToString
@@ -34,5 +36,5 @@ public class DetalleUsuario {
     private String email;
 
     @OneToOne(mappedBy = "detalleUsuario")
-    private Usuario usuario;
+    private org.cplcursos.java.Entidades.Usuario usuario;
 }

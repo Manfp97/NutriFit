@@ -1,6 +1,7 @@
 package com.eoi.NutriFit.Entidades;
 
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="entrenamientos")
+@Table(name="Entrenamiento")
 public class Entrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,19 +36,18 @@ public class Entrenamiento {
     private String planificacionFrecuencia;
 
 
-    /*
-    @ManyToOne
-    @Column(name = "idcontacto_entrenamiento")
-    private ClienteEntrenamiento idcontactoentrenamiento;
 
-    @OneToMany(mappedBy = "entrenamientos_identrenamiento")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "iddetallesentrenamiento",foreignKey=@ForeignKey(name = "Fk_detallesentrenamiento_entrenamiento"))
+    private org.cplcursos.java.Entidades.DetallesEntrenamiento DetallesEntrenamiento;
+
+    @OneToMany
     private ProgresionesEntrenamiento entrenamientos_identrenamiento;
 
-    @ManyToOne
-    @Column(name = "id_detalles")
-    private DetallesEntrenamiento id_detalles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idprogresionentrenamiento",foreignKey=@ForeignKey(name = "Fk_progresionentrenamiento_entrenamiento"))
+    private ProgresionesEntrenamiento ProgresionesEntrenamiento;
 
-    */
 
 
 }

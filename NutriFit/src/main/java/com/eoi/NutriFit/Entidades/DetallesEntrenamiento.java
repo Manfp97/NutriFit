@@ -11,7 +11,7 @@ import java.text.DecimalFormat;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="detalles_entrenamientos")
+@Table(name="Detalles_entrenamientos")
 public class DetallesEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +28,9 @@ public class DetallesEntrenamiento {
     private String detalles_ejercicios;
 
 
-    /*
-    @OneToMany(mappedBy = "identrenamiento")
+
+    @OneToMany
     private Entrenamiento identrenamiento;
 
-     */
 
 }

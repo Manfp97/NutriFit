@@ -1,5 +1,6 @@
 package com.eoi.NutriFit.Entidades;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,22 +17,13 @@ public class SesionClientes {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
-/*
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_empleado", nullable = false)
-    private Integer id_empleado;
 
-
-
-    @ManyToOne
-    @Column(name = "idclase_colectiva")
-    private SesionColectiva sesion_colectiva;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idsesioncolectivasesionclientes",foreignKey=@ForeignKey(name = "Fk_colectiva_cliente"))
+    private SesionColectiva idsesioncolectiva;
 
     @ManyToOne
     @Column(name = "idcliente")
     private Cliente idcliente;
 
-     */
-
-    }
+}

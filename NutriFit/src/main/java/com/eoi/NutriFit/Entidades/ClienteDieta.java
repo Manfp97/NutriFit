@@ -11,13 +11,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="clientes_dietas")
-//Falta el id de cliente || relacion many to one|| falta el id de dieta many to one ||
-//Es necesario crear un indice unico que afecte a los campos cliente y dieta
+@Table(name="contacto_dietas")
 public class ClienteDieta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private int id;
 
     @Column(name = "detalles_dietas")
@@ -27,13 +25,15 @@ public class ClienteDieta {
     private LocalDateTime horario;
 
 
-    /*
-    @OneToMany (mappedBy = "iddieta")
+    @OneToMany
     private Dieta dieta;
+
+    @OneToOne(mappedBy = "id")
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
-    */
+    private Cliente idcliente;
+
 
 }

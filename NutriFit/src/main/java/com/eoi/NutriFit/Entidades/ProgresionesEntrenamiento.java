@@ -1,5 +1,6 @@
 package com.eoi.NutriFit.Entidades;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="progresiones_entrenamientos")
-//Entrenamientos tiene un detalle || OneToOne debe de ser --- De entrenamientos a progresiones es un OneToMany
+@Table(name="Progresiones_entrenamientos")
 public class ProgresionesEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,11 +23,10 @@ public class ProgresionesEntrenamiento {
     @Column(name = "progresion_actual")
     private String progresion_actual;
 
-    /*
-    @ManyToOne
-    @Column(name = "identrenamiento")
-    private Entrenamiento identrenamiento;
 
-     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idprogresion_entrenamiento",foreignKey=@ForeignKey(name = "Fk_progresion_entrenamiento"))
+    private org.cplcursos.java.Entidades.Entrenamiento entrenamiento;
+
 
 }

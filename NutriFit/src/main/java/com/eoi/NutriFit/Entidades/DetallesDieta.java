@@ -24,10 +24,9 @@ public class DetallesDieta {
     @Column(name = "detalles_alimentos")
     private String detalles_alimentos;
 
-    /*
-    @ManyToOne
-    @JoinColumn(name = "iddieta")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "iddieta",foreignKey=@ForeignKey(name = "Fk_detalles_dieta"))
     private Dieta dieta;
 
-     */
 }

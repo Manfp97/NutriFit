@@ -1,9 +1,11 @@
 package com.eoi.NutriFit.Entidades;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cplcursos.java.Entidades.Carrito;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,5 +32,7 @@ public class Producto {
     )
     Set<Carrito> carritos = new HashSet<>();
 
+    @OneToMany()
+    private Proveedores productoproveedor;
 
 }
