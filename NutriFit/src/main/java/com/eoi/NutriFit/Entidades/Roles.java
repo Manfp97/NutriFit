@@ -22,7 +22,6 @@ public class Roles {
     private String nombreRol;
 
 
-
     @OneToMany
     private Usuario usuario;
 

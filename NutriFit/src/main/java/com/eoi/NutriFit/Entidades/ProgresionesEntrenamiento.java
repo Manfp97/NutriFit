@@ -26,7 +26,7 @@ public class ProgresionesEntrenamiento {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idprogresion_entrenamiento",foreignKey=@ForeignKey(name = "Fk_progresion_entrenamiento"))
-    private org.cplcursos.java.Entidades.Entrenamiento entrenamiento;
+    private Entrenamiento entrenamiento;
 
 
 }

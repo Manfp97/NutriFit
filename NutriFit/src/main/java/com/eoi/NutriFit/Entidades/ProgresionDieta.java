@@ -26,7 +26,7 @@ public class ProgresionDieta {
 
 
     @OneToOne (mappedBy = "id")
-    private org.cplcursos.java.Entidades.Dieta dieta;
+    private Dieta dieta;
 
 
 }

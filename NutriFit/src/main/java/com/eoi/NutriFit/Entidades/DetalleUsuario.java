@@ -36,5 +36,5 @@ public class DetalleUsuario {
     private String email;
 
     @OneToOne(mappedBy = "detalleUsuario")
-    private org.cplcursos.java.Entidades.Usuario usuario;
+    private Usuario usuario;
 }

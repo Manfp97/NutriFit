@@ -35,6 +35,6 @@ public class SesionColectiva {
 
 
     @OneToMany
-    private org.cplcursos.java.Entidades.SesionClientes sesionClientes;
+    private SesionClientes sesionClientes;
 
 }

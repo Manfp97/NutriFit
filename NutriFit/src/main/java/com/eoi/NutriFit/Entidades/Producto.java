@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cplcursos.java.Entidades.Carrito;
+import com.eoi.NutriFit.Entidades.Producto;
 
 import java.util.HashSet;
 import java.util.Set;

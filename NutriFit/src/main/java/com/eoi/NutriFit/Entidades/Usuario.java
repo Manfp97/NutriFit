@@ -34,7 +34,7 @@ public class Usuario {
     private Cliente clienteUsuario;
 
     @OneToOne()
-    private org.cplcursos.java.Entidades.Roles roles;
+    private Roles roles;
 
 
 
