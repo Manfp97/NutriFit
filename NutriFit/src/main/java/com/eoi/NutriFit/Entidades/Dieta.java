@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Blob;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -35,7 +36,7 @@ public class Dieta {
 
 
     @OneToMany
-    private DetallesDieta detalles_dietas;
+    private Set<DetallesDieta> detalles_dietas;
 
     @OneToOne
     private ProgresionDieta progresionDietas;
