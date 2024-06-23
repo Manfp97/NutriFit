@@ -26,8 +26,8 @@ public class Dieta {
     @Column (name = "categoria")
     private String categoria;
 
-    @Column (name = "recursos_multimedia")
-    private Blob recursos_multimedia;
+    @Lob
+    private byte [] recursos_multimedia;
 
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
@@ -35,7 +35,7 @@ public class Dieta {
 
 
     @OneToMany
-    private org.cplcursos.java.Entidades.DetallesDieta detalles_dietas;
+    private DetallesDieta detalles_dietas;
 
     @OneToOne
     private ProgresionDieta progresionDietas;
@@ -43,7 +43,7 @@ public class Dieta {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idcontactodieta",foreignKey=@ForeignKey(name = "Fk_contactodieta_dieta"))
-    private org.cplcursos.java.Entidades.DetallesDieta detalles_contactodieta;
+    private DetallesDieta detalles_contactodieta;
 
 
 }
