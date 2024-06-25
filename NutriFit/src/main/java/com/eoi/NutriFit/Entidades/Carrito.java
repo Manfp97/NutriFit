@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,14 +22,15 @@ public class Carrito {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-  /* Crear relación M/N con productos
-
-   */
-
     @OneToOne(mappedBy = "carrito")
     private Cliente clientecarrito;
 
-    @ManyToMany()
-    private Set<Producto> productoSet;
+    @ManyToMany
+    @JoinTable(
+            name = "carrito_producto",
+            joinColumns = @JoinColumn(name = "idcarrito",foreignKey=@ForeignKey(name = "Fk_carritp_producto_carrito")),
+            inverseJoinColumns = @JoinColumn(name = "idprodcuto",foreignKey=@ForeignKey(name = "Fk_carrito_producto_producto"))
+    )
+    Set<Producto> productos = new HashSet<>();
 
 }

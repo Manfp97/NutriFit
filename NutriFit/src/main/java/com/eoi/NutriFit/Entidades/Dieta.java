@@ -1,18 +1,20 @@
 package com.eoi.NutriFit.Entidades;
 
+
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Blob;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="dietas")
-//Crear onetomany hacia progresiones || crear onetoone con detalles dietas
+@Table(name="dieta")
 public class Dieta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,23 +28,23 @@ public class Dieta {
     private String categoria;
 
     @Lob
-    private byte [] recursos_multimedia;
+    private byte [] recursos_multimedia;                //
 
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
 
 
-    /*
-    @OneToMany(mappedBy = "dieta_iddieta")
-    private DetallesDieta detalles_dietas;
 
-    @OneToOne (mappedBy = "id_progreso")
+    @OneToMany
+    private Set<DetallesDieta> detalles_dietas;
+
+    @OneToOne
     private ProgresionDieta progresionDietas;
 
-    @ManyToOne
-    @JoinColumn(name = "id_contactodieta")
-    private ClienteDieta id_contactodieta;
 
-     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idcontactodieta",foreignKey=@ForeignKey(name = "Fk_contactodieta_dieta"))
+    private DetallesDieta detalles_contactodieta;
+
 
 }

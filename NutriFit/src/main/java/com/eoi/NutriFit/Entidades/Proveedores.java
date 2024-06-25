@@ -1,4 +1,6 @@
+
 package com.eoi.NutriFit.Entidades;
+
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,17 +15,10 @@ import lombok.Setter;
 public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "idproveedores", nullable = false)
+    private Integer idproveedores;
 
-/*
-    @ManyToOne
-    @Column(name = "id_producto")
-    private Tienda id_producto;
-
-
- */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idproductoproveedor",foreignKey=@ForeignKey(name = "Fk_proveedor_producto"))
+    private Producto productoproveedor;
 }
-
-
-

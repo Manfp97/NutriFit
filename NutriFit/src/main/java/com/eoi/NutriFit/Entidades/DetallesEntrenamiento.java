@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.text.DecimalFormat;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="detalles_entrenamientos")
+@Table(name="Detalles_entrenamientos")
 public class DetallesEntrenamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +29,8 @@ public class DetallesEntrenamiento {
     private String detalles_ejercicios;
 
 
-    /*
-    @OneToMany(mappedBy = "identrenamiento")
-    private Entrenamiento identrenamiento;
+    @OneToMany
+    private Set<Entrenamiento> identrenamiento;
 
-     */
 
 }

@@ -1,18 +1,20 @@
 package com.eoi.NutriFit.Entidades;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 //@ToString
-@Table(name="sesiones_colectivas")
+@Table(name="ClaseColectiva")
 public class SesionColectiva {
 
     @Id
@@ -32,9 +34,8 @@ public class SesionColectiva {
     @Column(name = "limite_reservas")
     private Byte limite_reservas;
 
-    /*
-    @OneToMany(mappedBy = "id")
-    private SesionClientes id;
 
-     */
+    @OneToMany
+    private Set<SesionClientes> sesionClientes;
+
 }
