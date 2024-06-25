@@ -30,6 +30,16 @@ public class Usuario {
     @Basic(optional = false)
     private boolean activo = true;
 
+
+    public Usuario(Integer id, String nombreUsuario, String password, boolean activo, Cliente clienteUsuario, Roles roles) {
+        this.id = id;
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
+        this.activo = activo;
+        this.clienteUsuario = clienteUsuario;
+        this.roles = roles;
+    }
+
     @OneToOne()
     private Cliente clienteUsuario;
 

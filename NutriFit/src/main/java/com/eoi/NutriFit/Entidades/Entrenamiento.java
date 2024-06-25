@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Blob;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -42,7 +43,7 @@ public class Entrenamiento {
     private DetallesEntrenamiento DetallesEntrenamiento;
 
     @OneToMany
-    private ProgresionesEntrenamiento entrenamientos_identrenamiento;
+    private Set <ProgresionesEntrenamiento> entrenamientos_identrenamiento;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idprogresionentrenamiento",foreignKey=@ForeignKey(name = "Fk_progresionentrenamiento_entrenamiento"))
