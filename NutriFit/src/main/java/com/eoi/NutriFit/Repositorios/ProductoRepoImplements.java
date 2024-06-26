@@ -1,60 +1,56 @@
 package com.eoi.NutriFit.Repositorios;
 
-import com.eoi.NutriFit.Entidades.Cliente;
+import com.eoi.NutriFit.Entidades.Producto;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
-import java.util.Optional;
 
-public class ClienteRepoImplements implements Repo<Cliente> {
+public class ProductoRepoImplements implements Repo<Producto> {
 
     private EntityManager em;
 
-    public ClienteRepoImplements(EntityManager em) {this.em =em; }
+    public ProductoRepoImplements(EntityManager em) {this.em = em;}
 
     @Override
-    public List<Cliente> list(Integer num) {
-        return em.createQuery("SELECT c FROM Cliente c", Cliente.class)
-                .setMaxResults(num)
+    public List<Producto> list(Integer num) {
+        return em.createQuery("SELECT p FROM Producto p", Producto.class)
+                .setFirstResult(num)
                 .getResultList();
     }
 
     @Override
-    public Cliente findby(Integer id) {
-        return em.find(Cliente.class, id);
+    public Producto findby(Integer id) {
+        return em.find(Producto.class, id);
     }
 
-
     @Override
-    public void save(Cliente cliente) {
+    public void save(Producto producto) {
         try {
             em.getTransaction().begin();
-            if (cliente.getId() != null && cliente.getId() > 0) {
-                em.merge(cliente);
+            if (producto.getId() != null && producto.getId() > 0) {
+                em.merge(producto);
             } else {
-                em.persist(cliente);
+                em.persist(producto);
             }
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void delete(Integer id) {
-        try{
+        try {
             em.getTransaction().begin();
-            Cliente cliente = findby(id);
-            if (cliente != null) {
-                em.remove(cliente);
+            Producto producto = em.find(Producto.class, id);
+            if (producto != null) {
+                em.remove(producto);
                 em.getTransaction().commit();
             }
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
         }
-
     }
 }

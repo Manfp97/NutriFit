@@ -19,6 +19,6 @@ public class Proveedores {
     private Integer idproveedores;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idproductoproveedor",foreignKey=@ForeignKey(name = "Fk_proveedor_producto"))
+    @JoinColumn(name = "id",foreignKey=@ForeignKey(name = "Fk_proveedor_producto"))
     private Producto productoproveedor;
 }

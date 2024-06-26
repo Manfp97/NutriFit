@@ -15,7 +15,7 @@ public class ClienteEntrenamientoRepoImplements implements Repo<ClienteEntrenami
 
     @Override
     public List<ClienteEntrenamiento> list(Integer num) {
-        return em.createQuery("SELECT a FROM ClienteEntrenamiento a", ClienteEntrenamiento.class).getResultList();
+        return em.createQuery("SELECT c FROM ClienteEntrenamiento c", ClienteEntrenamiento.class).getResultList();
     }
 
     @Override

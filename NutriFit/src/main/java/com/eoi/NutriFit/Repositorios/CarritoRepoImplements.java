@@ -18,7 +18,7 @@ public class CarritoRepoImplements implements Repo<Carrito> {
 
     @Override
     public List<Carrito> list(Integer num) {
-        return em.createQuery("SELECT a FROM Carrito a", Carrito.class)
+        return em.createQuery("SELECT c FROM Carrito c", Carrito.class)
                 .setMaxResults(num)
                 .getResultList();
     }

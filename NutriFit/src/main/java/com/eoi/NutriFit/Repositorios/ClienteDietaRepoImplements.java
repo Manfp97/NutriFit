@@ -13,7 +13,7 @@ public class ClienteDietaRepoImplements implements Repo<ClienteDieta> {
 
     @Override
     public List<ClienteDieta> list(Integer num) {
-        return em.createQuery("SELECT a FROM ClienteDieta a", ClienteDieta.class).setFirstResult(num)
+        return em.createQuery("SELECT c FROM ClienteDieta c", ClienteDieta.class).setFirstResult(num)
                 .setMaxResults(num)
                 .getResultList();
     }

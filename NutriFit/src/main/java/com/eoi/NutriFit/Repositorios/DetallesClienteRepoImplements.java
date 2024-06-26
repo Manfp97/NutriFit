@@ -14,7 +14,7 @@ public class DetallesClienteRepoImplements implements Repo<DetallesCliente> {
 
     @Override
     public List<DetallesCliente> list(Integer num) {
-        return em.createQuery("SELECT a FROM DetallesCliente a", DetallesCliente.class).getResultList();
+        return em.createQuery("SELECT d FROM DetallesCliente d", DetallesCliente.class).getResultList();
     }
 
     @Override
