@@ -4,6 +4,8 @@ package com.eoi.NutriFit.Entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name="roles")
@@ -23,7 +25,7 @@ public class Roles {
 
 
     @OneToMany
-    private Usuario usuario;
+    private Set<Usuario> usuario;
 
 
 

@@ -33,6 +33,6 @@ public class Producto {
     Set<Carrito> carritos = new HashSet<>();
 
     @OneToMany()
-    private Proveedores productoproveedor;
+    private Set<Proveedores> productoproveedor;
 
 }

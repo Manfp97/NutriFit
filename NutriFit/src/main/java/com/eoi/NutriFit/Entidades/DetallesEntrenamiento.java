@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.text.DecimalFormat;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,7 +31,7 @@ public class DetallesEntrenamiento {
 
 
     @OneToMany
-    private Entrenamiento identrenamiento;
+    private Set<Entrenamiento> identrenamiento;
 
 
 }

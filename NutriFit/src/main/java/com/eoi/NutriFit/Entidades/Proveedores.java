@@ -14,8 +14,8 @@ import lombok.Setter;
 public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idproveedores", nullable = false)
-    private Integer idproveedores;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idproductoproveedor",foreignKey=@ForeignKey(name = "Fk_proveedor_producto"))
