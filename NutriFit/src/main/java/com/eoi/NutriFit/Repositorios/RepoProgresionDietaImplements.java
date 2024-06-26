@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepoProgresionDietaImplements implements RepoInterfaz<ProgresionDieta> {
+public class RepoProgresionDietaImplements implements Repo<ProgresionDieta> {
 
     private EntityManager em;
 

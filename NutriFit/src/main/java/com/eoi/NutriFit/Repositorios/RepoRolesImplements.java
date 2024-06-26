@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class RepoRolesImplements implements RepoInterfaz<Roles> {
+public class RepoRolesImplements implements Repo<Roles> {
 
     //Usamos la entityManager para usar los repositorios con jpa e Hibernate
     private EntityManager em;

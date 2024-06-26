@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class RepoDetallesClienteImplements implements RepoInterfaz<DetallesCliente> {
+public class RepoDetallesClienteImplements implements Repo<DetallesCliente> {
 
     //Usamos la entityManager para usar los repositorios con jpa e Hibernate
     private EntityManager em;

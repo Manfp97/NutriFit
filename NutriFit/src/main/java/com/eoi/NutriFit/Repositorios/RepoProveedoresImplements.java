@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class RepoProveedoresImplements implements RepoInterfaz<Proveedores> {
+public class RepoProveedoresImplements implements Repo<Proveedores> {
 
     private EntityManager em;
 

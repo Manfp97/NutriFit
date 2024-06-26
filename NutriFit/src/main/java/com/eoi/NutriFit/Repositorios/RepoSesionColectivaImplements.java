@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class RepoSesionColectivaImplements implements RepoInterfaz<SesionColectiva> {
+public class RepoSesionColectivaImplements implements Repo<SesionColectiva> {
     // Usamos EntityManager para las operaciones de persistencia con JPA y Hibernate
     private EntityManager em;
 

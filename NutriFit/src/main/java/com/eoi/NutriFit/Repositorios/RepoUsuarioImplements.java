@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class RepoUsuarioImplements implements RepoInterfaz<Usuario> {
+public class RepoUsuarioImplements implements Repo<Usuario> {
 
     //Usamos la entityManager para usar los repositorios con jpa e Hibernate
     private EntityManager em;

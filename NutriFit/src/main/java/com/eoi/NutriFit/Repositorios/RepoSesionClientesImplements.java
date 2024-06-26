@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class RepoSesionClientesImplements implements RepoInterfaz<SesionClientes> {
+public class RepoSesionClientesImplements implements Repo<SesionClientes> {
 
     // Usamos EntityManager para las operaciones de persistencia con JPA y Hibernate
     private EntityManager em;

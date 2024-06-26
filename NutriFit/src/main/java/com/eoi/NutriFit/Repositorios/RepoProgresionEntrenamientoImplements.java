@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepoProgresionEntrenamientoImplements implements RepoInterfaz<ProgresionesEntrenamiento> {
+public class RepoProgresionEntrenamientoImplements implements Repo<ProgresionesEntrenamiento> {
 
     private EntityManager em;
 
