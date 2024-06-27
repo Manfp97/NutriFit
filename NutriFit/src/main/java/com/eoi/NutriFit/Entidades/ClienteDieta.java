@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,8 +16,8 @@ import java.time.LocalDateTime;
 public class ClienteDieta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(name = "detalles_dietas")
     private String detalles_dietas;
@@ -26,7 +27,7 @@ public class ClienteDieta {
 
 
     @OneToMany
-    private Dieta dieta;
+    private Set<Dieta> dieta;
 
     @OneToOne(mappedBy = "id")
     private Cliente cliente;

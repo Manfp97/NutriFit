@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -35,6 +36,6 @@ public class SesionColectiva {
 
 
     @OneToMany
-    private SesionClientes sesionClientes;
+    private Set<SesionClientes> sesionClientes;
 
 }

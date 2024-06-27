@@ -35,6 +35,6 @@ public class DetalleUsuario {
     @Column(name = "email", length = 50)
     private String email;
 
-    @OneToOne(mappedBy = "detalleUsuario")
+    @OneToOne(mappedBy = "id")
     private Usuario usuario;
 }
