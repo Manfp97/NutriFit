@@ -1,6 +1,12 @@
 package com.eoi.NutriFit.Servicios;
 
 import com.eoi.NutriFit.Entidades.Usuario;
+import com.eoi.NutriFit.Repositorios.UsuarioRepo;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class UsuarioServi extends AstrabBusinessService<Usuario, Integer> {
+public class UsuarioServi extends AbstractBusinessService<Usuario, Integer, UsuarioRepo> {
+
+    protected UsuarioServi(UsuarioRepo usuarioRepo) {
+        super(usuarioRepo);
+    }
 }
