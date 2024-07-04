@@ -6,4 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClienteDietaServi extends AbstractBusinessService<ClienteDieta, Integer, ClienteDietaRepo>{
+    protected ClienteDietaServi(ClienteDietaRepo clienteDietaRepo) {
+        super(clienteDietaRepo);
+    }
 }

@@ -4,4 +4,7 @@ import com.eoi.NutriFit.Entidades.ClienteEntrenamiento;
 import com.eoi.NutriFit.Repositorios.ClienteEntrenamientoRepo;
 
 public class ClienteEntrenamientoServi extends AbstractBusinessService<ClienteEntrenamiento, Integer, ClienteEntrenamientoRepo>{
+    protected ClienteEntrenamientoServi(ClienteEntrenamientoRepo clienteEntrenamientoRepo) {
+        super(clienteEntrenamientoRepo);
+    }
 }
