@@ -42,6 +42,12 @@ public abstract class AbstractBusinessService<E, ID,  REPO extends JpaRepository
         return  eSet;
     }
     //Guardar
+
+    public void guardarPorId(ID id){
+        this.repo.save(this.repo.getOne(id));
+    }
+
+
     public E guardar(E entidad) throws Exception {
         //Guardo el la base de datos
         E entidadGuardada =  repo.save(entidad);

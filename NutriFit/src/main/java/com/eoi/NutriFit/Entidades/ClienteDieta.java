@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,7 +27,7 @@ public class ClienteDieta {
 
 
     @OneToMany
-    private Dieta dieta;
+    private Set<Dieta> dieta;
 
     @OneToOne(mappedBy = "id")
     private Cliente cliente;

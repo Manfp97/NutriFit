@@ -22,6 +22,9 @@ public class Carrito {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "precio_total", length = 10)
+    private Double precioTotal;
+
     @OneToOne(mappedBy = "carrito")
     private Cliente clientecarrito;
 
