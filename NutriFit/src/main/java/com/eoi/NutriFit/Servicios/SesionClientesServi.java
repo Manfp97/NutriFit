@@ -9,4 +9,8 @@ public class SesionClientesServi extends AbstractBusinessService<SesionClientes,
     protected SesionClientesServi(SesionClientesRepo sesionClientesRepo) {
         super(sesionClientesRepo);
     }
+
+    public static void registrarSesionClientes(SesionClientes sesionClientes) {
+
+    }
 }

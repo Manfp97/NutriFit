@@ -10,4 +10,8 @@ public class ProgresionesEntrenamientoServi extends AbstractBusinessService<Prog
     protected ProgresionesEntrenamientoServi(ProgresionesEntrenamientoRepo progresionesEntrenamientoRepo) {
         super(progresionesEntrenamientoRepo);
     }
+
+    public static void registrarProgresionesEntrenamiento(ProgresionesEntrenamiento progresionesEntrenamiento) {
+
+    }
 }
