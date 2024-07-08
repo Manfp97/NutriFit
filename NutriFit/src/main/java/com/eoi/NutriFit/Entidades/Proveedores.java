@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Optional;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +21,11 @@ public class Proveedores {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idproductoproveedor",foreignKey=@ForeignKey(name = "Fk_proveedor_producto"))
+    @JoinColumn(name = "idproductoproveedor", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
     private Producto productoproveedor;
+
+    public List<Proveedores> buscarEntidades() {
+
+        return List.of();
+    }
 }
