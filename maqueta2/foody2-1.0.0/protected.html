@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Protected Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <h1>Bienvenido a la página protegida</h1>
+    <p>Solo los usuarios autenticados pueden ver esta página.</p>
+    <button onclick="logout()">Cerrar sesión</button>
+
+    <!-- Incluyendo cookies.js -->
+    <script src="cookies.js"></script>
+    <script type="text/javascript">
+        // Verifica si el usuario está logueado
+        if (getCookie('loggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        function logout() {
+            eraseCookie('loggedIn');
+            eraseCookie('user');
+            alert('Sesión cerrada');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
