@@ -159,8 +159,6 @@ h
 0src/main/java/Controladores/DietaController.java,8\8\88b3e3575830beb28f039eaa63a680385f25ac6e
 b
 2src/main/java/Controladores/CarritoController.java,c\4\c4c36db6fc22ebe9e27db730873161f242992e85
-o
-?src/main/java/com/eoi/NutriFit/Entidades/ClienteController.java,a\d\add8753d44922889b52d4689416cd4a3e16ded3d
 b
 2src/main/java/Controladores/ClienteController.java,5\f\5f784894e857a40a1c52fb234d13c96b177a96b6
 g
@@ -171,3 +169,5 @@ k
 ;src/main/java/Controladores/DetallesClientesController.java,5\0\5052f1e16c040c75d7b4b970cb4e6787333eede9
 h
 8src/main/java/Controladores/DetallesDietaController.java,9\9\9925f396efe390d0a38620e9c32daf40d0d8e372
+p
+@src/main/java/com/eoi/NutriFit/Servicios/DetallesDietaServi.java,9\9\99c314aa949b79795d731f589ad86dbec5e7cab3
