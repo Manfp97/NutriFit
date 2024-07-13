@@ -157,3 +157,17 @@ h
 8src/main/java/Controladores/EntrenamientoController.java,2\1\21e7157d3a2d48eb330ec9140c001608ca31b00f
 `
 0src/main/java/Controladores/DietaController.java,8\8\88b3e3575830beb28f039eaa63a680385f25ac6e
+b
+2src/main/java/Controladores/CarritoController.java,c\4\c4c36db6fc22ebe9e27db730873161f242992e85
+o
+?src/main/java/com/eoi/NutriFit/Entidades/ClienteController.java,a\d\add8753d44922889b52d4689416cd4a3e16ded3d
+b
+2src/main/java/Controladores/ClienteController.java,5\f\5f784894e857a40a1c52fb234d13c96b177a96b6
+g
+7src/main/java/Controladores/ClienteDietaController.java,4\2\42cdcee61e820f7c248377cb8ca1ae0e4bcb12af
+o
+?src/main/java/Controladores/ClienteEntrenamientoController.java,8\7\87e377161fa29648adc296596ac82dac619fa4a8
+k
+;src/main/java/Controladores/DetallesClientesController.java,5\0\5052f1e16c040c75d7b4b970cb4e6787333eede9
+h
+8src/main/java/Controladores/DetallesDietaController.java,9\9\9925f396efe390d0a38620e9c32daf40d0d8e372
