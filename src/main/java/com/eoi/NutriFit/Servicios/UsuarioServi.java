@@ -13,9 +13,7 @@ public class UsuarioServi extends AbstractBusinessService<Usuario, Integer, Usua
         super(usuarioRepo);
     }
 
-    public static void registrarUsuario(Usuario usuario) {
 
-    }
 }
 
 

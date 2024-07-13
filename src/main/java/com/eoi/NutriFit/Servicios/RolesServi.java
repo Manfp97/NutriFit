@@ -10,6 +10,5 @@ public class RolesServi extends AbstractBusinessService<Roles, Integer, RolesRep
         super(rolesRepo);
     }
 
-    public static void registrarRoles(RolesController roles) {
-    }
+
 }

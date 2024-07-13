@@ -10,7 +10,5 @@ public class SesionColectivaServi extends AbstractBusinessService<SesionColectiv
         super(sesionColectivaRepo);
     }
 
-    public static void registrarSesionColectiva(SesionColectiva sesionColectiva) {
 
-    }
 }

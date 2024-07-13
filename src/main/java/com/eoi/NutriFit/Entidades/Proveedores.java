@@ -24,8 +24,5 @@ public class Proveedores {
     @JoinColumn(name = "idproductoproveedor", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
     private Producto productoproveedor;
 
-    public List<Proveedores> buscarEntidades() {
 
-        return List.of();
-    }
 }

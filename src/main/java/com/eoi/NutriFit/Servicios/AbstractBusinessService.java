@@ -1,15 +1,13 @@
 package com.eoi.NutriFit.Servicios;
 
 
-import com.eoi.NutriFit.Entidades.SesionColectiva;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
+
 public abstract class AbstractBusinessService<E, ID,  REPO extends JpaRepository<E,ID>>  {
     private final REPO repo;
 
@@ -44,13 +42,19 @@ public abstract class AbstractBusinessService<E, ID,  REPO extends JpaRepository
         return  eSet;
     }
     //Guardar
+
+    public void guardarPorId(ID id){
+        this.repo.save(this.repo.getOne(id));
+    }
+
+
     public E guardar(E entidad) throws Exception {
         //Guardo el la base de datos
         E entidadGuardada =  repo.save(entidad);
         //Traducir la entidad a DTO para devolver el DTO
         return entidadGuardada;
     }
-    public SesionColectiva guardar(List<E> ents ) throws Exception {
+    public void  guardar(List<E> ents ) throws Exception {
         Iterator<E> it = ents.iterator();
 
         // mientras al iterador queda proximo juego
@@ -60,7 +64,6 @@ public abstract class AbstractBusinessService<E, ID,  REPO extends JpaRepository
             E e = it.next();
             repo.save(e);
         }
-        return null;
     }
     //eliminar un registro
     public void eliminarPorId(ID id){
@@ -69,5 +72,3 @@ public abstract class AbstractBusinessService<E, ID,  REPO extends JpaRepository
     //Obtener el repo
     public REPO getRepo(){return  repo;}
 }
-
-

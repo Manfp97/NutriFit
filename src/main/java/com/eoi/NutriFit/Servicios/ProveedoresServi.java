@@ -10,7 +10,5 @@ public class ProveedoresServi extends AbstractBusinessService<Proveedores, Integ
         super(proveedoresRepo);
     }
 
-    public static void registrarProveedores(Proveedores proveedores) {
 
-    }
 }

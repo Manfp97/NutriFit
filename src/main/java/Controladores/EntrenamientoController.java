@@ -1,8 +1,6 @@
-package com.eoi.NutriFit.Controladores;
+package Controladores;
 
 import com.eoi.NutriFit.Entidades.Entrenamiento;
-import com.eoi.NutriFit.Entidades.Entrenamiento;
-import com.eoi.NutriFit.Servicios.EntrenamientoService;
 import com.eoi.NutriFit.Servicios.EntrenamientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

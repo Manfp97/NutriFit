@@ -11,7 +11,5 @@ public class ProgresionesEntrenamientoServi extends AbstractBusinessService<Prog
         super(progresionesEntrenamientoRepo);
     }
 
-    public static void registrarProgresionesEntrenamiento(ProgresionesEntrenamiento progresionesEntrenamiento) {
 
-    }
 }

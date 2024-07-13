@@ -1,8 +1,6 @@
-package com.eoi.NutriFit.Controladores;
+package Controladores;
 
 import com.eoi.NutriFit.Entidades.ProgresionDieta;
-import com.eoi.NutriFit.Entidades.ProgresionDieta;
-import com.eoi.NutriFit.Servicios.ProgresionDietaService;
 import com.eoi.NutriFit.Servicios.ProgresionDietaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
