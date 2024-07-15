@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/com/eoi/NutriFit/Controladores/DetallesDietaController.java
 package com.eoi.NutriFit.Controladores;
+========
+package com.eoi.NutriFit.Controller;
+>>>>>>>> origin/francisco:NutriFit/src/main/java/com/eoi/NutriFit/Controller/DetallesDietaController.java
 
 import com.eoi.NutriFit.Entidades.DetallesDieta;
 import com.eoi.NutriFit.Servicios.DetallesDietaServi;
