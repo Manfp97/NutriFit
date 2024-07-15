@@ -195,3 +195,7 @@ f
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 N
 maqueta/nutrifit/usuarios.html,9\9\9920b4197b6c3de8ac88e9018608f9df6bc5814b
+M
+docker-compose-checkpoint.yml,f\6\f6d804494d369b800b44a80f4740b537b68deddf
+g
+7src/main/java/com/eoi/NutriFit/NutriFitApplication.java,a\b\abc4d15d1bf1bff55d117a13ba31aa8e117bf8e3
