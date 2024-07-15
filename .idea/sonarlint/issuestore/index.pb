@@ -197,3 +197,7 @@ N
 maqueta/nutrifit/usuarios.html,9\9\9920b4197b6c3de8ac88e9018608f9df6bc5814b
 g
 7src/main/java/com/eoi/NutriFit/NutriFitApplication.java,a\b\abc4d15d1bf1bff55d117a13ba31aa8e117bf8e3
+d
+4src/main/resources/application-desarrollo.properties,5\1\51eb1481212249c351dbbbaf4d5ee693226e1cd5
+d
+4src/main/resources/application-produccion.properties,9\7\9794baa83babbd3077a8c67d77fff1c79cb1ddb9
