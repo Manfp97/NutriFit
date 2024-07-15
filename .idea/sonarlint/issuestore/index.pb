@@ -193,3 +193,5 @@ f
 6src/main/java/Controladores/ProveedoresController.java,7\b\7b0d2eec43cecf04047daf7e5aea2cbda7fb53b1
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+N
+maqueta/nutrifit/usuarios.html,9\9\9920b4197b6c3de8ac88e9018608f9df6bc5814b
