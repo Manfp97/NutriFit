@@ -1,4 +1,4 @@
-package Controladores;
+package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.DetallesDieta;
 import com.eoi.NutriFit.Servicios.DetallesDietaServi;
