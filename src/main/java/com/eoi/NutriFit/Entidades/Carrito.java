@@ -1,38 +1,41 @@
 package com.eoi.NutriFit.Entidades;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.text.DecimalFormat;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="carrito")
+@Table(name = "carrito")
 public class Carrito {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "preciototal")
     private int preciototal;
 
-    @OneToOne(mappedBy = "carrito")
-    private Cliente clientecarrito;
+    // Establishing bidirectional one-to-one relationship with Cliente
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
+    // Establishing bidirectional many-to-many relationship with Producto
     @ManyToMany
     @JoinTable(
             name = "carrito_producto",
-            joinColumns = @JoinColumn(name = "idcarrito",foreignKey=@ForeignKey(name = "Fk_carritp_producto_carrito")),
-            inverseJoinColumns = @JoinColumn(name = "idprodcuto",foreignKey=@ForeignKey(name = "Fk_carrito_producto_producto"))
+            joinColumns = @JoinColumn(name = "idcarrito", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "idproducto", referencedColumnName = "id")
     )
-    Set<Producto> productos = new HashSet<>();
+    private Set<Producto> productos = new HashSet<>();
 
+    // Constructors, getters, setters, and other methods as needed
 }

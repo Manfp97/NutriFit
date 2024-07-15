@@ -25,16 +25,14 @@ public class ClienteDieta {
     @Column(name = "horario")
     private LocalDateTime horario;
 
-
     @OneToMany
     private Set<Dieta> dieta;
 
-    @OneToOne(mappedBy = "id")
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
-    private Cliente idcliente;
-
-
+    @JoinColumn(name = "id_dietista", referencedColumnName = "id")
+    private Cliente dietista;
 }

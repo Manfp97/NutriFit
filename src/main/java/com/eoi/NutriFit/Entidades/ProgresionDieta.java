@@ -26,8 +26,10 @@ public class ProgresionDieta {
 
 
 
-    @OneToOne (mappedBy = "id")
+    @ManyToOne
+    @JoinColumn(name = "dieta_id") // Adjust according to your schema
     private Dieta dieta;
+
 
 
 }

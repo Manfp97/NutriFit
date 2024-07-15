@@ -1,23 +1,18 @@
 package com.eoi.NutriFit.Entidades;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-
-
 @Entity
 @Table(name="usuarios")
 @Getter
 @Setter
-//@NoArgsConstructor
 @ToString
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -27,17 +22,20 @@ public class Usuario {
     @Column(name = "password", nullable = false, length = 250)
     private String password;
 
-    @Basic(optional = false)
+    @Column(name = "activo")
     private boolean activo = true;
 
-    @OneToOne()
-    private Cliente clienteUsuario;
+//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Cliente clienteUsuario;
 
-    @OneToOne()
-    private Roles roles;
+    @OneToOne
+    @JoinColumn(name = "cliente_id") // Assuming this is how it's mapped
+    private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "rol_id", nullable = false)
+    private Roles rol;
 
-
-
-
+    @OneToOne(mappedBy = "usuario")
+    private DetalleUsuario detalleUsuario;
 }

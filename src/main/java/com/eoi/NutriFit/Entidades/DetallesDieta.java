@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 @Entity
@@ -19,14 +20,15 @@ public class DetallesDieta {
     private Integer id;
 
     @Column(name = "cantidad")
-    private DecimalFormat cantidad;
+    private BigDecimal cantidad;
 
     @Column(name = "detalles_alimentos")
     private String detalles_alimentos;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "iddieta",foreignKey=@ForeignKey(name = "Fk_detalles_dieta"))
+    @JoinColumn(name = "iddieta", foreignKey = @ForeignKey(name = "Fk_detalles_dieta"))
     private Dieta dieta;
+
 
 }

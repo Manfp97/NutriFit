@@ -5,16 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
-
 @Entity
 @Table(name="detalleusuario")
 @Getter
 @Setter
 @ToString
 public class DetalleUsuario {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Changed to IDENTITY for auto-increment
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -24,10 +23,8 @@ public class DetalleUsuario {
     @Column(name = "apellidos", nullable = false, length = 500)
     private String apellidos;
 
-
     @Column(name = "direccion", length = 80)
     private String direccion;
-    /* Faltan campos con detalles de la direccion */
 
     @Column(name = "dni", length = 10)
     private String dni;
@@ -35,6 +32,8 @@ public class DetalleUsuario {
     @Column(name = "email", length = 50)
     private String email;
 
-    @OneToOne(mappedBy = "id")
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
 }

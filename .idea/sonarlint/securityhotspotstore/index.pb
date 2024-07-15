@@ -185,3 +185,11 @@ dockerfile,5\5\558c49b604560afd1841f2a7b49e2f60bd1f99b3
 :
 
 Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
+j
+:src/main/java/Controladores/SesionColectivaController.java,0\6\063ad3c88bc357bcbc8b82f24fcd429da3feca6b
+b
+2src/main/java/Controladores/UsuarioController.java,b\c\bce00ca5bf85e4b1e246ddb1c3b4ffff70f1f34b
+f
+6src/main/java/Controladores/ProveedoresController.java,7\b\7b0d2eec43cecf04047daf7e5aea2cbda7fb53b1
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec

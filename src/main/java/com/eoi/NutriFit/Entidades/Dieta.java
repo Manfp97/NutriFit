@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Blob;
 import java.util.Set;
 
 @Entity
@@ -28,23 +27,25 @@ public class Dieta {
     private String categoria;
 
     @Lob
-    private byte [] recursos_multimedia;                //
+    private byte [] recursos_multimedia;
 
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
 
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "dieta", cascade = CascadeType.ALL)
     private Set<DetallesDieta> detalles_dietas;
 
-    @OneToOne
-    private ProgresionDieta progresionDietas;
+
+    @OneToMany(mappedBy = "dieta")
+    private Set<ProgresionDieta> progresionDietas;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idcontactodieta",foreignKey=@ForeignKey(name = "Fk_contactodieta_dieta"))
-    private DetallesDieta detalles_contactodieta;
+    @JoinColumn(name = "idcontactodieta", foreignKey = @ForeignKey(name = "Fk_contactodieta_dieta"))
+    private DetallesDieta contactoDieta;
+
 
 
 }

@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import com.eoi.NutriFit.Entidades.Cliente;
 
+import java.util.List;
 import java.util.Set;
-
 
 @Entity
 @Table(name="clientes")
@@ -20,37 +19,31 @@ public class Cliente {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(mappedBy ="clienteUsuario")
+    @OneToOne(mappedBy = "cliente")
     private Usuario usuario;
 
-    @OneToOne()
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private Carrito carrito;
 
-    @OneToOne()
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private DetallesCliente detallesCliente;
 
-    //Usuario cliente entrenado por Usuario entrenador
-    @OneToMany(mappedBy = "clienteentrenado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ClienteEntrenamiento> clienteEntrenamientos_cli;
+    @OneToMany(mappedBy = "clienteEntrenado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ClienteEntrenamiento> clienteEntrenamientosCli;
 
-    //Usuario entrenador entrena a cliente
-    @OneToMany(mappedBy = "entrenadorcliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ClienteEntrenamiento> clienteEntrenamientos_entrenador;
+    @OneToMany(mappedBy = "entrenadorCliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ClienteEntrenamiento> clienteEntrenamientosEntrenador;
 
-    //Usuario cliente recetado por Usuario dietista
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ClienteDieta> clienteDietas_recetado;
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ClienteDieta> clienteDietasRecetado;
 
-    //Usuario dietista receta a cliente
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ClienteDieta> clienteDietas_dietista;
+    @OneToMany(mappedBy = "dietista", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ClienteDieta> clienteDietasDietista;
 
-    //Usuario cliente citado por Usuario empleado
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<SesionClientes> sesionClientes_citado;
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<SesionClientes> sesionClientesCitado;
 
-    //Usuario empleado cita a cliente
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<SesionClientes> sesionClientes_empleado;
-
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SesionClientes> sesionClientesEmpleado;
 }
