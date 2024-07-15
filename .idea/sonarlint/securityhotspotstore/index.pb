@@ -254,3 +254,7 @@ Ksrc/main/java/com/eoi/NutriFit/Controladores/ProgresionDietaController.java,9\
 Usrc/main/java/com/eoi/NutriFit/Controladores/ProgresionesEntrenamientoController.java,d\b\db9a59047447f9221b0db10aa96e4cd12a3ac74e
 q
 Asrc/main/java/com/eoi/NutriFit/Controladores/RolesController.java,7\3\7383a22b5aa239bba4e428a795a4329f3fe9c274
+P
+ .run/NutriFitApplication.run.xml,a\8\a8b1083ed21c7ad5eee89db4159b006091f2254d
+G
+.run/Desarrollo.run.xml,8\0\8069a2e2d93d778db530556f2fd295d80508eddb
