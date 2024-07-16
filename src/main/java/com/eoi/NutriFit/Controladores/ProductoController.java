@@ -4,24 +4,28 @@ import com.eoi.NutriFit.Entidades.Producto;
 import com.eoi.NutriFit.Servicios.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/producto")
 public class ProductoController {
 
-    @Autowired
-    private ProductoService service;
+    private final ProductoService service;
+
+    public ProductoController(ProductoService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public String getAll(Model model) {
         List<Producto> listaDetalles = service.buscarEntidades();
         model.addAttribute("productos", listaDetalles);
-        return "productos";
+        return "product";
 
     }
 
