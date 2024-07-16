@@ -214,16 +214,12 @@ Qsrc/main/java/com/eoi/NutriFit/Controladores/DetallesEntrenamientoController.ja
 Ksrc/main/java/com/eoi/NutriFit/Controladores/ProgresionDietaController.java,9\d\9d42436ee5cfed52a023158ab36df5402b7333e6
 …
 Usrc/main/java/com/eoi/NutriFit/Controladores/ProgresionesEntrenamientoController.java,d\b\db9a59047447f9221b0db10aa96e4cd12a3ac74e
-q
-Asrc/main/java/com/eoi/NutriFit/Controladores/RolesController.java,7\3\7383a22b5aa239bba4e428a795a4329f3fe9c274
 P
  .run/NutriFitApplication.run.xml,a\8\a8b1083ed21c7ad5eee89db4159b006091f2254d
 G
 .run/Desarrollo.run.xml,8\0\8069a2e2d93d778db530556f2fd295d80508eddb
 t
 Dsrc/main/java/com/eoi/NutriFit/configuration/ApplicationStartup.java,0\b\0bf01b5dcafac5c2b7a963fd7e18a31127bbde50
-p
-@src/main/java/com/eoi/NutriFit/Controladores/LoginContoller.java,d\0\d0e5ed4c33db00f20f619784b67b60545f555484
 q
 Asrc/main/java/com/eoi/NutriFit/Controladores/LoginController.java,e\3\e394d9e24a103ad98bcf3622391261b20bb789dd
 p
