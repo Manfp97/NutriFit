@@ -4,13 +4,14 @@ import com.eoi.NutriFit.Entidades.Entrenamiento;
 import com.eoi.NutriFit.Servicios.EntrenamientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/entrenamiento")
 public class EntrenamientoController {
 
@@ -21,7 +22,7 @@ public class EntrenamientoController {
     public String getAll(Model model) {
         List<Entrenamiento> listaDetalles = service.buscarEntidades();
         model.addAttribute("entrenamientos", listaDetalles);
-        return "entrenamientos";
+        return "entrenamiento";
 
     }
 
