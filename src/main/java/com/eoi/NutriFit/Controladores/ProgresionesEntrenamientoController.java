@@ -2,7 +2,6 @@ package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.ProgresionesEntrenamiento;
 import com.eoi.NutriFit.Servicios.ProgresionesEntrenamientoServi;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,18 +11,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/progresionesEntrenamiento")
+@RequestMapping("/progresionesEntrenamientos")
 public class ProgresionesEntrenamientoController {
 
-    @Autowired
-    private ProgresionesEntrenamientoServi service;
+    private final ProgresionesEntrenamientoServi service;
+
+    public ProgresionesEntrenamientoController(ProgresionesEntrenamientoServi service) {
+        this.service = service;
+    }
 
     @GetMapping
     public String getAll(Model model) {
         List<ProgresionesEntrenamiento> listaProgresiones = service.buscarEntidades();
         model.addAttribute("progresionesEntrenamiento", listaProgresiones);
-        return "progresionesEntrenamiento";
+        return "progresionesentrenamiento"; // This should match the template file name
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ProgresionesEntrenamiento> getById(@PathVariable Integer id) {
