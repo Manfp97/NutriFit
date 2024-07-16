@@ -4,13 +4,14 @@ import com.eoi.NutriFit.Entidades.ProgresionDieta;
 import com.eoi.NutriFit.Servicios.ProgresionDietaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/progresionDieta")
 public class ProgresionDietaController {
 
@@ -21,7 +22,7 @@ public class ProgresionDietaController {
     public String getAll(Model model) {
         List<ProgresionDieta> listaDetalles = service.buscarEntidades();
         model.addAttribute("progresionDietas", listaDetalles);
-        return "progresionDietas";
+        return "progresionesdietas";
 
     }
 
