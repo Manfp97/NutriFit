@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -18,15 +21,20 @@ public class ProgresionesEntrenamiento {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "estado_fisico_anterior")
-    private String estado_fisico_anterior;
+    @Column(name = "fecha")
+    private LocalDate fecha;
 
-    @Column(name = "progresion_actual")
-    private String progresion_actual;
+    @Column(name = "repeticiones")
+    private int repeticiones;
 
+    @Column(name = "series")
+    private int series;
+
+    @Column(name = "peso")
+    private int peso;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idprogresion_entrenamiento",foreignKey=@ForeignKey(name = "Fk_progresion_entrenamiento"))
+    @JoinColumn(name = "idEntrenamiento")
     private Entrenamiento entrenamiento;
 
 

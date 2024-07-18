@@ -28,10 +28,8 @@ public class DetallesEntrenamiento {
     @Column(name = "detalles_ejercicios")
     private String detalles_ejercicios;
 
-
-
-    @OneToMany
-    private Set<Entrenamiento> identrenamiento;
+    @ManyToOne
+    private Entrenamiento identrenamiento;
 
 
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Navbar Start -->
+<div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s" th:fragment="navbar">
+    <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
+        <div class="col-lg-6 px-5 text-start">
+            <small><i class="fa fa-map-marker-alt me-2"></i>Calle Larios, Málaga</small>
+            <small class="ms-4"><i class="fa fa-envelope me-2"></i>nutrifit@gmail.com</small>
+        </div>
+        <div class="col-lg-6 px-5 text-end">
+            <small>Síguenos:</small>
+            <a class="text-body ms-3" href=""><i class="fab fa-facebook-f"></i></a>
+            <a class="text-body ms-3" href=""><i class="fab fa-twitter"></i></a>
+            <a class="text-body ms-3" href=""><i class="fab fa-linkedin-in"></i></a>
+            <a class="text-body ms-3" href=""><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+            <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a th:href="@{/login}" class="nav-item nav-link active">Regístrate</a>
+                <a th:href="@{/static}" class="nav-item nav-link">Nutrición</a>
+                <a th:href="@{/entrenamiento}" class="nav-item nav-link">Entrenamiento</a>
+                <a th:href="@{/404}" class="nav-item nav-link">Otros</a>
+                <div class="nav-item dropdown">
+                    <a th:href="@{/product}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tienda</a>
+                </div>
+                <a th:href="@{/contact}" class="nav-item nav-link">Reserva tu clase</a>
+            </div>
+            <div class="d-none d-lg-flex ms-2">
+                <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+                    <small class="fas fa-search text-body"></small>
+                </a>
+                <div class="dropdown">
+                    <button class="btn-sm-square bg-white rounded-circle ms-3 dropdown-toggle" type="button"
+                            id="userDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <small class="fas fa-user text-body"></small>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdownBtn">
+                        <span id="username"></span>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a>
+                    </div>
+                </div>
+                <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
+                    <small class="fas fa-shopping-bag text-body"></small>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- Navbar End -->
+</html>
