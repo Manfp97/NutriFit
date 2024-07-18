@@ -102,14 +102,15 @@
                     <a href="about.html" class="nav-item nav-link">About Us</a>
                     <a href="product.html" class="nav-item nav-link active">Product</a>
                     <a href="entrenamiento.html" class="nav-item nav-link active">Entrenamiento</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                            <a href="feature.html" class="dropdown-item">Our Features</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
+                    <div class="navbar-nav ms-auto p-4 p-lg-0">
+                        <a th:href="@{/login}" class="nav-item nav-link active">Regístrate</a>
+                        <a th:href="@{/}" class="nav-item nav-link">Nutrición</a>
+                        <a th:href="@{/entrenamiento}" class="nav-item nav-link">Entrenamiento</a>
+                        <a th:href="@{/404}" class="nav-item nav-link">Otros</a>
+                        <div class="nav-item dropdown">
+                            <a th:href="@{/product}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tienda</a>
                         </div>
+                        <a th:href="@{/contact}" class="nav-item nav-link">Reserva tu clase</a>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact Us</a>
                 </div>
@@ -173,7 +174,7 @@
                             <div class="row g-5">
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/cardio.jpg" class="card-img-top" alt="Entrenamiento de Cardio">
+                                        <img src="img/cardio.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Cardio">
                                         <div class="card-body">
                                             <h5 class="card-title">Entrenamiento de Cardio</h5>
                                             <p class="card-text">Mejora tu resistencia cardiovascular con nuestros entrenamientos de cardio. Incluye rutinas de alta intensidad y consejos para optimizar tu rendimiento.</p>
@@ -188,7 +189,7 @@
                             <div class="row g-5">
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/pecho.jpg" class="card-img-top" alt="Entrenamiento de Pecho">
+                                        <img src="img/pecho.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Pecho">
                                         <div class="card-body">
                                             <h5 class="card-title">Entrenamiento de Pecho</h5>
                                             <p class="card-text">Desarrolla tu pecho con nuestros ejercicios específicos. Incluye videos tutoriales y recomendaciones de expertos.</p>
@@ -198,7 +199,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/espalda.jpg" class="card-img-top" alt="Entrenamiento de Espalda">
+                                        <img src="img/espalda.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Espalda">
                                         <div class="card-body">
                                             <h5 class="card-title">Entrenamiento de Espalda</h5>
                                             <p class="card-text">Fortalece tu espalda con nuestros ejercicios específicos. Incluye videos tutoriales y recomendaciones de expertos.</p>
@@ -208,7 +209,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/hombros.jpg" class="card-img-top" alt="Entrenamiento de Hombros">
+                                        <img src="img/hombros.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Hombros">
                                         <div class="card-body">
                                             <h5 class="card-title">Entrenamiento de Hombros</h5>
                                             <p class="card-text">Desarrolla tus hombros con nuestros ejercicios específicos. Incluye videos tutoriales y recomendaciones de expertos.</p>
@@ -224,7 +225,7 @@
                             <div class="row g-5">
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/push-ups.jpg" class="card-img-top" alt="Entrenamiento de Peso Corporal - Push-ups">
+                                        <img src="img/push-ups.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Peso Corporal - Push-ups">
                                         <div class="card-body">
                                             <h5 class="card-title">Push-ups</h5>
                                             <p class="card-text">Aprende a hacer push-ups de manera efectiva para desarrollar fuerza y resistencia.</p>
@@ -234,7 +235,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/squats.jpg" class="card-img-top" alt="Entrenamiento de Peso Corporal - Squats">
+                                        <img src="img/squats.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Peso Corporal - Squats">
                                         <div class="card-body">
                                             <h5 class="card-title">Squats</h5>
                                             <p class="card-text">Desarrolla tus piernas y glúteos con nuestros ejercicios de squats.</p>
@@ -244,7 +245,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card">
-                                        <img src="img/plank.jpg" class="card-img-top" alt="Entrenamiento de Peso Corporal - Plank">
+                                        <img src="img/plank.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Peso Corporal - Plank">
                                         <div class="card-body">
                                             <h5 class="card-title">Plank</h5>
                                             <p class="card-text">Fortalece tu core y mejora tu postura con nuestros ejercicios de plank.</p>
