@@ -21,18 +21,34 @@ public class Producto {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "codigo")
     private String codigo;
+
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    @Column(name = "categoria")
+    private String categoria;
+
+    @Column(name = "precio")
+    private Double precio;
+
+    @Column(name = "stock")
+    private Double stock;
 
     @ManyToMany
     @JoinTable(
             name = "producto_carrito",
-            joinColumns = @JoinColumn(name = "idproducto",foreignKey=@ForeignKey(name = "Fk_producto_carrito_producto")),
-            inverseJoinColumns = @JoinColumn(name = "idcarrito",foreignKey=@ForeignKey(name = "Fk_producto_carrito_carrito"))
+            joinColumns = @JoinColumn(name = "idproducto", foreignKey = @ForeignKey(name = "Fk_producto_carrito_producto")),
+            inverseJoinColumns = @JoinColumn(name = "idcarrito", foreignKey = @ForeignKey(name = "Fk_producto_carrito_carrito"))
     )
-    Set<Carrito> carritos = new HashSet<>();
+    private Set<Carrito> carritos = new HashSet<>();
 
-    @OneToMany()
-    private Set<Proveedores> productoproveedor;
-
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
+    private Proveedores proveedor;
 }
+
