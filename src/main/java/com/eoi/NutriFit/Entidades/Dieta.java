@@ -20,6 +20,9 @@ public class Dieta {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @Column (name = "objetivos")
     private String objetivos;
 
