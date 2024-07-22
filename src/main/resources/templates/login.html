@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Please Log In</title>
+    <title th:text="#{titulo.login}">placeholder</title>
 </head>
 <body>
-<h1>Please Log In</h1>
+<h1 th:text="#{mensaje.login}"></h1>
 <div th:if="${param.error}">
     Nombre o password de usuario incorrecto.</div>
 <div th:if="${param.logout}">
@@ -17,6 +17,27 @@
         <input type="password" name="password" placeholder="Password"/>
     </div>
     <input type="submit" value="Log in" />
+
 </form>
+
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.eng}"></option>
+    <option value="fr" th:text="#{lang.fr}"></option>
+    <option value="es" th:text="#{lang.es}"></option>
+</select>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace('login?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -158,4 +158,6 @@ public class UsuarioDemo implements UserDetails, Serializable
     public boolean isEnabled() {
         return true;
     }
+
+
 }

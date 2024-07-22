@@ -1,5 +1,6 @@
 package com.eoi.NutriFit.Servicios;
 
+import com.eoi.NutriFit.Entidades.Usuario;
 import com.eoi.NutriFit.Repositorios.UsuarioRepository;
 import com.eoi.NutriFit.Entidades.UsuarioDemo;
 import org.springframework.context.MessageSource;
@@ -57,9 +58,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<UsuarioDemo> usuarioDemo = usuarioRepository.findBynombreDeUsuario(username);
-        if (usuarioDemo.isPresent()) {
-            return usuarioDemo.get();
+        Optional<Usuario> usuario= usuarioRepository.findBynombreDeUsuario(username);
+        if (usuario.isPresent()) {
+            return usuario.get();
         } else {
             String errorMessage = messageSource.getMessage("user.not.found", null, Locale.getDefault());
             throw new UsernameNotFoundException(errorMessage );

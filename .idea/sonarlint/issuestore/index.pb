@@ -236,3 +236,17 @@ p
 @src/main/java/com/eoi/NutriFit/Security/PasswordEncoderBean.java,b\f\bf85ee46f2d3712c19171c39a6d97190404e4eab
 k
 ;src/main/java/com/eoi/NutriFit/Security/SecurityConfig.java,3\e\3e2d70e50ab8fe586c0b3f11137602a501fa7df9
+q
+Asrc/main/java/com/eoi/NutriFit/Controladores/PagedController.java,d\b\dbcb80385783c52479f01a3f9baf4b354e87af6f
+‚
+Rsrc/main/java/com/eoi/NutriFit/Repositorios/UsuarioPagingAndSortingRepository.java,f\c\fce68eee368058471634632fa9eb610df1af1136
+d
+4src/main/java/com/eoi/NutriFit/forms/PersonForm.java,d\c\dc2291876598fcbad09c7dc548ddb20a3b0704b2
+n
+>src/main/java/com/eoi/NutriFit/i18n/LocaleResolverFactory.java,d\e\dec17c8ba0d4d5f1c432de2994fd3b4465306712
+u
+Esrc/test/java/com/eoi/NutriFit/Controladores/LoginControllerTest.java,f\7\f768955e5260faa5c3d255f5d6b1e2e55796167a
+s
+Csrc/main/java/com/eoi/NutriFit/Controladores/UsuarioController.java,f\7\f7eea56ca134b4b5befcbf022db027f811ac433b
+y
+Isrc/main/java/com/eoi/NutriFit/Security/CustomAuthenticationProvider.java,a\1\a1d9d9fb1d37049c8afd4d1ddb2408327b2d4469

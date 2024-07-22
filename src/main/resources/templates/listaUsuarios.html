@@ -1,0 +1,20 @@
+<table>
+    <thead>
+    <tr>
+        <th th:text="#{msg.id}" />
+        <th th:text="#{msg.name}" />
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="usuario: ${pagina.content}">
+        <td th:text="${usuario.nombreDeUsuario}" />
+        <td th:text="${usuario.correoPila}" />
+    </tr>
+    </tbody>
+</table>
+<div th:if="${pagina.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/listaUsuarios(size=${pagina.size}, page=${pageNumber})}"
+       th:text=${pageNumber}
+       th:class="${pageNumber==pagina.number + 1} ? active"></a>
+</div>

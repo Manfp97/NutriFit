@@ -2,15 +2,22 @@ package com.eoi.NutriFit.Entidades;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="usuarios")
 @Getter
 @Setter
 @ToString
-public class Usuario {
+@NoArgsConstructor
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -18,6 +25,9 @@ public class Usuario {
 
     @Column(name = "nombreUsuario", nullable = false, length = 100)
     private String nombreUsuario;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
 
     @Column(name = "password", nullable = false, length = 250)
     private String password;
@@ -38,4 +48,21 @@ public class Usuario {
 
     @OneToOne(mappedBy = "usuario")
     private DetalleUsuario detalleUsuario;
+
+    public Usuario(String nombreUsuario, String password) {
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
 }
