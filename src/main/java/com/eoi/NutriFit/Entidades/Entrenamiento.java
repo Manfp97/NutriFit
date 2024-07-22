@@ -37,6 +37,9 @@ public class Entrenamiento {
     @Column(name = "objetivos")
     private String objetivos;
 
+    @Column(name = "dificultad")
+    private String dificultad;
+
     @Column(name = "planificacion_frecuencia")
     private String planificacionFrecuencia;
 
