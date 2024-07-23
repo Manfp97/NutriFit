@@ -1,0 +1,15 @@
+<!DOCTYPE html >
+<html layout:decorate="~{layout/layout}" xmlns:th="thymeleaf.org"  xmlns:layout="ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <title> Lista de productosasdasdasd</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:if="${#lists.isEmpty(listaProductos)}"><h1>Lista vacía</h1></div>
+    <div th:if="${listaProductos!=null }" th:replace="~{fragments/listaProductos :: listaProductos}"></div>
+    <section th:replace="~{fragments/latest_products::latest_products}"></section>
+</div>
+<script layout:fragment="script">
+</script>
+</body>
+</html>
