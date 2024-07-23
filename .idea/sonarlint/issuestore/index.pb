@@ -238,3 +238,5 @@ k
 ;src/main/java/com/eoi/NutriFit/Security/SecurityConfig.java,3\e\3e2d70e50ab8fe586c0b3f11137602a501fa7df9
 z
 Jsrc/main/java/com/eoi/NutriFit/Repositorios/PaginAndSortingRepository.java,f\1\f140ced8a1bce7bc7f2b790646916215c5db3d0b
+‡
+Wsrc/main/java/com/eoi/NutriFit/Repositorios/EntrenamientoPaginAndSortingRepository.java,9\8\9876aa24444bde4415433c7bb58bb86867b24389

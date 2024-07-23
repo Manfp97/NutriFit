@@ -9,7 +9,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.util.List;
 
 @NoRepositoryBean
-public interface PaginAndSortingRepository<T, ID> extends JpaRepository<T, ID> {
+public interface EntrenamientoPaginAndSortingRepository<T, ID> extends JpaRepository<T, ID> {
 
     List<T> findAll(Sort sort);
 
