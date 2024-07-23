@@ -29,6 +29,9 @@ public class Dieta {
     @Column (name = "categoria")
     private String categoria;
 
+    @Column (name = "descripcion")
+    private String descripcion;
+
     @Lob
     private byte [] recursos_multimedia;
 

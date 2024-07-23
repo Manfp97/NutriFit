@@ -236,3 +236,5 @@ p
 @src/main/java/com/eoi/NutriFit/Security/PasswordEncoderBean.java,b\f\bf85ee46f2d3712c19171c39a6d97190404e4eab
 k
 ;src/main/java/com/eoi/NutriFit/Security/SecurityConfig.java,3\e\3e2d70e50ab8fe586c0b3f11137602a501fa7df9
+€
+Psrc/main/java/com/eoi/NutriFit/Repositorios/DietaPagingAndSortingRepository.java,6\9\6901aa49760978187e4f98dc2bb67630211bf8bf
