@@ -186,7 +186,7 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -397,5 +397,51 @@
     height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
     object-fit: cover; /* Ajusta el tamaño de la imagen cubriendo el área asignada */
 }
+
+/* Asegúrate de que el texto de la paginación sea azul y se ajuste al tema */
+.pagination .page-link {
+    color: #007bff; /* Cambia a tu color deseado */
+}
+
+.pagination .page-link:hover {
+    color: #0056b3; /* Cambia a tu color deseado */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Cambia a tu color deseado */
+    border-color: #007bff; /* Cambia a tu color deseado */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d; /* Cambia a tu color deseado */
+}
+
+
+.custom-select {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 200px; /* Ajusta el ancho según tu necesidad */
+}
+
+.custom-select:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.custom-select option {
+    padding: 5px;
+}
+
+/* Opcional: Agrega un borde más prominente al hover */
+.custom-select:hover {
+    border-color: #007bff;
+}
+
 
 

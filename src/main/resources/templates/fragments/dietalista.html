@@ -10,16 +10,16 @@
             <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                 <ul class="nav nav-pills d-inline-flex justify-content-end mb-5 flex-nowrap">
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dieta(categoria='aumentodemasamuscular', size=${pagina.size}, page=0)}" th:text="'Aumento de Masa Muscular'" th:classappend="${categoria == 'aumentodemasamuscular'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='aumentodemasamuscular', size=${pagina.size}, page=0)}" th:text="'Aumento de Masa Muscular'" th:classappend="${categoria == 'aumentodemasamuscular'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dieta(categoria='perdidadepeso', size=${pagina.size}, page=0)}" th:text="'Pérdida de Peso'" th:classappend="${categoria == 'perdidadepeso'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='perdidadepeso', size=${pagina.size}, page=0)}" th:text="'Pérdida de Peso'" th:classappend="${categoria == 'perdidadepeso'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dieta(categoria='aumentodepeso', size=${pagina.size}, page=0)}" th:text="'Aumento de Peso'" th:classappend="${categoria == 'aumentodepeso'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='aumentodepeso', size=${pagina.size}, page=0)}" th:text="'Aumento de Peso'" th:classappend="${categoria == 'aumentodepeso'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dieta(categoria='dietadeportiva', size=${pagina.size}, page=0)}" th:text="'Dieta Deportiva'" th:classappend="${categoria == 'dietadeportiva'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='dietadeportiva', size=${pagina.size}, page=0)}" th:text="'Dieta Deportiva'" th:classappend="${categoria == 'dietadeportiva'} ? 'active'"></a>
                     </li>
                 </ul>
             </div>
@@ -43,15 +43,15 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='aumentodemasamuscular', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/dietaUsuario(categoria='aumentodemasamuscular', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/dieta(categoria='aumentodemasamuscular', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/dietaUsuario(categoria='aumentodemasamuscular', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='aumentodemasamuscular', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/dietaUsuario(categoria='aumentodemasamuscular', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -77,15 +77,15 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='perdidadepeso', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/dietaUsuario(categoria='perdidadepeso', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/dieta(categoria='perdidadepeso', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/dietaUsuario(categoria='perdidadepeso', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='perdidadepeso', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/dietaUsuario(categoria='perdidadepeso', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -111,15 +111,15 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='aumentodepeso', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/dietaUsuario(categoria='aumentodepeso', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/dieta(categoria='aumentodepeso', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/dietaUsuario(categoria='aumentodepeso', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='aumentodepeso', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/dietaUsuario(categoria='aumentodepeso', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -145,15 +145,15 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='dietadeportiva', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/dietaUsuario(categoria='dietadeportiva', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/dieta(categoria='dietadeportiva', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/dietaUsuario(categoria='dietadeportiva', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/dieta(categoria='dietadeportiva', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/dietaUsuario(categoria='dietadeportiva', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
