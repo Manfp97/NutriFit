@@ -32,7 +32,8 @@ public class Dieta {
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
 
-
+    @Column (name = "descripcion")
+    private String descripcion;
 
     @OneToMany(mappedBy = "dieta", cascade = CascadeType.ALL)
     private Set<DetallesDieta> detalles_dietas;
