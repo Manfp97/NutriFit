@@ -1,7 +1,9 @@
 package com.eoi.NutriFit.Entidades;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="productos")
 public class Producto {
     @Id
@@ -39,6 +42,10 @@ public class Producto {
     @Column(name = "stock")
     private Double stock;
 
+
+
+
+
     @ManyToMany
     @JoinTable(
             name = "producto_carrito",
@@ -49,6 +56,7 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
+    @JsonBackReference
     private Proveedores proveedor;
 }
 

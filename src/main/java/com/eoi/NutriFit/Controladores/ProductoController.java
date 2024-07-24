@@ -1,6 +1,5 @@
 package com.eoi.NutriFit.Controladores;
 
-import com.eoi.NutriFit.Entidades.Dieta;
 import com.eoi.NutriFit.Entidades.Producto;
 import com.eoi.NutriFit.Repositorios.ProductoRepo;
 import com.eoi.NutriFit.Servicios.ProductoService;
@@ -79,10 +78,25 @@ public class ProductoController {
         }
     }
 
-    @PostMapping
-    public Producto create(@RequestBody Producto producto) throws Exception {
-        return service.guardar(producto);
+
+    @GetMapping("/nuevo")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("producto", new Producto());
+        return "crearproducto"; // nombre del archivo Thymeleaf (sin .html)
     }
+
+    @PostMapping("/nuevo")
+    public String crearProducto(@ModelAttribute("producto") Producto producto, Model model) {
+        try {
+            service.guardar(producto);
+            model.addAttribute("mensaje", "Producto creado con éxito");
+            return "redirect:/producto/nuevo";
+        } catch (Exception e) {
+            model.addAttribute("mensaje", "Error al crear producto");
+            return "redirect:/producto/nuevo";
+        }
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Producto> update(@PathVariable Integer id, @RequestBody Producto producto) throws Exception {
