@@ -32,7 +32,7 @@ public class ProductoController {
 
 
     @GetMapping
-    public String getProductos(
+    public String listAll(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "9") int size,
             @RequestParam(required = false, defaultValue = "proteina") String categoria,
@@ -60,21 +60,17 @@ public class ProductoController {
         model.addAttribute("categoria", categoria);
         return "product";
     }
-//    @GetMapping
-//    public String getAll(Model model) {
-//        List<Producto> listaDetalles = service.buscarEntidades();
-//        model.addAttribute("productos", listaDetalles);
-//        return "product";
-//
-//    }
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> getById(@PathVariable Integer id) {
+    public String getById(@PathVariable Integer id , Model model) {
         Optional<Producto> producto = service.encuentraPorId(id);
+
         if (producto.isPresent()) {
-            return ResponseEntity.ok(producto.get());
+            model.addAttribute("producto", producto.get());
+            return "detalleproducto";
         } else {
-            return ResponseEntity.notFound().build();
+            return "redirect:/producto";
         }
     }
 
@@ -86,7 +82,7 @@ public class ProductoController {
     }
 
     @PostMapping("/nuevo")
-    public String crearProducto(@ModelAttribute("producto") Producto producto, Model model) {
+    public String crear(@ModelAttribute("producto") Producto producto, Model model) {
         try {
             service.guardar(producto);
             model.addAttribute("mensaje", "Producto creado con éxito");
@@ -97,15 +93,13 @@ public class ProductoController {
         }
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> update(@PathVariable Integer id, @RequestBody Producto producto) throws Exception {
-        Optional<Producto> existingProducto = service.encuentraPorId(id);
-        if (existingProducto.isPresent()) {
-            producto.setId(id);
-            return ResponseEntity.ok(service.guardar(producto));
-        } else {
-            return ResponseEntity.notFound().build();
+    public String update(@PathVariable Integer id, @RequestBody Producto producto){
+        try {
+            service.guardar(producto);
+            return "redirect:/product";
+        } catch (Exception e) {
+            return "redirect:/product";
         }
     }
 
