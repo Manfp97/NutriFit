@@ -1,0 +1,69 @@
+<section id="entrenamiento" class="container-xxl py-5" th:fragment="entrenamientos">
+    <div class="container">
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-6">
+                <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="display-5 mb-3">Entrenamiento</h1>
+                    <p>No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#cardio">Cardio</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#musculacion">Musculación</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#pesocorporal">Peso Corporal</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="cardio">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}" th:if="${entrenamiento.categoria=='cardio'}" >
+                        <div class="card">
+                            <img src="img/cardio.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Cardio">
+                            <div class="card-body">
+                                <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
+                                <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="musculacion">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}" th:if="${entrenamiento.categoria=='musculacion'}" >
+                        <div class="card">
+                            <img src="img/cardio.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Cardio">
+                            <div class="card-body">
+                                <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
+                                <p th:text="${entrenamiento.objetivos}" class="card-text">Mejora tu resistencia cardiovascular con nuestros entrenamientos de cardio. Incluye rutinas de alta intensidad y consejos para optimizar tu rendimiento.</p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pesocorporal">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}" th:if="${entrenamiento.categoria=='pesocorporal'}" >
+                        <div class="card">
+                            <img src="img/cardio.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Cardio">
+                            <div class="card-body">
+                                <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
+                                <p th:text="${entrenamiento.objetivos}" class="card-text">Mejora tu resistencia cardiovascular con nuestros entrenamientos de cardio. Incluye rutinas de alta intensidad y consejos para optimizar tu rendimiento.</p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

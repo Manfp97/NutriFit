@@ -21,6 +21,10 @@ public class Entrenamiento {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "nombre")
+    private String nombre;
+
+
     @Column(name = "categoria")
     private String categoria;
 
@@ -36,18 +40,16 @@ public class Entrenamiento {
     @Column(name = "planificacion_frecuencia")
     private String planificacionFrecuencia;
 
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "iddetallesentrenamiento",foreignKey=@ForeignKey(name = "Fk_detallesentrenamiento_entrenamiento"))
-    private DetallesEntrenamiento DetallesEntrenamiento;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "identrenamiento")
+    private Set<DetallesEntrenamiento> DetallesEntrenamiento;
 
     @OneToMany
     private Set <ProgresionesEntrenamiento> entrenamientos_identrenamiento;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idprogresionentrenamiento",foreignKey=@ForeignKey(name = "Fk_progresionentrenamiento_entrenamiento"))
-    private ProgresionesEntrenamiento ProgresionesEntrenamiento;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idEntrenamiento")
+    private Set<ProgresionesEntrenamiento> ProgresionesEntrenamiento;
 
 
 
