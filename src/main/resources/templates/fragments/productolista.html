@@ -26,14 +26,14 @@
         </div>
         <div class="tab-content">
             <!-- Sección Proteina -->
-            <div class="tab-pane fade show" th:classappend="${categoria == 'proteina'} ? 'active'" id="proteina">
+            <div class="tab-pane fade show" th:classappend="${categoria == 'proteina'} ? 'active show' : ''" id="proteina">
                 <div class="row g-5">
                     <div class="col-lg-4" th:each="producto : ${productos}">
                         <div class="card">
                             <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Proteina">
                             <div class="card-body">
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                             <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Musculación">
                             <div class="card-body">
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                             <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Peso Corporal">
                             <div class="card-body">
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                             <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Vitaminas">
                             <div class="card-body">
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
                             </div>
                         </div>
@@ -162,4 +162,3 @@
         </div>
     </div>
 </section>
- 
