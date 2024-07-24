@@ -14,7 +14,7 @@
                 <div class="card-body p-5">
                     <h1 class="card-title mb-4 text-center fw-bold">Actualizar Producto</h1>
                     <!-- Formulario para actualizar el producto -->
-                    <form th:action="@{/producto/editar/__${producto.id}__}" th:object="${producto}" method="post">
+                    <form th:action="@{/producto/editar}" th:object="${producto}" method="post">
                         <!-- Campo oculto para el ID del producto -->
                         <input type="hidden" th:field="*{id}" />
                         <!-- Campo para el nombre del producto -->
