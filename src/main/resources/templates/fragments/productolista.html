@@ -1,0 +1,165 @@
+<section id="producto" class="container-xxl py-5" th:fragment="productolista">
+    <div class="container">
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-6">
+                <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="display-5 mb-3">Producto</h1>
+                    <p>No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=0)}" th:text="'proteina'" th:classappend="${categoria == 'proteina'} ? 'active'"></a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=0)}" th:text="'creatina'" th:classappend="${categoria == 'creatina'} ? 'active'"></a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=0)}" th:text="'snacks'" th:classappend="${categoria == 'snacks'} ? 'active'"></a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=0)}" th:text="'vitaminas'" th:classappend="${categoria == 'vitaminas'} ? 'active'"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <!-- Sección Proteina -->
+            <div class="tab-pane fade show" th:classappend="${categoria == 'proteina'} ? 'active'" id="proteina">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="producto : ${productos}">
+                        <div class="card">
+                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Proteina">
+                            <div class="card-body">
+                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
+                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paginación -->
+                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${pagina.hasPrevious()}" class="page-item">
+                            <a th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                            <a th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                        </li>
+                        <li th:if="${pagina.hasNext()}" class="page-item">
+                            <a th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sección Musculación -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'creatina'} ? 'active show' : ''" id="creatina">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="producto : ${productos}">
+                        <div class="card">
+                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Musculación">
+                            <div class="card-body">
+                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
+                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paginación -->
+                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${pagina.hasPrevious()}" class="page-item">
+                            <a th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                            <a th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                        </li>
+                        <li th:if="${pagina.hasNext()}" class="page-item">
+                            <a th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sección Peso Corporal -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'snacks'} ? 'active show' : ''" id="snacks">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="producto : ${productos}">
+                        <div class="card">
+                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Peso Corporal">
+                            <div class="card-body">
+                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
+                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paginación -->
+                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${pagina.hasPrevious()}" class="page-item">
+                            <a th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                            <a th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                        </li>
+                        <li th:if="${pagina.hasNext()}" class="page-item">
+                            <a th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Sección Vitaminas -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'vitaminas'} ? 'active show' : ''" id="vitaminas">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="producto : ${productos}">
+                        <div class="card">
+                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Vitaminas">
+                            <div class="card-body">
+                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
+                                <p th:text="${producto.objetivos}" class="card-text"></p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paginación -->
+                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${pagina.hasPrevious()}" class="page-item">
+                            <a th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                            <a th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                        </li>
+                        <li th:if="${pagina.hasNext()}" class="page-item">
+                            <a th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
