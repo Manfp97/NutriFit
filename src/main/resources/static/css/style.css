@@ -186,7 +186,7 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -442,7 +442,6 @@
 .custom-select:hover {
     border-color: #007bff;
 }
-
 
 
 

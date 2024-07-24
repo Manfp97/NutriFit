@@ -20,11 +20,17 @@ public class Dieta {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @Column (name = "objetivos")
     private String objetivos;
 
     @Column (name = "categoria")
     private String categoria;
+
+    @Column (name = "descripcion")
+    private String descripcion;
 
     @Lob
     private byte [] recursos_multimedia;
