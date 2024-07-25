@@ -43,9 +43,17 @@
                             </select>
                             <label for="categoria">Categoría:</label>
                         </div>
-                        <!-- Botón para enviar el formulario -->
-                        <div class="text-center">
+                        <!-- Botón para actualizar el producto -->
+                        <div class="text-center mb-3">
                             <button type="submit" class="btn btn-primary rounded-3 px-5 py-2">Actualizar Producto</button>
+                        </div>
+                    </form>
+
+                    <!-- Formulario para eliminar el producto -->
+                    <form th:action="@{/producto/{id}(id=${producto.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                        <input type="hidden" name="_method" value="delete" />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-danger rounded-3 px-5 py-2">Eliminar Producto</button>
                         </div>
                     </form>
                 </div>
