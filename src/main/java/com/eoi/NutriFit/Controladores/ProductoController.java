@@ -93,15 +93,31 @@ public class ProductoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public String update(@PathVariable Integer id, @RequestBody Producto producto){
+    @PostMapping("/{id}")
+    public String update(@PathVariable Integer id, @ModelAttribute Producto producto, Model model) {
         try {
-            service.guardar(producto);
-            return "redirect:/product";
+            Optional<Producto> existingProducto = service.encuentraPorId(id);
+            if (existingProducto.isPresent()) {
+                Producto updatedProducto = existingProducto.get();
+                updatedProducto.setNombre(producto.getNombre());
+                updatedProducto.setPrecio(producto.getPrecio());
+                updatedProducto.setCategoria(producto.getCategoria());
+                updatedProducto.setDescripcion(producto.getDescripcion());
+                // Actualizar otros campos necesarios si es necesario
+
+                service.guardar(updatedProducto);
+                model.addAttribute("mensaje", "Producto actualizado con éxito");
+                return "redirect:/producto";
+            } else {
+                model.addAttribute("mensaje", "Producto no encontrado");
+                return "redirect:/producto";
+            }
         } catch (Exception e) {
-            return "redirect:/product";
+            model.addAttribute("mensaje", "Error al actualizar producto: " + e.getMessage());
+            return "redirect:/producto";
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
