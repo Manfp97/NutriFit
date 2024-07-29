@@ -1,7 +1,7 @@
 package com.eoi.NutriFit.Controladores;
 
+import com.eoi.NutriFit.Entidades.Usuario;
 import com.eoi.NutriFit.Repositorios.UsuarioRepository;
-import com.eoi.NutriFit.Entidades.UsuarioDemo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +31,9 @@ class LoginController {
 
     @PostMapping("/login")
     public String processLogin(@RequestParam String email, @RequestParam String password, Model model) {
-        Optional<UsuarioDemo> optionalUsuario = usuarioRepository.findBynombreDeUsuario(email);
+        Optional<Usuario> optionalUsuario = usuarioRepository.findUsuarioByUsernameAndActivoTrue(email);
         if (optionalUsuario.isPresent() && optionalUsuario.get().getPassword().equals(bCryptPasswordEncoder.encode(password))) {
-            UsuarioDemo usuario = optionalUsuario.get();
+            Usuario usuario = optionalUsuario.get();
             model.addAttribute("usuario", usuario);
             model.addAttribute("msg", "Usuario encontrado");
             return "/login";

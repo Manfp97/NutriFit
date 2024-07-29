@@ -23,14 +23,4 @@ public class Roles {
     @Column(name = "nombre_rol", nullable = false, length = 45)
     private String nombreRol;
 
-
-    @OneToMany
-    private Set<Usuario> usuario;
-
-
-
-
-
-
-
 }

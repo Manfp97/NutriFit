@@ -47,18 +47,23 @@ public class ProductoController {
         } else {
             productosPage = productoRepo.findAll(pageable);
         }
+        if (productosPage.isEmpty()){
+            return "productnotfound";
+        } else {
+            // Crea la lista de números de página
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, productosPage.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
 
-        // Crea la lista de números de página
-        List<Integer> pageNumbers = IntStream.rangeClosed(1, productosPage.getTotalPages())
-                .boxed()
-                .collect(Collectors.toList());
+            // Añade los atributos al modelo
+            model.addAttribute("pagina", productosPage);
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("productos", productosPage.getContent());
+            model.addAttribute("categoria", categoria);
+            return "product";
 
-        // Añade los atributos al modelo
-        model.addAttribute("pagina", productosPage);
-        model.addAttribute("pageNumbers", pageNumbers);
-        model.addAttribute("productos", productosPage.getContent());
-        model.addAttribute("categoria", categoria);
-        return "product";
+        }
+
     }
 
 

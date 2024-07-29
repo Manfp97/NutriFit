@@ -23,7 +23,14 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bcryptPasswordEncoder;
     }
-
+    // Authentication Provider to authenticate users.
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder);
+        return authProvider;
+    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.formLogin(form -> form
@@ -33,12 +40,6 @@ public class SecurityConfig {
         );
 
         http.logout(logout -> logout
-                .logoutUrl("/usuarios/logout")
-                .logoutSuccessUrl("/")
-        );
-
-        http.logout(logout -> logout
-                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
         );
 
@@ -48,22 +49,15 @@ public class SecurityConfig {
                 .requestMatchers("/img/**").permitAll()
                 .requestMatchers("/css/**").permitAll()
                 .requestMatchers("/fonts/**").permitAll()
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/entrenamiento").permitAll()
                 .requestMatchers(HttpMethod.POST, "/**").permitAll()
                 .anyRequest().authenticated()
-        );
+                );
 
         return http.build();
     }
 
-    // Authentication Provider to authenticate users.
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(bCryptPasswordEncoder);
-        return authProvider;
-    }
+
 
     @Bean
     static GrantedAuthorityDefaults grantedAuthorityDefaults() {

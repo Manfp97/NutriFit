@@ -1,14 +1,14 @@
 package com.eoi.NutriFit.Repositorios;
 
-import com.eoi.NutriFit.Entidades.UsuarioDemo;
+import com.eoi.NutriFit.Entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<UsuarioDemo, Integer> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    Optional<UsuarioDemo> findBynombreDeUsuario(String username);
+    Optional<Usuario>  findUsuarioByUsernameAndActivoTrue(String username);
 
 }
