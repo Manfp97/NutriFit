@@ -1,4 +1,4 @@
-<section id="dieta" class="container-xxl py-5" th:fragment="dietalista">
+<section id="dieta" class="container-xxl py-5" th:fragment="proveedoreslista">
     <div class="container">
         <div class="row g-0 gx-5 align-items-end">
             <div class="col-lg-6">
@@ -6,22 +6,6 @@
                     <h1 class="display-5 mb-3">Dietas</h1>
                     <p>Tu dieta es una cuenta bancaria. Las buenas elecciones alimentarias son buenas inversiones.</p>
                 </div>
-            </div>
-            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5 flex-nowrap">
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='aumentodemasamuscular', size=${pagina.size}, page=0)}" th:text="'Aumento de Masa Muscular'" th:classappend="${categoria == 'aumentodemasamuscular'} ? 'active'"></a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='perdidadepeso', size=${pagina.size}, page=0)}" th:text="'Pérdida de Peso'" th:classappend="${categoria == 'perdidadepeso'} ? 'active'"></a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='aumentodepeso', size=${pagina.size}, page=0)}" th:text="'Aumento de Peso'" th:classappend="${categoria == 'aumentodepeso'} ? 'active'"></a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/dietaUsuario(categoria='dietadeportiva', size=${pagina.size}, page=0)}" th:text="'Dieta Deportiva'" th:classappend="${categoria == 'dietadeportiva'} ? 'active'"></a>
-                    </li>
-                </ul>
             </div>
         </div>
         <div class="tab-content">
