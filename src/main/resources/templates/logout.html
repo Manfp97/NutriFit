@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <!-- Otras partes del encabezado -->
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
+            <!-- Mostrar botón de logout solo si el usuario está autenticado -->
+            <li sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-primary">Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div layout:fragment="content" />
+</main>
+</body>
+</html>

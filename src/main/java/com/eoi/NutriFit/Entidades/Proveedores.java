@@ -34,4 +34,10 @@ public class Proveedores {
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Producto> productos = new HashSet<>();
+
+    public Proveedores(String nombre, String contacto, String direccion) {
+        this.nombre = nombre;
+        this.contacto = contacto;
+        this.direccion = direccion;
+    }
 }

@@ -3,6 +3,7 @@ package com.eoi.NutriFit.Entidades;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="Entrenamiento")
 public class Entrenamiento {
     @Id
@@ -54,6 +56,13 @@ public class Entrenamiento {
     @JoinColumn(name = "idEntrenamiento")
     private Set<ProgresionesEntrenamiento> ProgresionesEntrenamiento;
 
-
-
+    public Entrenamiento(String nombre, String categoria, byte[] recursos_multimedia, String grupoMuscular, String objetivos, String dificultad, String planificacionFrecuencia) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.recursos_multimedia = recursos_multimedia;
+        this.grupoMuscular = grupoMuscular;
+        this.objetivos = objetivos;
+        this.dificultad = dificultad;
+        this.planificacionFrecuencia = planificacionFrecuencia;
+    }
 }

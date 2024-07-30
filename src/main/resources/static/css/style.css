@@ -443,5 +443,28 @@
     border-color: #007bff;
 }
 
+/*** Botón de cierre de sesión ***/
+#logout-button {
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    color: #555555; /* Igual que los enlaces del navbar */
+    font-weight: 500; /* Igual que los enlaces del navbar */
+    text-decoration: none; /* Sin subrayado */
+    cursor: pointer; /* Cursor tipo mano al pasar sobre el botón */
+    padding: 25px 15px; /* Igual que los enlaces del navbar */
+    outline: none; /* Igual que los enlaces del navbar */
+    display: inline; /* Muestra el botón en línea */
+}
+
+#logout-button:hover,
+#logout-button:focus {
+    color: var(--dark); /* Igual que el color de los enlaces en hover */
+    text-decoration: none; /* Sin subrayado en hover */
+}
+
+#logout-form {
+    display: inline; /* Asegura que el formulario se muestre en línea con el botón */
+}
+
 
 

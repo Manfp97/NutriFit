@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
     <title>Please Log In</title>
 </head>
 <body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Nombre o password de usuario incorrecto.</div>
-<div th:if="${param.logout}">
-    You have been logged out.</div>
-<form th:action="@{/login}" method="post">
-    <div>
-        <input type="text" name="username" placeholder="Username"/>
+<div layout:fragment="content" class="container mt-5 pt-5">
+    <h1>Please Log In</h1>
+
+    <div th:if="${param.error}">
+        Nombre o contraseña de usuario incorrectos.
     </div>
-    <div>
-        <input type="password" name="password" placeholder="Password"/>
+    <div th:if="${param.logout}">
+        Has sido desconectado.
     </div>
-    <input type="submit" value="Log in" />
-</form>
+
+    <form th:action="@{/login}" method="post">
+        <div>
+            <input type="text" name="username" placeholder="Username" required/>
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password" required/>
+        </div>
+        <div>
+            <input type="submit" value="Log in"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -15,31 +15,32 @@ import java.util.Optional;
 
 
 @Controller
-class LoginController {
+public class LoginController {
 
-    UsuarioRepository usuarioRepository;
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public LoginController(UsuarioRepository usuarioRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-
+        this.usuarioRepository = usuarioRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping("/login")
-    String login() {
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("msg", "Usuario o contraseña incorrectos");
+        }
         return "login";
     }
 
     @PostMapping("/login")
     public String processLogin(@RequestParam String email, @RequestParam String password, Model model) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findUsuarioByUsernameAndActivoTrue(email);
-        if (optionalUsuario.isPresent() && optionalUsuario.get().getPassword().equals(bCryptPasswordEncoder.encode(password))) {
-            Usuario usuario = optionalUsuario.get();
-            model.addAttribute("usuario", usuario);
-            model.addAttribute("msg", "Usuario encontrado");
-            return "/login";
-        }else{
-            model.addAttribute("msg", "Usuario no encontrado");
+        if (optionalUsuario.isPresent() && bCryptPasswordEncoder.matches(password, optionalUsuario.get().getPassword())) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("msg", "Usuario o contraseña incorrectos");
+            return "redirect:/login?error=true";
         }
-        return "redirect:/login?error=true";
     }
 }

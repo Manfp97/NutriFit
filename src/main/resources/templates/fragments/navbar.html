@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <!-- Navbar Start -->
 <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s" th:fragment="navbar">
     <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
@@ -30,6 +31,11 @@
                 <a th:href="@{/static}" class="nav-item nav-link">Nutrición</a>
                 <a th:href="@{/entrenamiento}" class="nav-item nav-link">Entrenamiento</a>
                 <a th:href="@{/404}" class="nav-item nav-link">Otros</a>
+                <div sec:authorize="isAuthenticated()" class="nav-item">
+                    <form th:action="@{/logout}" method="post" id="logout-form">
+                        <button type="submit" class="nav-link" id="logout-button">Cerrar sesión</button>
+                    </form>
+                </div>
                 <div class="nav-item dropdown">
                     <a th:href="@{/product}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tienda</a>
                 </div>

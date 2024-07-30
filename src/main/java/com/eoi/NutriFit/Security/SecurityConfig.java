@@ -19,11 +19,11 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bcryptPasswordEncoder) {
+    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bcryptPasswordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-    // Authentication Provider to authenticate users.
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -31,33 +31,36 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(bCryptPasswordEncoder);
         return authProvider;
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
         );
 
         http.logout(logout -> logout
-                .logoutSuccessUrl("/")
+                .logoutUrl("/logout")  // URL para el logout
+                .logoutSuccessUrl("/") // Redirige a la página principal después del logout
+                .invalidateHttpSession(true) // Invalidar la sesión HTTP
+                .deleteCookies("JSESSIONID") // Eliminar cookies
         );
 
-        // Authorization of Requests
-        http.authorizeHttpRequests(customizer -> customizer
-                .requestMatchers("/js/**").permitAll()
-                .requestMatchers("/img/**").permitAll()
-                .requestMatchers("/css/**").permitAll()
-                .requestMatchers("/fonts/**").permitAll()
-                .requestMatchers("/entrenamiento").permitAll()
-                .requestMatchers(HttpMethod.POST, "/**").permitAll()
-                .anyRequest().authenticated()
-                );
+        http.authorizeHttpRequests(customizer -> {
+            customizer
+                    .requestMatchers("/js/**").permitAll()
+                    .requestMatchers("/img/**").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/fonts/**").permitAll()
+                    .requestMatchers("/static/lib/**").permitAll()
+                    .requestMatchers("/static/scss/**").permitAll()
+                    .requestMatchers("/index").permitAll(); // Permitir todas las solicitudes por defecto
+            customizer.anyRequest().authenticated();
+        });
 
         return http.build();
     }
-
-
 
     @Bean
     static GrantedAuthorityDefaults grantedAuthorityDefaults() {

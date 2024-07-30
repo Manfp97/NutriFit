@@ -58,5 +58,15 @@ public class Producto {
     @JoinColumn(name = "proveedor_id", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
     @JsonBackReference
     private Proveedores proveedor;
+
+    public Producto(String codigo, String nombre, String descripcion, String categoria, Double precio, Double stock, Proveedores proveedor) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.stock = stock;
+        this.proveedor = proveedor;
+    }
 }
 
