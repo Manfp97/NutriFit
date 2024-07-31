@@ -1,6 +1,7 @@
 package com.eoi.NutriFit.Servicios;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -66,10 +67,18 @@ public abstract class AbstractBusinessService<E, ID,  REPO extends JpaRepository
             repo.save(e);
         }
     }
+
+
     //eliminar un registro
-    public void eliminarPorId(ID id){
-        this.repo.deleteById(id);
+    public void eliminarPorId(ID id) {
+        if (this.repo.existsById(id)) {
+            this.repo.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Entidad con id " + id + " no encontrada.");
+        }
     }
+
+
     //Obtener el repo
     public REPO getRepo(){return  repo;}
 }

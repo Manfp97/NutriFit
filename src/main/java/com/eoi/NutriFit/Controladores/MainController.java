@@ -40,10 +40,6 @@ public class MainController {
         return "about";
     }
 
-    @GetMapping({"/404"})
-    public String notFound() {
-        return "404";
-    }
 
     @GetMapping({"/testimonial"})
     public String testimonial() {

@@ -3,6 +3,7 @@ package com.eoi.NutriFit.Controladores;
 import com.eoi.NutriFit.Entidades.Producto;
 import com.eoi.NutriFit.Repositorios.ProductoRepo;
 import com.eoi.NutriFit.Servicios.ProductoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -66,6 +67,23 @@ public class ProductoController {
 
     }
 
+    @GetMapping("/list")
+    public String listAllEditable(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size,
+                                  Model model) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Producto> productosPage = productoRepo.findAll(pageable);
+
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, productosPage.getTotalPages())
+                .boxed()
+                .collect(Collectors.toList());
+
+        model.addAttribute("productosPage", productosPage);
+        model.addAttribute("pageNumbers", pageNumbers);
+        return "listaproductoseditable"; // El nombre del archivo Thymeleaf que mostraría la tabla
+    }
+
 
     @GetMapping("/{id}")
     public String getById(@PathVariable Integer id , Model model) {
@@ -75,7 +93,7 @@ public class ProductoController {
             model.addAttribute("producto", producto.get());
             return "detalleproducto";
         } else {
-            return "redirect:/producto";
+            return "redirect:/404";
         }
     }
 
@@ -124,13 +142,13 @@ public class ProductoController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (service.encuentraPorId(id).isPresent()) {
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        try {
             service.eliminarPorId(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+            return "redirect:/producto";
+        } catch (EntityNotFoundException e) {
+            return "redirect:/404";
         }
     }
 }

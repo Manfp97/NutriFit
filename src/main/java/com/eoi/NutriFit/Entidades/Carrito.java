@@ -29,7 +29,7 @@ public class Carrito {
     private Cliente cliente;
 
     // Establishing bidirectional many-to-many relationship with Producto
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "carrito_producto",
             joinColumns = @JoinColumn(name = "idcarrito", referencedColumnName = "id"),

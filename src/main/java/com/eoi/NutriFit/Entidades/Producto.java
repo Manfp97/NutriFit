@@ -21,7 +21,6 @@ import java.util.Set;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "codigo")
@@ -46,7 +45,7 @@ public class Producto {
 
 
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "producto_carrito",
             joinColumns = @JoinColumn(name = "idproducto", foreignKey = @ForeignKey(name = "Fk_producto_carrito_producto")),
@@ -54,7 +53,7 @@ public class Producto {
     )
     private Set<Carrito> carritos = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "proveedor_id", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
     @JsonBackReference
     private Proveedores proveedor;
