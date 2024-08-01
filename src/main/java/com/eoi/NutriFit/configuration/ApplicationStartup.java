@@ -45,6 +45,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     private final EntrenamientoRepo entrenamientoRepo;
     private final ProductoRepo productoRepo;
     private final ProveedoresRepo proveedoresRepo;
+    private final DietaRepo dietaRepo;
 
     /**
      * Constructor de la clase que recibe un {@link UsuarioRepository} para interactuar con la base de datos.
@@ -55,9 +56,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
      * @param entrenamientoRepo
      * @param productoRepo
      * @param proveedoresRepo
-     *
+     * @param dietaRepo
      */
-    public ApplicationStartup(UsuarioRepository userRepository, RolesRepo rolesRepo, Environment env, BCryptPasswordEncoder bCryptPasswordEncoder, EntrenamientoRepo entrenamientoRepo, ProductoRepo productoRepo, ProveedoresRepo proveedoresRepo) {
+    public ApplicationStartup(UsuarioRepository userRepository, RolesRepo rolesRepo, Environment env, BCryptPasswordEncoder bCryptPasswordEncoder, EntrenamientoRepo entrenamientoRepo, ProductoRepo productoRepo, ProveedoresRepo proveedoresRepo, DietaRepo dietaRepo) {
         this.usuarioRepository = userRepository;
         this.rolesRepo = rolesRepo;
         this.env = env;
@@ -65,6 +66,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         this.entrenamientoRepo = entrenamientoRepo;
         this.productoRepo = productoRepo;
         this.proveedoresRepo = proveedoresRepo;
+        this.dietaRepo = dietaRepo;
     }
 
     /**
@@ -90,6 +92,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             altaEntrenamientos();
             altaProductos();
             altaProveedores();
+            altaDietas();
         }
     }
 
@@ -875,6 +878,73 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
         proveedoresRepo.saveAll(proveedores);
     }
+
+    public void altaDietas() {
+        List<Dieta> dietas = new ArrayList<>();
+
+        // Categoría: Aumento de Masa Muscular
+        dietas.add(new Dieta("Dieta Alta en Proteínas 1", "Aumentar la masa muscular con proteínas de alta calidad.", "aumentodemasamuscular", null, "Diario", "Ideal para aquellos que buscan ganar masa muscular rápidamente."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 2", "Plan de comidas con alto contenido en proteínas y bajo en grasas.", "aumentodemasamuscular", null, "Diario", "Enfocada en la recuperación y crecimiento muscular."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 3", "Dieta rica en proteínas animales y vegetales para el aumento muscular.", "aumentodemasamuscular", null, "Diario", "Equilibrio entre proteínas animales y vegetales para maximizar el crecimiento muscular."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 4", "Dieta para atletas con alto requerimiento proteico.", "aumentodemasamuscular", null, "Diario", "Aumenta la masa muscular y la fuerza para atletas profesionales."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 5", "Plan de alimentación basado en batidos y alimentos ricos en proteínas.", "aumentodemasamuscular", null, "Diario", "Fomenta el crecimiento muscular con la combinación de alimentos y batidos."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 6", "Dieta centrada en la ingesta de huevos, carnes y legumbres.", "aumentodemasamuscular", null, "Diario", "Ingesta alta en proteínas para crecimiento muscular y recuperación."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 7", "Plan alimenticio con énfasis en proteínas y carbohidratos complejos.", "aumentodemasamuscular", null, "Diario", "Combinación ideal para el desarrollo muscular y la energía."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 8", "Dieta para el aumento de masa muscular con suplementos de proteínas.", "aumentodemasamuscular", null, "Diario", "Incorpora suplementos para maximizar la ganancia muscular."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 9", "Dieta diseñada para culturistas con alto contenido proteico.", "aumentodemasamuscular", null, "Diario", "Ajustada para culturistas que buscan definición y volumen."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 10", "Plan de comidas con proteínas para entrenamientos intensivos.", "aumentodemasamuscular", null, "Diario", "Ideal para quienes entrenan con alta intensidad y buscan recuperación muscular."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 11", "Dieta con énfasis en carnes magras y suplementos.", "aumentodemasamuscular", null, "Diario", "Enfocada en fuentes de proteínas magras para evitar grasas innecesarias."));
+        dietas.add(new Dieta("Dieta Alta en Proteínas 12", "Plan alimenticio para el aumento de masa muscular en deportistas de resistencia.", "aumentodemasamuscular", null, "Diario", "Especialmente diseñado para atletas de resistencia que buscan aumentar su masa muscular."));
+
+        // Categoría: Pérdida de Peso
+        dietas.add(new Dieta("Dieta de Definición 1", "Plan de comidas para reducir grasa y mantener la masa muscular.", "perdidadepeso", null, "Semanal", "Enfocada en la pérdida de grasa sin perder músculo."));
+        dietas.add(new Dieta("Dieta de Definición 2", "Dieta baja en carbohidratos para acelerar la quema de grasa.", "perdidadepeso", null, "Semanal", "Optimizada para personas que desean reducir el porcentaje de grasa corporal."));
+        dietas.add(new Dieta("Dieta de Definición 3", "Dieta rica en fibras y proteínas para la pérdida de peso.", "perdidadepeso", null, "Semanal", "Combina alimentos ricos en fibra con proteínas para mantener la saciedad."));
+        dietas.add(new Dieta("Dieta de Definición 4", "Plan de comidas con calorías controladas para pérdida de peso.", "perdidadepeso", null, "Semanal", "Controla las calorías para lograr una pérdida de peso eficaz."));
+        dietas.add(new Dieta("Dieta de Definición 5", "Dieta intermitente para la reducción de grasa corporal.", "perdidadepeso", null, "Semanal", "Enfocada en la pérdida de peso mediante ayuno intermitente."));
+        dietas.add(new Dieta("Dieta de Definición 6", "Plan alimenticio para quemar grasa con alta ingesta de proteínas.", "perdidadepeso", null, "Semanal", "Combina alta ingesta de proteínas con reducción de calorías para perder peso."));
+        dietas.add(new Dieta("Dieta de Definición 7", "Dieta de bajo índice glucémico para controlar el apetito.", "perdidadepeso", null, "Semanal", "Enfocada en mantener estables los niveles de azúcar en sangre."));
+        dietas.add(new Dieta("Dieta de Definición 8", "Plan de comidas para una pérdida de peso gradual y saludable.", "perdidadepeso", null, "Semanal", "Optimizada para una pérdida de peso a largo plazo sin efectos negativos."));
+        dietas.add(new Dieta("Dieta de Definición 9", "Dieta rica en vegetales y proteínas para la pérdida de peso.", "perdidadepeso", null, "Semanal", "Focalizada en alimentos vegetales para apoyar la pérdida de peso."));
+        dietas.add(new Dieta("Dieta de Definición 10", "Plan de comidas con énfasis en proteínas magras y grasas saludables.", "perdidadepeso", null, "Semanal", "Reduce el porcentaje de grasa corporal con un balance de proteínas y grasas saludables."));
+        dietas.add(new Dieta("Dieta de Definición 11", "Dieta para pérdida de peso con comidas pequeñas y frecuentes.", "perdidadepeso", null, "Semanal", "Optimizada para mantener el metabolismo activo durante todo el día."));
+        dietas.add(new Dieta("Dieta de Definición 12", "Plan alimenticio para quemar grasa y mejorar la composición corporal.", "perdidadepeso", null, "Semanal", "Focalizada en la mejora de la composición corporal y la quema de grasa."));
+
+        // Categoría: Aumento de Peso
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 1", "Plan de comidas con alta ingesta calórica y proteínas.", "aumentodepeso", null, "Diario", "Enfocada en incrementar rápidamente el peso corporal con calorías y proteínas."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 2", "Dieta rica en carbohidratos y proteínas para ganar peso.", "aumentodepeso", null, "Diario", "Combina carbohidratos complejos y proteínas para el aumento de peso."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 3", "Plan alimenticio con batidos y snacks altos en calorías.", "aumentodepeso", null, "Diario", "Ideal para ganar peso rápidamente con la ayuda de batidos y snacks."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 4", "Dieta para ganar peso con comidas frecuentes y calóricas.", "aumentodepeso", null, "Diario", "Plan de comidas que incluye alimentos ricos en calorías y nutrientes."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 5", "Plan de comidas con énfasis en alimentos densos en calorías.", "aumentodepeso", null, "Diario", "Optimizado para aquellos que buscan ganar peso rápidamente con alimentos densos en calorías."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 6", "Dieta rica en grasas saludables y proteínas para el aumento de peso.", "aumentodepeso", null, "Diario", "Combina grasas saludables y proteínas para un incremento de peso saludable."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 7", "Plan alimenticio para incremento de peso con alto contenido en nutrientes.", "aumentodepeso", null, "Diario", "Ideal para el aumento de peso con una alta densidad nutricional."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 8", "Dieta con alto contenido en calorías y proteínas para masa muscular.", "aumentodepeso", null, "Diario", "Focalizada en la ganancia de masa muscular con calorías y proteínas."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 9", "Plan de comidas con énfasis en carnes rojas y granos.", "aumentodepeso", null, "Diario", "Aumenta el peso corporal con una dieta rica en carnes rojas y granos."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 10", "Dieta alta en calorías y batidos para aumentar el peso.", "aumentodepeso", null, "Diario", "Incorpora batidos y alimentos altos en calorías para un aumento rápido de peso."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 11", "Plan de comidas para aumentar peso con calorías líquidas y sólidas.", "aumentodepeso", null, "Diario", "Combina calorías líquidas y sólidas para facilitar el aumento de peso."));
+        dietas.add(new Dieta("Dieta para Aumento de Peso Rápido 12", "Dieta con enfoque en alimentos ricos en calorías y proteínas para deportistas.", "aumentodepeso", null, "Diario", "Optimizada para deportistas que buscan aumentar peso y masa muscular."));
+
+        // Categoría: Dieta Deportiva
+        dietas.add(new Dieta("Dieta Deportiva 1", "Plan alimenticio para optimizar el rendimiento deportivo.", "dietadeportiva", null, "Diario", "Optimizada para mejorar el rendimiento y la recuperación en atletas."));
+        dietas.add(new Dieta("Dieta Deportiva 2", "Dieta balanceada para apoyar el entrenamiento y la recuperación.", "dietadeportiva", null, "Diario", "Incluye una mezcla de proteínas, carbohidratos y grasas para el rendimiento deportivo."));
+        dietas.add(new Dieta("Dieta Deportiva 3", "Plan de comidas para atletas de resistencia con alto contenido en carbohidratos.", "dietadeportiva", null, "Diario", "Optimizada para aumentar la resistencia con una alta ingesta de carbohidratos."));
+        dietas.add(new Dieta("Dieta Deportiva 4", "Dieta con alto contenido en proteínas para fortalecer músculos.", "dietadeportiva", null, "Diario", "Enfocada en la construcción muscular y recuperación para deportistas."));
+        dietas.add(new Dieta("Dieta Deportiva 5", "Plan alimenticio con enfoque en la recuperación post-entrenamiento.", "dietadeportiva", null, "Diario", "Optimizado para la recuperación rápida después de entrenamientos intensivos."));
+        dietas.add(new Dieta("Dieta Deportiva 6", "Dieta rica en antioxidantes para mejorar el rendimiento y la salud.", "dietadeportiva", null, "Diario", "Incluye alimentos ricos en antioxidantes para mejorar la recuperación y el rendimiento."));
+        dietas.add(new Dieta("Dieta Deportiva 7", "Plan de comidas para mejorar el rendimiento en deportes de alta intensidad.", "dietadeportiva", null, "Diario", "Optimizada para aquellos que practican deportes de alta intensidad."));
+        dietas.add(new Dieta("Dieta Deportiva 8", "Dieta equilibrada para deportistas con un enfoque en la salud general.", "dietadeportiva", null, "Diario", "Incluye un balance de todos los macronutrientes para una salud óptima."));
+        dietas.add(new Dieta("Dieta Deportiva 9", "Plan alimenticio para mejorar el enfoque y la energía durante el entrenamiento.", "dietadeportiva", null, "Diario", "Optimizado para mantener altos niveles de energía y concentración durante el ejercicio."));
+        dietas.add(new Dieta("Dieta Deportiva 10", "Dieta centrada en la hidratación y la energía para el rendimiento deportivo.", "dietadeportiva", null, "Diario", "Focalizada en mantener una adecuada hidratación y niveles de energía."));
+        dietas.add(new Dieta("Dieta Deportiva 11", "Plan alimenticio para optimizar el metabolismo y el rendimiento atlético.", "dietadeportiva", null, "Diario", "Optimizado para un metabolismo eficiente y rendimiento máximo en el deporte."));
+        dietas.add(new Dieta("Dieta Deportiva 12", "Dieta con enfoque en la prevención de lesiones y mejor recuperación.", "dietadeportiva", null, "Diario", "Incluye alimentos y nutrientes para prevenir lesiones y mejorar la recuperación."));
+
+        // Guardar todas las dietas en la base de datos
+        dietaRepo.saveAll(dietas);
+    }
+
+
+
+
 
 
 }

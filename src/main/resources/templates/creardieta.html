@@ -12,7 +12,7 @@
             <div class="card shadow-sm border-0 rounded-3">
                 <div class="card-body p-5">
                     <h1 class="card-title mb-4 text-center fw-bold">Crear DietaUsuario</h1>
-                    <form th:action="@{/dietaUsuario/nuevo}" th:object="${dietaUsuario}" method="post">
+                    <form th:action="@{/dietaUsuario/nuevo}" th:object="${dieta}" method="post">
                         <div class="form-floating mb-3">
                             <input type="text" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Nombre del dietaUsuario" />
                             <label for="nombre">Nombre:</label>
@@ -23,8 +23,8 @@
                             <label for="descripcion">Descripción:</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" id="precio" th:field="*{precio}" class="form-control" placeholder="Precio del dietaUsuario" />
-                            <label for="precio">Precio:</label>
+                            <input type="text" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="objetivos del dietaUsuario" />
+                            <label for="objetivos">Objetivos:</label>
                         </div>
                         <div class="form-floating mb-3">
                             <select id="categoria" th:field="*{categoria}" class="form-select">x

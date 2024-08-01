@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -38,6 +39,9 @@ public class Dieta {
     @Column (name = "planificacion_frecuencia")
     private String planificacion_frecuencia;
 
+    @Column(name = "fecha_creacion")
+    private LocalDate fechaCreacion;
+
 
     @OneToMany(mappedBy = "dieta", cascade = CascadeType.ALL)
     private Set<DetallesDieta> detalles_dietas;
@@ -45,6 +49,19 @@ public class Dieta {
 
     @OneToMany(mappedBy = "dieta")
     private Set<ProgresionDieta> progresionDietas;
+
+
+    public Dieta(String nombre, String objetivos, String categoria, byte[] recursosMultimedia,
+                 String planificacionFrecuencia, String descripcion) {
+
+        this.nombre = nombre;
+        this.objetivos = objetivos;
+        this.categoria = categoria;
+        this.recursos_multimedia = recursosMultimedia;
+        this.planificacion_frecuencia = planificacionFrecuencia;
+        this.descripcion = descripcion;
+    }
+
 
 
     @ManyToOne(fetch = FetchType.EAGER)

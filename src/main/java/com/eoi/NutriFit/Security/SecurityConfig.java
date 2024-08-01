@@ -55,10 +55,16 @@ public class SecurityConfig {
                     .requestMatchers("/fonts/**").permitAll()
                     .requestMatchers("/static/lib/**").permitAll()
                     .requestMatchers("/static/scss/**").permitAll()
+                    //Producto security
                     .requestMatchers(HttpMethod.GET, "/producto/list").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.GET, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.POST, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.POST, "/producto/**").hasRole("ADMIN")
+                    //Dietas security
+                    .requestMatchers(HttpMethod.GET, "/dietaUsuario/list").hasAnyRole("ADMIN", "EMPLEADO")
+                    .requestMatchers(HttpMethod.GET, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
+                    .requestMatchers(HttpMethod.POST, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
+                    .requestMatchers(HttpMethod.POST, "/dietaUsuario/**").hasRole("ADMIN")
                     .requestMatchers("/index").permitAll(); // Permitir todas las solicitudes por defecto
             customizer.anyRequest().authenticated();
         });

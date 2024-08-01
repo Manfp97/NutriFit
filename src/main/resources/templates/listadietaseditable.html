@@ -21,7 +21,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="dietaUsuario : ${dietaUsuariosPage.content}">
+                <tr th:each="dietaUsuario : ${dietaPage.content}">
                     <td th:text="${dietaUsuario.id}">1</td>
                     <td th:text="${dietaUsuario.nombre}">Nombre de la Dieta</td>
                     <td th:text="${dietaUsuario.categoria}">Categoría</td>
@@ -37,14 +37,14 @@
         <div class="d-flex justify-content-center mt-4">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li th:classappend="${dietaUsuariosPage.hasPrevious()} ? '' : 'disabled'" class="page-item">
-                        <a th:href="@{/dietaUsuario/list(page=${dietaUsuariosPage.number - 1}, size=${dietaUsuariosPage.size})}" class="page-link">Anterior</a>
+                    <li th:classappend="${dietaPage.hasPrevious()} ? '' : 'disabled'" class="page-item">
+                        <a th:href="@{/dietaUsuario/list(page=${dietaPage.number - 1}, size=${dietaPage.size})}" class="page-link">Anterior</a>
                     </li>
-                    <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == dietaUsuariosPage.number} ? 'active' : ''">
-                        <a th:href="@{/dietaUsuario/list(page=${pageNumber - 1}, size=${dietaUsuariosPage.size})}" class="page-link" th:text="${pageNumber}">1</a>
+                    <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == dietaPage.number} ? 'active' : ''">
+                        <a th:href="@{/dietaUsuario/list(page=${pageNumber - 1}, size=${dietaPage.size})}" class="page-link" th:text="${pageNumber}">1</a>
                     </li>
-                    <li th:classappend="${dietaUsuariosPage.hasNext()} ? '' : 'disabled'" class="page-item">
-                        <a th:href="@{/dietaUsuario/list(page=${dietaUsuariosPage.number + 1}, size=${dietaUsuariosPage.size})}" class="page-link">Siguiente</a>
+                    <li th:classappend="${dietaPage.hasNext()} ? '' : 'disabled'" class="page-item">
+                        <a th:href="@{/dietaUsuario/list(page=${dietaPage.number + 1}, size=${dietaPage.size})}" class="page-link">Siguiente</a>
                     </li>
                 </ul>
             </nav>

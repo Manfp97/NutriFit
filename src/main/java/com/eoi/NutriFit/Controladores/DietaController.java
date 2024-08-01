@@ -30,6 +30,12 @@ public class DietaController {
     @Autowired
     private DietaRepo dietaRepo;
 
+    @Autowired
+    public DietaController(DietaService service, DietaRepo dietaRepo) {
+        this.service = service;
+        this.dietaRepo = dietaRepo;
+    }
+
     @GetMapping
     public String listAll(
             @RequestParam(required = false, defaultValue = "0") int page,
@@ -65,13 +71,6 @@ public class DietaController {
         }
     }
 
-//    @GetMapping
-//    public String getAll(Model model) {
-//        List<Dieta> listaDetalles = service.buscarEntidades();
-//        model.addAttribute("dietas", listaDetalles);
-//        return "dieta";
-//
-//    }
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
@@ -118,14 +117,14 @@ public class DietaController {
 
                 service.guardar(updatedDieta);
                 model.addAttribute("mensaje", "Dieta actualizada con éxito");
-                return "redirect:/dieta";
+                return "redirect:/dietaUsuario";
             } else {
                 model.addAttribute("mensaje", "Dieta no encontrada");
-                return "redirect:/dieta";
+                return "redirect:/dietaUsuario";
             }
         } catch (Exception e) {
             model.addAttribute("mensaje", "Error al actualizar dieta: " + e.getMessage());
-            return "redirect:/dieta";
+            return "redirect:/dietaUsuario";
         }
     }
 
@@ -134,7 +133,7 @@ public class DietaController {
     public String delete(@PathVariable Integer id) {
         try {
             service.eliminarPorId(id);
-            return "redirect:/dieta";
+            return "redirect:/dietaUsuario";
         } catch (EntityNotFoundException e) {
             return "redirect:/404";
         }
@@ -154,10 +153,10 @@ public class DietaController {
         try {
             service.guardar(dieta);
             model.addAttribute("mensaje", "Dieta creada con éxito");
-            return "redirect:/dieta/nuevo";
+            return "redirect:/dietaUsuario/nuevo";
         } catch (Exception e) {
             model.addAttribute("mensaje", "Error al crear dieta");
-            return "redirect:/dieta/nuevo";
+            return "redirect:/404";
         }
     }
     

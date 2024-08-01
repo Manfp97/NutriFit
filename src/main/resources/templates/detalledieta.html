@@ -15,7 +15,7 @@
                     <div class="card-body p-5">
                         <h1 class="card-title mb-4 text-center fw-bold">Actualizar DietaUsuario</h1>
                         <!-- Formulario para actualizar el dietaUsuario -->
-                        <form th:action="@{/dietaUsuario/{id}(id=${dietaUsuario.id})}" th:object="${dietaUsuario}" method="post">
+                        <form th:action="@{/dietaUsuario/{id}(id=${dieta.id})}" th:object="${dieta}" method="post">
                             <!-- Campo oculto para el ID del dietaUsuario -->
                             <input type="hidden" th:field="*{id}" />
                             <!-- Campo para el nombre del dietaUsuario -->
@@ -37,10 +37,10 @@
                             <div class="form-floating mb-3">
                                 <select id="categoria" th:field="*{categoria}" class="form-select" required>
                                     <option value="" th:text="'Seleccione una categoría'">Seleccione una categoría</option>
-                                    <option value="Aumentodemasamuscular" th:selected="${dietaUsuario.categoria == 'Aumentodemasamuscular'}">Aumentodemasamuscular</option>
-                                    <option value="Perdidadepeso" th:selected="${dietaUsuario.categoria == 'Perdidadepeso'}">Perdidadepeso</option>
-                                    <option value="Aumentodepeso" th:selected="${dietaUsuario.categoria == 'Aumentodepeso'}">Aumentodepeso</option>
-                                    <option value="Dietadeportiva" th:selected="${dietaUsuario.categoria == 'Dietadeportiva'}">Dietadeportiva</option>
+                                    <option value="Aumentodemasamuscular" th:selected="${dieta.categoria == 'Aumentodemasamuscular'}">Aumentodemasamuscular</option>
+                                    <option value="Perdidadepeso" th:selected="${dieta.categoria == 'Perdidadepeso'}">Perdidadepeso</option>
+                                    <option value="Aumentodepeso" th:selected="${dieta.categoria == 'Aumentodepeso'}">Aumentodepeso</option>
+                                    <option value="Dietadeportiva" th:selected="${dieta.categoria == 'Dietadeportiva'}">Dietadeportiva</option>
                                 </select>
                                 <label for="categoria">Categoría:</label>
                             </div>
@@ -51,7 +51,7 @@
                         </form>
 
                         <!-- Formulario para eliminar el dietaUsuario -->
-                        <form th:action="@{/dietaUsuario/delete/{id}(id=${dietaUsuario.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este dietaUsuario?');">
+                        <form th:action="@{/dietaUsuario/delete/{id}(id=${dieta.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este dietaUsuario?');">
                             <input type="hidden" name="_method" value="delete" />
                             <div class="text-center">
                                 <button type="submit" class="btn btn-danger rounded-3 px-5 py-2">Eliminar DietaUsuario</button>
