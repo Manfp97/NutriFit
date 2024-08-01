@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
 
     <meta charset="utf-8">
@@ -39,7 +39,11 @@
 
 
     <div th:replace="fragments/header :: header">...</div>
-    <div th:replace="fragments/productolista :: productolista">...</div>
+    <div class="container mt-5 pt-5">
+        <div class="mt-5">
+            <div th:replace="fragments/productolista :: productolista">...</div>
+        </div>
+    </div>
     <div th:replace="fragments/testimonios :: testimonios">...</div>
     <div th:replace="fragments/opiniones :: opiniones">...</div>
     <div th:replace="fragments/footer :: footer">...</div>

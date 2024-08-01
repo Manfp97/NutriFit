@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,7 @@ public class ProductoController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String listAllEditable(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size,
                                   Model model) {
@@ -99,12 +101,14 @@ public class ProductoController {
 
 
     @GetMapping("/nuevo")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
     public String mostrarFormulario(Model model) {
         model.addAttribute("producto", new Producto());
         return "crearproducto"; // nombre del archivo Thymeleaf (sin .html)
     }
 
     @PostMapping("/nuevo")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String crear(@ModelAttribute("producto") Producto producto, Model model) {
         try {
             service.guardar(producto);
@@ -117,6 +121,7 @@ public class ProductoController {
     }
 
     @PostMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String update(@PathVariable Integer id, @ModelAttribute Producto producto, Model model) {
         try {
             Optional<Producto> existingProducto = service.encuentraPorId(id);
@@ -143,6 +148,7 @@ public class ProductoController {
 
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@PathVariable Integer id) {
         try {
             service.eliminarPorId(id);
