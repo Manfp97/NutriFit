@@ -7,6 +7,23 @@
                     <p>Tu dieta es una cuenta bancaria. Las buenas elecciones alimentarias son buenas inversiones.</p>
                 </div>
             </div>
+
+            <!-- Botones que sólo se mostrarán a usuarios con ROLE_ADMIN o ROLE_EMPLEADO -->
+            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
+                    <li class="nav-item me-2">
+                        <a class="btn btn-primary" th:href="@{/dietaUsuario/list}"
+                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"
+                           th:text="'Lista de productos'"></a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-success" th:href="@{/dietaUsuario/nuevo}"
+                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"
+                           th:text="'Nuevo producto'"></a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                 <ul class="nav nav-pills d-inline-flex justify-content-end mb-5 flex-nowrap">
                     <li class="nav-item me-2">

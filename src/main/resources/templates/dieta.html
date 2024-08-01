@@ -8,13 +8,15 @@
 <body>
 
 
-    <div layout:fragment="content">
-        <div th:replace="fragments/navbar :: navbar">...</div>
+<div th:replace="fragments/header :: header">...</div>
+<div class="container mt-5 pt-5">
+    <div class="mt-5">
         <div th:replace="fragments/dietalista :: dietalista">...</div>
-        <div th:replace="fragments/testimonios :: testimonios">...</div>
-        <div th:replace="fragments/opiniones :: opiniones">...</div>
-        <div th:replace="fragments/footer :: footer">...</div>
     </div>
+</div>
+<div th:replace="fragments/testimonios :: testimonios">...</div>
+<div th:replace="fragments/opiniones :: opiniones">...</div>
+<div th:replace="fragments/footer :: footer">...</div>
 
             <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
