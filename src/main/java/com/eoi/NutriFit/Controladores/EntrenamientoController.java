@@ -3,12 +3,12 @@ package com.eoi.NutriFit.Controladores;
 import com.eoi.NutriFit.Entidades.Entrenamiento;
 import com.eoi.NutriFit.Repositorios.EntrenamientoRepo;
 import com.eoi.NutriFit.Servicios.EntrenamientoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/entrenamiento")
+@RequestMapping("/entrenamientoUsuario")
 public class EntrenamientoController {
 
     @Autowired
@@ -27,24 +27,24 @@ public class EntrenamientoController {
     @Autowired
     private EntrenamientoRepo entrenamientoRepo;
 
-//    @GetMapping
-//    public String getAll(Model model) {
-//        List<Entrenamiento> listaDetalles = service.buscarEntidades();
-//        model.addAttribute("entrenamientos", listaDetalles);
-//        return "entrenamiento";
-//    }
+    @Autowired
+    public EntrenamientoController(EntrenamientoService service, EntrenamientoRepo entrenamientoRepo) {
+        this.service = service;
+        this.entrenamientoRepo = entrenamientoRepo;
+    }
 
     @GetMapping
-    public String getEntrenamientos(
+    public String listAll(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "9") int size,
             @RequestParam(value = "dificultad", required = false) String dificultad,
-            @RequestParam(required = false, defaultValue = "cardio") String categoria,
+            @RequestParam(required = false, defaultValue = "grupomuscular") String categoria,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Entrenamiento> entrenamientosPage;
 
+        // Verifica si la categoria no es nula ni vacia
         if (dificultad != null && !dificultad.isEmpty()) {
             if (categoria != null && !categoria.isEmpty()) {
                 entrenamientosPage = entrenamientoRepo.findByCategoriaAndDificultad(categoria, dificultad, pageable);
@@ -59,6 +59,7 @@ public class EntrenamientoController {
             }
         }
 
+        // Crea la lista de números de página
         List<Integer> pageNumbers = IntStream.rangeClosed(1, entrenamientosPage.getTotalPages())
                 .boxed()
                 .collect(Collectors.toList());
@@ -69,42 +70,93 @@ public class EntrenamientoController {
         model.addAttribute("categoria", categoria);
         model.addAttribute("dificultad", dificultad);
 
-        return "entrenamiento";
+        return "entrenamientonotfound";
+    }
+
+    @GetMapping("/list")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
+    public String listAllEditable(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size,
+                                  Model model) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Entrenamiento> entrenamientoPage = entrenamientoRepo.findAll(pageable);
+
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, entrenamientoPage.getTotalPages())
+                .boxed()
+                .collect(Collectors.toList());
+
+        model.addAttribute("entrenamientoPage", entrenamientoPage);
+        model.addAttribute("pageNumbers", pageNumbers);
+        return "listaentrenamientoseditable"; // El nombre del archivo Thymeleaf que mostraría la tabla
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Entrenamiento> getById(@PathVariable Integer id) {
+    public String getById(@PathVariable Integer id, Model model) {
         Optional<Entrenamiento> entrenamiento = service.encuentraPorId(id);
+        
         if (entrenamiento.isPresent()) {
-            return ResponseEntity.ok(entrenamiento.get());
+            model.addAttribute("entrenamiento", entrenamiento.get());
+            return "detalleentrenamiento";
         } else {
-            return ResponseEntity.notFound().build();
+            return "redirect:/404";
         }
     }
 
-    @PostMapping
-    public Entrenamiento create(@RequestBody Entrenamiento entrenamiento) throws Exception {
-        return service.guardar(entrenamiento);
-    }
+    @PostMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
+    public String update(@PathVariable Integer id, @ModelAttribute Entrenamiento entrenamiento, Model model) {
+        try {
+            Optional<Entrenamiento> existingEntrenamiento= service.encuentraPorId(id);
+            if (existingEntrenamiento.isPresent()) {
+                Entrenamiento updatedEntrenamiento = existingEntrenamiento.get();
+                updatedEntrenamiento.setNombre(entrenamiento.getNombre());
+                updatedEntrenamiento.setObjetivos(entrenamiento.getObjetivos());
+                updatedEntrenamiento.setCategoria(entrenamiento.getCategoria());
+                // Actualizar otros campos necesarios si es necesario
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Entrenamiento> update(@PathVariable Integer id, @RequestBody Entrenamiento entrenamiento) throws Exception {
-        Optional<Entrenamiento> existingEntrenamiento = service.encuentraPorId(id);
-        if (existingEntrenamiento.isPresent()) {
-            entrenamiento.setId(id);
-            return ResponseEntity.ok(service.guardar(entrenamiento));
-        } else {
-            return ResponseEntity.notFound().build();
+                service.guardar(updatedEntrenamiento);
+                model.addAttribute("mensaje", "Entrenamiento actualizado con éxito");
+                return "redirect:/entrenamientoUsuario";
+            } else {
+                model.addAttribute("mensaje", "Entrenamiento no encontrado");
+                return "redirect:/entrenamientoUsuario";
+            }
+        } catch (Exception e) {
+            model.addAttribute("mensaje", "Error al actualizar entrenamiento: " + e.getMessage());
+            return "redirect:/entrenamientoUsuario";
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (service.encuentraPorId(id).isPresent()) {
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String delete(@PathVariable Integer id) {
+        try {
             service.eliminarPorId(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+            return "redirect:/entrenamientoUsuario";
+        } catch (EntityNotFoundException e) {
+            return "redirect:/404";
         }
     }
+
+    @GetMapping("/nuevo")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("entrenamiento", new Entrenamiento());
+        return "crearentrenamiento"; // nombre del archivo Thymeleaf (sin .html)
+    }
+
+    @PostMapping("/nuevo")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
+    public String crear(@ModelAttribute("entrenamiento") Entrenamiento entrenamiento, Model model) {
+        try {
+            service.guardar(entrenamiento);
+            model.addAttribute("mensaje", "Entrenamiento creado con éxito");
+            return "redirect:/entrenamientoUsuario/nuevo";
+        } catch (Exception e) {
+            model.addAttribute("mensaje", "Error al crear entrenamiento");
+            return "redirect:/404";
+        }
+    }
+
 }
