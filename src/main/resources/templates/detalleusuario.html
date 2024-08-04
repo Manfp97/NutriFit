@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Usuario</title>
+    <!-- Incluye tu CSS aquí -->
+</head>
+<body>
+<div layout:fragment="content" class="mt-4">
+    <div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-body p-5">
+                        <h1 class="card-title mb-4 text-center fw-bold">Actualizar Usuario</h1>
+                        <!-- Formulario para actualizar el usuario -->
+                        <form th:action="@{/usuario/{id}(id=${usuario.id})}" th:object="${usuario}" method="post">
+                            <!-- Campo oculto para el ID del usuario -->
+                            <input type="hidden" th:field="*{id}" />
+                            <!-- Campo para el nombre de usuario -->
+                            <div class="form-floating mb-3">
+                                <input type="text" id="nombre" th:field="*{username}" class="form-control" placeholder="Nombre de usuario" />
+                                <label for="nombre">Nombre de Usuario:</label>
+                            </div>
+                            <!-- Campo para el password -->
+                            <div class="form-floating mb-3">
+                                <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Password" />
+                                <label for="password">Password:</label>
+                            </div>
+                            <!-- Selector para el rol del usuario -->
+                            <div class="form-floating mb-3">
+                                <select id="rol" th:field="*{rol.nombre}" class="form-select" required>
+                                    <option value="" th:text="'Seleccione un rol'">Seleccione un rol</option>
+                                    <option value="ROLE_CLIENTE" th:selected="${usuario.rol.nombre == 'ROLE_USER'}">Cliente</option>
+                                    <option value="ROLE_EMPLEADO" th:selected="${usuario.rol.nombre == 'ROLE_EMPLEADO'}">Profesional</option>
+                                </select>
+                                <label for="rol">Rol:</label>
+                            </div>
+                            <!-- Botón para actualizar el usuario -->
+                            <div class="text-center mb-3">
+                                <button type="submit" class="btn btn-primary rounded-3 px-5 py-2">Actualizar Usuario</button>
+                            </div>
+                        </form>
+
+                        <!-- Formulario para eliminar el usuario -->
+                        <form th:action="@{/usuario/delete/{id}(id=${usuario.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger rounded-3 px-5 py-2">Eliminar Usuario</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

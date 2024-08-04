@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <!-- Incluye tu CSS aquí -->
+</head>
+<body>
+<div layout:fragment="content" class="mt-4">
+    <div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s">
+        <h1 class="text-center mb-4">Lista de Usuarios</h1>
+
+        <!-- Formulario de filtrado por rol -->
+        <form th:action="@{/usuario/list}" method="get" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <select class="form-select" name="rol">
+                        <option value="" th:selected="${rol == null or rol == ''}">Todos los Roles</option>
+                        <option value="ROLE_ADMIN" th:selected="${rol == 'ROLE_ADMIN'}">Admin</option>
+                        <option value="ROLE_EMPLEADO" th:selected="${rol == 'ROLE_EMPLEADO'}">Empleado</option>
+                        <option value="ROLE_USER" th:selected="${rol == 'ROLE_USER'}">Cliente</option>
+                        <!-- Agrega más opciones según tus roles -->
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usuario : ${usuariosPage.content}">
+                    <td th:text="${usuario.id}">1</td>
+                    <td th:text="${usuario.username}">Nombre del Usuario</td>
+                    <td th:text="${usuario.rol.nombreRol}">Rol del Usuario</td>
+                    <td>
+                        <!-- Enlace para editar el usuario -->
+                        <a th:href="@{/usuario/{id}(id=${usuario.id})}" class="btn btn-primary">Editar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- Paginación -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:classappend="${usuariosPage.hasPrevious()} ? '' : 'disabled'" class="page-item">
+                        <a th:href="@{/usuario/list(page=${usuariosPage.number - 1}, size=${usuariosPage.size}, rol=${rol})}" class="page-link">Anterior</a>
+                    </li>
+                    <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == usuariosPage.number} ? 'active' : ''">
+                        <a th:href="@{/usuario/list(page=${pageNumber - 1}, size=${usuariosPage.size}, rol=${rol})}" class="page-link" th:text="${pageNumber}">1</a>
+                    </li>
+                    <li th:classappend="${usuariosPage.hasNext()} ? '' : 'disabled'" class="page-item">
+                        <a th:href="@{/usuario/list(page=${usuariosPage.number + 1}, size=${usuariosPage.size}, rol=${rol})}" class="page-link">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

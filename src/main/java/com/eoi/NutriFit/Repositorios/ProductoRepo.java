@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductoRepo extends ProductoPagingAndSorting<Producto, Integer> {
+
     Page<Producto> findAll(Pageable pageable);
+
     Page<Producto> findByCategoria(String nombre, Pageable pageable);
 }

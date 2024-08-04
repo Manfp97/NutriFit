@@ -36,6 +36,6 @@ public class Usuario {
     @JoinColumn(name = "rol_id", nullable = false)
     private Roles rol;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private DetalleUsuario detalleUsuario;
 }
