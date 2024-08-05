@@ -38,7 +38,7 @@ public class EntrenamientoController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "9") int size,
             @RequestParam(value = "dificultad", required = false) String dificultad,
-            @RequestParam(required = false, defaultValue = "grupomuscular") String categoria,
+            @RequestParam(required = false, defaultValue = "cardio") String categoria,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
@@ -70,7 +70,7 @@ public class EntrenamientoController {
         model.addAttribute("categoria", categoria);
         model.addAttribute("dificultad", dificultad);
 
-        return "entrenamientonotfound";
+        return "entrenamiento";
     }
 
     @GetMapping("/list")

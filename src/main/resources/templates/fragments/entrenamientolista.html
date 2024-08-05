@@ -10,24 +10,27 @@
             <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                 <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='fitness', size=${pagina.size}, page=0)}" th:text="'Fitness'" th:classappend="${categoria == 'fitness'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=0)}" th:text="'Musculacion'" th:classappend="${categoria == 'musculacion'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='altorendimiento', size=${pagina.size}, page=0)}" th:text="'Altorendimiento'" th:classappend="${categoria == 'altorendimiento'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=0)}" th:text="'Mantenimiento'" th:classappend="${categoria == 'mantenimiento'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='vidasaludable', size=${pagina.size}, page=0)}" th:text="'Vidasaludable'" th:classappend="${categoria == 'vidasaludable'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=0)}" th:text="'Peso Corporal'" th:classappend="${categoria == 'pesocorporal'} ? 'active'"></a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=0)}" th:text="'Cardio'" th:classappend="${categoria == 'cardio'} ? 'active'"></a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="tab-content">
-            <!-- Sección Fitness -->
-            <div class="tab-pane fade show" th:classappend="${categoria == 'fitness'} ? 'active'" id="fitness">
+            <!-- Sección Musculacion -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'musculacion'} ? 'show active' : ''" id="musculacion">
                 <div class="row g-5">
                     <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/fitness.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Fitness">
+                            <img src="img/musculacion.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Musculacion">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
@@ -40,15 +43,15 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/entrenamiento(categoria='fitness', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/entrenamiento(categoria='fitness', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/entrenamiento(categoria='fitness', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -56,12 +59,12 @@
                 </div>
             </div>
 
-            <!-- Sección Altorendimiento -->
-            <div class="tab-pane fade" th:classappend="${categoria == 'altorendimiento'} ? 'active show' : ''" id="altorendimiento">
+            <!-- Sección Mantenimiento -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'mantenimiento'} ? 'show active' : ''" id="mantenimiento">
                 <div class="row g-5">
                     <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/fitness.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Altorendimiento">
+                            <img src="img/mantenimiento.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Mantenimiento">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
@@ -74,15 +77,15 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/entrenamiento(categoria='altorendimiento', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/entrenamiento(categoria='altorendimiento', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/entrenamiento(categoria='altorendimiento', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -90,12 +93,12 @@
                 </div>
             </div>
 
-            <!-- Sección Vida Saludable -->
-            <div class="tab-pane fade" th:classappend="${categoria == 'vidasaludable'} ? 'active show' : ''" id="vidasaludable">
+            <!-- Sección Peso Corporal -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'pesocorporal'} ? 'show active' : ''" id="pesocorporal">
                 <div class="row g-5">
                     <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/fitness.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Peso Corporal">
+                            <img src="img/pesocorporal.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Peso Corporal">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
@@ -108,15 +111,49 @@
                 <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/entrenamiento(categoria='vidasaludable', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/entrenamiento(categoria='vidasaludable', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/entrenamiento(categoria='vidasaludable', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sección Cardio -->
+            <div class="tab-pane fade" th:classappend="${categoria == 'cardio'} ? 'show active' : ''" id="cardio">
+                <div class="row g-5">
+                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
+                        <div class="card">
+                            <img src="img/cardio.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Cardio">
+                            <div class="card-body">
+                                <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
+                                <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
+                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paginación -->
+                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${pagina.hasPrevious()}" class="page-item">
+                            <a th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                            <a th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                        </li>
+                        <li th:if="${pagina.hasNext()}" class="page-item">
+                            <a th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

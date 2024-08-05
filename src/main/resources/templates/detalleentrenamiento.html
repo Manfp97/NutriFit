@@ -25,23 +25,13 @@
                             </div>
                             <!-- Campo para la descripción del entrenamiento -->
                             <div class="form-floating mb-3">
-                                <input type="text" id="descripcion" th:field="*{categoria}" class="form-control" placeholder="Categoría del entrenamiento" />
-                                <label for="categoria">Categoria:</label>
+                                <input type="text" id="descripcion" th:field="*{descripcion}" class="form-control" placeholder="Categoría del entrenamiento" />
+                                <label for="descripcion">descripcion:</label>
                             </div>
                             <!-- Campo para el precio del entrenamiento -->
                             <div class="form-floating mb-3">
-                                <input type="number" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" step="0.01" />
+                                <input type="text" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" step="0.01" />
                                 <label for="objetivos">Objetivos:</label>
-                            </div>
-                            <!-- Campo para la categoría del entrenamiento -->
-                            <div class="form-floating mb-3">
-                                <select id="categoria" th:field="*{categoria}" class="form-select" required>
-                                    <option value="" th:text="'Seleccione una categoría'">Seleccione una categoría</option>
-                                    <option value="Fitness" th:selected="${entrenamiento.categoria == 'Fitness'}">Fitness</option>
-                                    <option value="Altorendimiento" th:selected="${entrenamiento.categoria == 'Altorendimiento'}">Altorendimiento</option>
-                                    <option value="Vidasaludable" th:selected="${entrenamiento.categoria == 'Vidasaludable'}">Vidasaludable</option>
-                                </select>
-                                <label for="categoria">Categoría:</label>
                             </div>
                             <!-- Botón para actualizar el entrenamiento -->
                             <div class="text-center mb-3">

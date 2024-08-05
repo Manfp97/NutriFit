@@ -23,16 +23,15 @@
                             <label for="descripcion">Descripción:</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" />
+                            <input type="number" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" />
                             <label for="objetivos">Objetivos:</label>
                         </div>
                         <div class="form-floating mb-3">
                             <select id="categoria" th:field="*{categoria}" class="form-select">x
                                 <option value="">Seleccione una categoría</option>
-                                <option value="musculacion">musculacion</option>
-                                <option value="mantenimiento">mantenimiento</option>
-                                <option value="pesocorporal">peso corporal</option>
-                                <option value="cardio">cardio</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="AltoRendimiento">Alto Rendimiento</option>
+                                <option value="VidaSaludable">Vida Saludable</option>
                             </select>
                             <label for="categoria">Categoría:</label>
                         </div>
