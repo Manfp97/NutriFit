@@ -23,4 +23,9 @@ public class Roles {
     @Column(name = "nombre_rol", nullable = false, length = 45)
     private String nombreRol;
 
+
+    @OneToMany(mappedBy = "rol")
+    @ToString.Exclude
+    private Set<Usuario> usuarios;
+
 }

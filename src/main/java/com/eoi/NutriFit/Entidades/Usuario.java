@@ -6,13 +6,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="usuarios")
+@Table(name = "usuarios")
 @Getter
 @Setter
 @ToString
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -24,9 +24,6 @@ public class Usuario {
 
     @Column(name = "activo")
     private boolean activo = true;
-
-//    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Cliente clienteUsuario;
 
     @OneToOne
     @JoinColumn(name = "cliente_id") // Assuming this is how it's mapped
