@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Entrenamiento</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-5">
+                    <h1 class="card-title mb-4 text-center fw-bold">Crear Entrenamiento</h1>
+                    <form th:action="@{/entrenamiento/nuevo}" th:object="${entrenamiento}" method="post">
+                        <div class="form-floating mb-3">
+                            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Nombre del entrenamiento" />
+                            <label for="nombre">Nombre:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea type="text" id="descripcion" rows="5" th:field="*{descripcion}" class="form-control" placeholder="Descripción del entrenamiento">
+                            </textarea>
+                            <label for="descripcion">Descripción:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" />
+                            <label for="objetivos">Objetivos:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select id="categoria" th:field="*{categoria}" class="form-select">x
+                                <option value="">Seleccione una categoría</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="AltoRendimiento">Alto Rendimiento</option>
+                                <option value="VidaSaludable">Vida Saludable</option>
+                            </select>
+                            <label for="categoria">Categoría:</label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary rounded-3 px-5 py-2">Crear Entrenamiento</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

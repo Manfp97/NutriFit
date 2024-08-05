@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/entrenamientoUsuario")
+@RequestMapping("/entrenamiento")
 public class EntrenamientoController {
 
     @Autowired
@@ -117,14 +117,14 @@ public class EntrenamientoController {
 
                 service.guardar(updatedEntrenamiento);
                 model.addAttribute("mensaje", "Entrenamiento actualizado con éxito");
-                return "redirect:/entrenamientoUsuario";
+                return "redirect:/entrenamiento";
             } else {
                 model.addAttribute("mensaje", "Entrenamiento no encontrado");
-                return "redirect:/entrenamientoUsuario";
+                return "redirect:/entrenamiento";
             }
         } catch (Exception e) {
             model.addAttribute("mensaje", "Error al actualizar entrenamiento: " + e.getMessage());
-            return "redirect:/entrenamientoUsuario";
+            return "redirect:/entrenamiento";
         }
     }
 
@@ -133,7 +133,7 @@ public class EntrenamientoController {
     public String delete(@PathVariable Integer id) {
         try {
             service.eliminarPorId(id);
-            return "redirect:/entrenamientoUsuario";
+            return "redirect:/entrenamiento";
         } catch (EntityNotFoundException e) {
             return "redirect:/404";
         }
@@ -152,7 +152,7 @@ public class EntrenamientoController {
         try {
             service.guardar(entrenamiento);
             model.addAttribute("mensaje", "Entrenamiento creado con éxito");
-            return "redirect:/entrenamientoUsuario/nuevo";
+            return "redirect:/entrenamiento/nuevo";
         } catch (Exception e) {
             model.addAttribute("mensaje", "Error al crear entrenamiento");
             return "redirect:/404";
