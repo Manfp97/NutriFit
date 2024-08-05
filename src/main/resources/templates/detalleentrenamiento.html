@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Entrenamiento</title>
+    <!-- Incluye tu CSS aquí -->
+</head>
+<body>
+<div layout:fragment="content" class="mt-4">
+    <div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-body p-5">
+                        <h1 class="card-title mb-4 text-center fw-bold">Actualizar Entrenamiento</h1>
+                        <!-- Formulario para actualizar el entrenamiento -->
+                        <form th:action="@{/entrenamiento/{id}(id=${entrenamiento.id})}" th:object="${entrenamiento}" method="post">
+                            <!-- Campo oculto para el ID del entrenamiento -->
+                            <input type="hidden" th:field="*{id}" />
+                            <!-- Campo para el nombre del entrenamiento -->
+                            <div class="form-floating mb-3">
+                                <input type="text" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Nombre del entrenamiento" />
+                                <label for="nombre">Nombre:</label>
+                            </div>
+                            <!-- Campo para la descripción del entrenamiento -->
+                            <div class="form-floating mb-3">
+                                <input type="text" id="descripcion" th:field="*{categoria}" class="form-control" placeholder="Categoría del entrenamiento" />
+                                <label for="categoria">Categoria:</label>
+                            </div>
+                            <!-- Campo para el precio del entrenamiento -->
+                            <div class="form-floating mb-3">
+                                <input type="number" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" step="0.01" />
+                                <label for="objetivos">Objetivos:</label>
+                            </div>
+                            <!-- Campo para la categoría del entrenamiento -->
+                            <div class="form-floating mb-3">
+                                <select id="categoria" th:field="*{categoria}" class="form-select" required>
+                                    <option value="" th:text="'Seleccione una categoría'">Seleccione una categoría</option>
+                                    <option value="Fitness" th:selected="${entrenamiento.categoria == 'Fitness'}">Fitness</option>
+                                    <option value="Altorendimiento" th:selected="${entrenamiento.categoria == 'Altorendimiento'}">Altorendimiento</option>
+                                    <option value="Vidasaludable" th:selected="${entrenamiento.categoria == 'Vidasaludable'}">Vidasaludable</option>
+                                </select>
+                                <label for="categoria">Categoría:</label>
+                            </div>
+                            <!-- Botón para actualizar el entrenamiento -->
+                            <div class="text-center mb-3">
+                                <button type="submit" class="btn btn-primary rounded-3 px-5 py-2">Actualizar Entrenamiento</button>
+                            </div>
+                        </form>
+
+                        <!-- Formulario para eliminar el entrenamiento -->
+                        <form th:action="@{/entrenamiento/delete/{id}(id=${entrenamiento.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este entrenamiento?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger rounded-3 px-5 py-2">Eliminar Entrenamiento</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
