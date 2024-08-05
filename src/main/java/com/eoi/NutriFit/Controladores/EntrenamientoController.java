@@ -59,18 +59,26 @@ public class EntrenamientoController {
             }
         }
 
-        // Crea la lista de números de página
-        List<Integer> pageNumbers = IntStream.rangeClosed(1, entrenamientosPage.getTotalPages())
-                .boxed()
-                .collect(Collectors.toList());
+        // 
+        if (entrenamientosPage.isEmpty()) {
+            return "entrenamientonotfound";
 
-        model.addAttribute("pagina", entrenamientosPage);
-        model.addAttribute("pageNumbers", pageNumbers);
-        model.addAttribute("entrenamientos", entrenamientosPage.getContent());
-        model.addAttribute("categoria", categoria);
-        model.addAttribute("dificultad", dificultad);
+        } else {
+            // Crea la lista de números de página
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, entrenamientosPage.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
 
-        return "entrenamientonotfound";
+            model.addAttribute("pagina", entrenamientosPage);
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("entrenamientos", entrenamientosPage.getContent());
+            model.addAttribute("categoria", categoria);
+            model.addAttribute("dificultad", dificultad);
+
+            return "entrenamiento";
+        }
+
+
     }
 
     @GetMapping("/list")
