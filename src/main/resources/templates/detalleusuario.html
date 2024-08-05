@@ -20,8 +20,8 @@
                             <input type="hidden" th:field="*{id}" />
                             <!-- Campo para el nombre de usuario -->
                             <div class="form-floating mb-3">
-                                <input type="text" id="nombre" th:field="*{username}" class="form-control" placeholder="Nombre de usuario" />
-                                <label for="nombre">Nombre de Usuario:</label>
+                                <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Nombre de usuario" />
+                                <label for="username">Nombre de Usuario:</label>
                             </div>
                             <!-- Campo para el password -->
                             <div class="form-floating mb-3">
@@ -30,10 +30,9 @@
                             </div>
                             <!-- Selector para el rol del usuario -->
                             <div class="form-floating mb-3">
-                                <select id="rol" th:field="*{rol.nombre}" class="form-select" required>
+                                <select id="rol" th:field="*{rol.id}" class="form-select" required>
                                     <option value="" th:text="'Seleccione un rol'">Seleccione un rol</option>
-                                    <option value="ROLE_CLIENTE" th:selected="${usuario.rol.nombre == 'ROLE_USER'}">Cliente</option>
-                                    <option value="ROLE_EMPLEADO" th:selected="${usuario.rol.nombre == 'ROLE_EMPLEADO'}">Profesional</option>
+                                    <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombreRol}" th:selected="${usuario.rol.id == rol.id}"></option>
                                 </select>
                                 <label for="rol">Rol:</label>
                             </div>
