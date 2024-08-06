@@ -117,12 +117,27 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     }
     //Metodo para cargar usuarios
     public  void altaUsuarios(){
+        // Crea un usuario
         Usuario usuario = new Usuario();
         usuario.setUsername("administrador");
         usuario.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
         usuario.setActivo(true);
         usuario.setRol(rolesRepo.findByNombreRol("ROLE_ADMIN"));
-        Usuario usuarioguardado = usuarioRepository.save(usuario);
+
+        // Crea un detalle de usuario
+        DetalleUsuario detalleUsuario = new DetalleUsuario();
+        detalleUsuario.setNombre("Nombre del usuario");
+        detalleUsuario.setApellidos("Apellidos del usuario");
+        detalleUsuario.setDireccion("Direccion del usuario");
+        detalleUsuario.setDni("DNI del usuario".substring(0, 10));
+        detalleUsuario.setEmail("Email del usuario");
+
+        // Establece la relación bidireccional
+        detalleUsuario.setUsuario(usuario);
+        usuario.setDetalleUsuario(detalleUsuario);
+
+        // Guarda el usuario (esto debería guardar también el detalle usuario si tienes la cascada configurada)
+        usuarioRepository.save(usuario);
 
         Usuario usuario1 = new Usuario();
         usuario1.setUsername("anonimo");

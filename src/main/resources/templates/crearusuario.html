@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Usuario</title>
 </head>
 <body>
-<div layout:fragment="content" class="container mt-5 pt-5">
+<div class="container mt-5 pt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-3">
                 <div class="card-body p-5">
                     <h1 class="card-title mb-4 text-center fw-bold">Crear Usuario</h1>
-                    <!-- Formulario de creación de usuario -->
                     <form th:action="@{/usuario/nuevo}" th:object="${usuario}" method="post">
-
+                        <!-- Campos de Usuario -->
                         <div class="form-floating mb-3">
                             <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Username del usuario" />
                             <label for="username">Username:</label>
@@ -25,6 +24,7 @@
                             <label for="password">Password:</label>
                         </div>
 
+                        <!-- Campos de DetalleUsuario -->
                         <div class="form-floating mb-3">
                             <input type="text" id="nombre" th:field="*{detalleUsuario.nombre}" class="form-control" placeholder="Nombre del usuario" />
                             <label for="nombre">Nombre:</label>
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="number" id="dni" th:field="*{detalleUsuario.dni}" class="form-control" placeholder="DNI del usuario" />
+                            <input type="text" id="dni" th:field="*{detalleUsuario.dni}" class="form-control" placeholder="DNI del usuario" />
                             <label for="dni">DNI:</label>
                         </div>
 

@@ -90,13 +90,16 @@ public class UsuarioController {
 
     @PostMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
-    public String crear(@ModelAttribute("usuario") Usuario usuario,
-                        @ModelAttribute("detalleUsuario") DetalleUsuario detalleUsuario,
-                        Model model) {
+    public String crear(@ModelAttribute("usuario") Usuario usuario, Model model) {
         try {
-            // Establece el detalleUsuario al usuario
-            detalleUsuario.setUsuario(usuario);
-            usuario.setDetalleUsuario(detalleUsuario);
+            // Verifica que el detalleUsuario no sea null
+            if (usuario.getDetalleUsuario() == null ||
+                    usuario.getDetalleUsuario().getNombre() == null ||
+                    usuario.getDetalleUsuario().getApellidos() == null) {
+                model.addAttribute("mensaje", "Nombre y apellidos son obligatorios");
+                model.addAttribute("roles", rolesServi.getRepo().findAll());
+                return "crearusuario";
+            }
 
             // Asigna el rol predeterminado
             Roles rol = rolesRepo.findByNombreRol("ROLE_USER");

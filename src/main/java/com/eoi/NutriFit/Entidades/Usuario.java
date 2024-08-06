@@ -9,10 +9,10 @@ import lombok.ToString;
 @Table(name = "usuarios")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"detalleUsuario", "rol"})
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Cambiado a IDENTITY
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -26,13 +26,14 @@ public class Usuario {
     private boolean activo = true;
 
     @OneToOne
-    @JoinColumn(name = "cliente_id") // Assuming this is how it's mapped
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
     private Roles rol;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "detalle_usuario_id")
     private DetalleUsuario detalleUsuario;
 }

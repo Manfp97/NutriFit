@@ -9,11 +9,11 @@ import lombok.ToString;
 @Table(name="detalleusuario")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "usuario")
 public class DetalleUsuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Changed to IDENTITY for auto-increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -32,8 +32,6 @@ public class DetalleUsuario {
     @Column(name = "email", length = 50)
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id")
+    @OneToOne(mappedBy = "detalleUsuario")
     private Usuario usuario;
-
 }
