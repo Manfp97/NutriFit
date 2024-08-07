@@ -114,6 +114,14 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         roles3.setNombreRol("ROLE_EMPLEADO");
         Roles srole3 = rolesRepo.save(roles3);
 
+        Roles roles4 = new Roles();
+        roles4.setNombreRol("ROLE_ENTRENADOR");
+        Roles srole4 = rolesRepo.save(roles4);
+
+        Roles roles5 = new Roles();
+        roles5.setNombreRol("ROLE_NUTRICIONISTA");
+        Roles srole5 = rolesRepo.save(roles5);
+
     }
     //Metodo para cargar usuarios
     public  void altaUsuarios(){
@@ -138,6 +146,51 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
         // Guarda el usuario (esto debería guardar también el detalle usuario si tienes la cascada configurada)
         usuarioRepository.save(usuario);
+
+
+        // Crea un usuario con rol ROLE_NUTRICIONISTA
+        Usuario usuarioNutricionista = new Usuario();
+        usuarioNutricionista.setUsername("nutricionista");
+        usuarioNutricionista.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista.setActivo(true);
+        usuarioNutricionista.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        // Crea un detalle de usuario para ROLE_NUTRICIONISTA
+        DetalleUsuario detalleUsuarioNutricionista = new DetalleUsuario();
+        detalleUsuarioNutricionista.setNombre("Nombre del nutricionista");
+        detalleUsuarioNutricionista.setApellidos("Apellidos del nutricionista");
+        detalleUsuarioNutricionista.setDireccion("Direccion del nutricionista");
+        detalleUsuarioNutricionista.setDni("0987654321");
+        detalleUsuarioNutricionista.setEmail("nutricionista@example.com");
+
+        // Establece la relación bidireccional para ROLE_NUTRICIONISTA
+        detalleUsuarioNutricionista.setUsuario(usuarioNutricionista);
+        usuarioNutricionista.setDetalleUsuario(detalleUsuarioNutricionista);
+
+        // Guarda el usuario con rol ROLE_NUTRICIONISTA
+        usuarioRepository.save(usuarioNutricionista);
+
+        // Crea un usuario con rol ROLE_ENTRENADOR
+        Usuario usuarioEntrenador = new Usuario();
+        usuarioEntrenador.setUsername("entrenador");
+        usuarioEntrenador.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioEntrenador.setActivo(true);
+        usuarioEntrenador.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        // Crea un detalle de usuario para ROLE_ENTRENADOR
+        DetalleUsuario detalleUsuarioEntrenador = new DetalleUsuario();
+        detalleUsuarioEntrenador.setNombre("Nombre del entrenador");
+        detalleUsuarioEntrenador.setApellidos("Apellidos del entrenador");
+        detalleUsuarioEntrenador.setDireccion("Direccion del entrenador");
+        detalleUsuarioEntrenador.setDni("1122334455");
+        detalleUsuarioEntrenador.setEmail("entrenador@example.com");
+
+        // Establece la relación bidireccional para ROLE_ENTRENADOR
+        detalleUsuarioEntrenador.setUsuario(usuarioEntrenador);
+        usuarioEntrenador.setDetalleUsuario(detalleUsuarioEntrenador);
+
+        // Guarda el usuario con rol ROLE_ENTRENADOR
+        usuarioRepository.save(usuarioEntrenador);
 
         Usuario usuario1 = new Usuario();
         usuario1.setUsername("anonimo");

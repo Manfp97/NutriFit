@@ -1,9 +1,11 @@
 package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.DetalleUsuario;
+import com.eoi.NutriFit.Entidades.Producto;
 import com.eoi.NutriFit.Entidades.Roles;
 import com.eoi.NutriFit.Entidades.Usuario;
 import com.eoi.NutriFit.Repositorios.RolesRepo;
+import com.eoi.NutriFit.Repositorios.UsuarioRepository;
 import com.eoi.NutriFit.Servicios.RolesServi;
 import com.eoi.NutriFit.Servicios.UsuarioServi;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,9 @@ import java.util.stream.IntStream;
 public class UsuarioController {
 
     @Autowired
+    private UsuarioRepository usuarioRepo;
+
+    @Autowired
     private UsuarioServi service;
 
     @Autowired
@@ -33,6 +39,66 @@ public class UsuarioController {
 
     @Autowired
     private RolesServi rolesServi;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @GetMapping("/entrenadores")
+    public String listEntrenadores(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "9") int size,
+            Model model
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Usuario> usuariosPage = usuarioRepo.findByRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"), pageable);
+
+        if (usuariosPage.isEmpty()) {
+            return "404"; // Página de error o vacía
+        } else {
+            // Crea la lista de números de página
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, usuariosPage.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
+
+            // Añade los atributos al modelo
+            model.addAttribute("pagina", usuariosPage);
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("usuarios", usuariosPage.getContent());
+            model.addAttribute("rol", "ROLE_ENTRENADOR");
+            return "entrenadoresfreelance";
+        }
+    }
+
+    // Controlador para nutricionistas
+    @GetMapping("/nutricionistas")
+    public String listNutricionistas(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "9") int size,
+            Model model
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Usuario> usuariosPage = usuarioRepo.findByRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"), pageable);
+
+        if (usuariosPage.isEmpty()) {
+            return "404"; // Página de error o vacía
+        } else {
+            // Crea la lista de números de página
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, usuariosPage.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
+
+            // Añade los atributos al modelo
+            model.addAttribute("pagina", usuariosPage);
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("usuarios", usuariosPage.getContent());
+            model.addAttribute("rol", "ROLE_NUTRICIONISTA");
+            return "nutricionistasfreelance";
+        }
+    }
+
+
+
+
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
@@ -110,6 +176,11 @@ public class UsuarioController {
             }
             usuario.setRol(rol);
 
+            //  Encoder de la password del usuario
+            String encodedPassword = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPassword);
+
+
             // Guarda el usuario
             service.guardar(usuario);
             model.addAttribute("mensaje", "Usuario y detalles creados con éxito");
@@ -121,42 +192,61 @@ public class UsuarioController {
         }
     }
 
-
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
-    public String update(@PathVariable Integer id, @ModelAttribute Usuario usuario, Model model) {
+    public String actualizar(@PathVariable Integer id, @ModelAttribute("usuario") Usuario usuario, Model model) {
         try {
+            // Buscar el usuario existente
             Usuario existingUsuario = service.encuentraPorId(id)
                     .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
+            // Actualizar los campos básicos del usuario
             existingUsuario.setUsername(usuario.getUsername());
-            existingUsuario.setPassword(usuario.getPassword());
-            existingUsuario.setActivo(usuario.isActivo());
 
-            Roles rol = rolesRepo.findByNombreRol(usuario.getRol().getNombreRol());
-            if (rol == null) {
-                model.addAttribute("mensaje", "Rol no válido");
-                return "redirect:/usuario/list";
+            // Verificar si se proporcionó una nueva contraseña, si no, mantener la existente
+            if (!usuario.getPassword().isEmpty()) {
+                existingUsuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             }
-            existingUsuario.setRol(rol);
 
-            DetalleUsuario detalleUsuario = usuario.getDetalleUsuario();
-            if (detalleUsuario != null) {
-                detalleUsuario.setUsuario(existingUsuario);
+            // Actualizar el detalle del usuario
+            if (usuario.getDetalleUsuario() != null) {
+                DetalleUsuario detalleUsuario = existingUsuario.getDetalleUsuario();
+                if (detalleUsuario == null) {
+                    detalleUsuario = new DetalleUsuario();
+                    detalleUsuario.setUsuario(existingUsuario);
+                }
+
+                // Actualizar campos de detalleUsuario
+                detalleUsuario.setNombre(usuario.getDetalleUsuario().getNombre());
+                detalleUsuario.setApellidos(usuario.getDetalleUsuario().getApellidos());
+                detalleUsuario.setDireccion(usuario.getDetalleUsuario().getDireccion());
+                detalleUsuario.setDni(usuario.getDetalleUsuario().getDni());
+                detalleUsuario.setEmail(usuario.getDetalleUsuario().getEmail());
+
                 existingUsuario.setDetalleUsuario(detalleUsuario);
             }
 
+            // Actualizar el rol del usuario si es necesario
+            if (usuario.getRol() != null && usuario.getRol().getId() != null) {
+                Roles rol = rolesRepo.findById(usuario.getRol().getId())
+                        .orElseThrow(() -> new EntityNotFoundException("Rol no válido"));
+                existingUsuario.setRol(rol);
+            }
+
+            // Guardar el usuario actualizado
             service.guardar(existingUsuario);
             model.addAttribute("mensaje", "Usuario actualizado con éxito");
-            return  "redirect:/usuario/list";
+            return "redirect:/usuario/list";
         } catch (EntityNotFoundException e) {
             model.addAttribute("mensaje", "Usuario no encontrado");
-            return  "redirect:/usuario/list";
+            return "redirect:/usuario/list";
         } catch (Exception e) {
             model.addAttribute("mensaje", "Error al actualizar usuario: " + e.getMessage());
-            return  "redirect:/usuario/list";
+            return "redirect:/usuario/list";
         }
     }
+
+
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

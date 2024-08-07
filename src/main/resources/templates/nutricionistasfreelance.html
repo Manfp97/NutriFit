@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404</title>
+</head>
+<body>
+<div>
+    <div layout:fragment="content">
+        <!-- Sección Nutricionistas -->
+        <div class="tab-pane fade" th:classappend="${rol == 'ROLE_NUTRICIONISTA'} ? 'active show' : ''" id="nutricionistas">
+            <div class="row g-5">
+                <div th:each="usuario : ${usuarios}" class="col-lg-4">
+                    <div class="card">
+                        <img src="img/nutricionista.jpg" class="card-img-top img-fluid max-height-225" alt="Nutricionista">
+                        <div class="card-body">
+                            <h5 th:text="${usuario.detalleUsuario.nombre}" class="card-title"></h5>
+                            <p th:text="${usuario.detalleUsuario.email}" class="card-text"></p>
+                            <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Paginación -->
+            <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                <ul class="pagination justify-content-center">
+                    <li th:if="${pagina.hasPrevious()}" class="page-item">
+                        <a th:href="@{/freelance/nutricionistas(size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                        <a th:href="@{/freelance/nutricionistas(size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                    </li>
+                    <li th:if="${pagina.hasNext()}" class="page-item">
+                        <a th:href="@{/freelance/nutricionistas(size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
