@@ -1,7 +1,6 @@
 package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.DetalleUsuario;
-import com.eoi.NutriFit.Entidades.Producto;
 import com.eoi.NutriFit.Entidades.Roles;
 import com.eoi.NutriFit.Entidades.Usuario;
 import com.eoi.NutriFit.Repositorios.RolesRepo;
@@ -53,7 +52,7 @@ public class UsuarioController {
         Page<Usuario> usuariosPage = usuarioRepo.findByRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"), pageable);
 
         if (usuariosPage.isEmpty()) {
-            return "404"; // Página de error o vacía
+            return "error"; // Página de error o vacía
         } else {
             // Crea la lista de números de página
             List<Integer> pageNumbers = IntStream.rangeClosed(1, usuariosPage.getTotalPages())
@@ -80,7 +79,7 @@ public class UsuarioController {
         Page<Usuario> usuariosPage = usuarioRepo.findByRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"), pageable);
 
         if (usuariosPage.isEmpty()) {
-            return "404"; // Página de error o vacía
+            return "error"; // Página de error o vacía
         } else {
             // Crea la lista de números de página
             List<Integer> pageNumbers = IntStream.rangeClosed(1, usuariosPage.getTotalPages())

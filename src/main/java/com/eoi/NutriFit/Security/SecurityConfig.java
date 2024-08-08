@@ -1,5 +1,6 @@
 package com.eoi.NutriFit.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,17 +12,25 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig <S extends Session>{
+
+    private final FindByIndexNameSessionRepository<Session> sessionRepository;
 
     private final UserDetailsService userDetailsService;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, FindByIndexNameSessionRepository<Session> sessionRepository) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.sessionRepository = sessionRepository;
     }
 
     @Bean
@@ -47,6 +56,16 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID") // Eliminar cookies
         );
 
+        http.rememberMe((rememberMe) -> rememberMe
+                        .rememberMeServices(rememberMeServices())
+                );
+
+        http.sessionManagement((sessionManagement) -> sessionManagement
+                        .maximumSessions(2)
+                        .sessionRegistry(sessionRegistry())
+                );
+
+
         http.authorizeHttpRequests(customizer -> {
             customizer
                     .requestMatchers("/js/**").permitAll()
@@ -70,6 +89,20 @@ public class SecurityConfig {
         });
 
         return http.build();
+    }
+
+    @Bean
+    public SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices =
+                new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
+
+    @Bean
+    public SpringSessionBackedSessionRegistry<Session> sessionRegistry() {
+        return new SpringSessionBackedSessionRegistry<>(this.sessionRepository);
     }
 
     @Bean
