@@ -50,7 +50,7 @@ public class ProductoController {
             productosPage = productoRepo.findAll(pageable);
         }
         if (productosPage.isEmpty()){
-            return "productnotfound";
+            return "error";
         } else {
             // Crea la lista de números de página
             List<Integer> pageNumbers = IntStream.rangeClosed(1, productosPage.getTotalPages())

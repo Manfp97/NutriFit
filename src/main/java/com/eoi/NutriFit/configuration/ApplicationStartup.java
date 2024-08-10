@@ -170,6 +170,298 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         // Guarda el usuario con rol ROLE_NUTRICIONISTA
         usuarioRepository.save(usuarioNutricionista);
 
+
+        // Crear 15 nutricionistas con rol ROLE_NUTRICIONISTA
+
+// Nutricionista 1
+        Usuario usuarioNutricionista1 = new Usuario();
+        usuarioNutricionista1.setUsername("nutricionista1");
+        usuarioNutricionista1.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista1.setActivo(true);
+        usuarioNutricionista1.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista1 = new DetalleUsuario();
+        detalleUsuarioNutricionista1.setNombre("Nombre del nutricionista 1");
+        detalleUsuarioNutricionista1.setApellidos("Apellidos del nutricionista 1");
+        detalleUsuarioNutricionista1.setDireccion("Direccion del nutricionista 1");
+        detalleUsuarioNutricionista1.setDni("098765431");
+        detalleUsuarioNutricionista1.setEmail("nutricionista1@example.com");
+
+        detalleUsuarioNutricionista1.setUsuario(usuarioNutricionista1);
+        usuarioNutricionista1.setDetalleUsuario(detalleUsuarioNutricionista1);
+
+        usuarioRepository.save(usuarioNutricionista1);
+
+// Nutricionista 2
+        Usuario usuarioNutricionista2 = new Usuario();
+        usuarioNutricionista2.setUsername("nutricionista2");
+        usuarioNutricionista2.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista2.setActivo(true);
+        usuarioNutricionista2.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista2 = new DetalleUsuario();
+        detalleUsuarioNutricionista2.setNombre("Nombre del nutricionista 2");
+        detalleUsuarioNutricionista2.setApellidos("Apellidos del nutricionista 2");
+        detalleUsuarioNutricionista2.setDireccion("Direccion del nutricionista 2");
+        detalleUsuarioNutricionista2.setDni("098765432");
+        detalleUsuarioNutricionista2.setEmail("nutricionista2@example.com");
+
+        detalleUsuarioNutricionista2.setUsuario(usuarioNutricionista2);
+        usuarioNutricionista2.setDetalleUsuario(detalleUsuarioNutricionista2);
+
+        usuarioRepository.save(usuarioNutricionista2);
+
+// Nutricionista 3
+        Usuario usuarioNutricionista3 = new Usuario();
+        usuarioNutricionista3.setUsername("nutricionista3");
+        usuarioNutricionista3.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista3.setActivo(true);
+        usuarioNutricionista3.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista3 = new DetalleUsuario();
+        detalleUsuarioNutricionista3.setNombre("Nombre del nutricionista 3");
+        detalleUsuarioNutricionista3.setApellidos("Apellidos del nutricionista 3");
+        detalleUsuarioNutricionista3.setDireccion("Direccion del nutricionista 3");
+        detalleUsuarioNutricionista3.setDni("098765433");
+        detalleUsuarioNutricionista3.setEmail("nutricionista3@example.com");
+
+        detalleUsuarioNutricionista3.setUsuario(usuarioNutricionista3);
+        usuarioNutricionista3.setDetalleUsuario(detalleUsuarioNutricionista3);
+
+        usuarioRepository.save(usuarioNutricionista3);
+
+// Nutricionista 4
+        Usuario usuarioNutricionista4 = new Usuario();
+        usuarioNutricionista4.setUsername("nutricionista4");
+        usuarioNutricionista4.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista4.setActivo(true);
+        usuarioNutricionista4.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista4 = new DetalleUsuario();
+        detalleUsuarioNutricionista4.setNombre("Nombre del nutricionista 4");
+        detalleUsuarioNutricionista4.setApellidos("Apellidos del nutricionista 4");
+        detalleUsuarioNutricionista4.setDireccion("Direccion del nutricionista 4");
+        detalleUsuarioNutricionista4.setDni("098765434");
+        detalleUsuarioNutricionista4.setEmail("nutricionista4@example.com");
+
+        detalleUsuarioNutricionista4.setUsuario(usuarioNutricionista4);
+        usuarioNutricionista4.setDetalleUsuario(detalleUsuarioNutricionista4);
+
+        usuarioRepository.save(usuarioNutricionista4);
+
+// Nutricionista 5
+        Usuario usuarioNutricionista5 = new Usuario();
+        usuarioNutricionista5.setUsername("nutricionista5");
+        usuarioNutricionista5.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista5.setActivo(true);
+        usuarioNutricionista5.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista5 = new DetalleUsuario();
+        detalleUsuarioNutricionista5.setNombre("Nombre del nutricionista 5");
+        detalleUsuarioNutricionista5.setApellidos("Apellidos del nutricionista 5");
+        detalleUsuarioNutricionista5.setDireccion("Direccion del nutricionista 5");
+        detalleUsuarioNutricionista5.setDni("098765435");
+        detalleUsuarioNutricionista5.setEmail("nutricionista5@example.com");
+
+        detalleUsuarioNutricionista5.setUsuario(usuarioNutricionista5);
+        usuarioNutricionista5.setDetalleUsuario(detalleUsuarioNutricionista5);
+
+        usuarioRepository.save(usuarioNutricionista5);
+
+// Nutricionista 6
+        Usuario usuarioNutricionista6 = new Usuario();
+        usuarioNutricionista6.setUsername("nutricionista6");
+        usuarioNutricionista6.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista6.setActivo(true);
+        usuarioNutricionista6.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista6 = new DetalleUsuario();
+        detalleUsuarioNutricionista6.setNombre("Nombre del nutricionista 6");
+        detalleUsuarioNutricionista6.setApellidos("Apellidos del nutricionista 6");
+        detalleUsuarioNutricionista6.setDireccion("Direccion del nutricionista 6");
+        detalleUsuarioNutricionista6.setDni("098765436");
+        detalleUsuarioNutricionista6.setEmail("nutricionista6@example.com");
+
+        detalleUsuarioNutricionista6.setUsuario(usuarioNutricionista6);
+        usuarioNutricionista6.setDetalleUsuario(detalleUsuarioNutricionista6);
+
+        usuarioRepository.save(usuarioNutricionista6);
+
+// Nutricionista 7
+        Usuario usuarioNutricionista7 = new Usuario();
+        usuarioNutricionista7.setUsername("nutricionista7");
+        usuarioNutricionista7.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista7.setActivo(true);
+        usuarioNutricionista7.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista7 = new DetalleUsuario();
+        detalleUsuarioNutricionista7.setNombre("Nombre del nutricionista 7");
+        detalleUsuarioNutricionista7.setApellidos("Apellidos del nutricionista 7");
+        detalleUsuarioNutricionista7.setDireccion("Direccion del nutricionista 7");
+        detalleUsuarioNutricionista7.setDni("098765437");
+        detalleUsuarioNutricionista7.setEmail("nutricionista7@example.com");
+
+        detalleUsuarioNutricionista7.setUsuario(usuarioNutricionista7);
+        usuarioNutricionista7.setDetalleUsuario(detalleUsuarioNutricionista7);
+
+        usuarioRepository.save(usuarioNutricionista7);
+
+// Nutricionista 8
+        Usuario usuarioNutricionista8 = new Usuario();
+        usuarioNutricionista8.setUsername("nutricionista8");
+        usuarioNutricionista8.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista8.setActivo(true);
+        usuarioNutricionista8.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista8 = new DetalleUsuario();
+        detalleUsuarioNutricionista8.setNombre("Nombre del nutricionista 8");
+        detalleUsuarioNutricionista8.setApellidos("Apellidos del nutricionista 8");
+        detalleUsuarioNutricionista8.setDireccion("Direccion del nutricionista 8");
+        detalleUsuarioNutricionista8.setDni("098765438");
+        detalleUsuarioNutricionista8.setEmail("nutricionista8@example.com");
+
+        detalleUsuarioNutricionista8.setUsuario(usuarioNutricionista8);
+        usuarioNutricionista8.setDetalleUsuario(detalleUsuarioNutricionista8);
+
+        usuarioRepository.save(usuarioNutricionista8);
+
+// Nutricionista 9
+        Usuario usuarioNutricionista9 = new Usuario();
+        usuarioNutricionista9.setUsername("nutricionista9");
+        usuarioNutricionista9.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista9.setActivo(true);
+        usuarioNutricionista9.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista9 = new DetalleUsuario();
+        detalleUsuarioNutricionista9.setNombre("Nombre del nutricionista 9");
+        detalleUsuarioNutricionista9.setApellidos("Apellidos del nutricionista 9");
+        detalleUsuarioNutricionista9.setDireccion("Direccion del nutricionista 9");
+        detalleUsuarioNutricionista9.setDni("098765439");
+        detalleUsuarioNutricionista9.setEmail("nutricionista9@example.com");
+
+        detalleUsuarioNutricionista9.setUsuario(usuarioNutricionista9);
+        usuarioNutricionista9.setDetalleUsuario(detalleUsuarioNutricionista9);
+
+        usuarioRepository.save(usuarioNutricionista9);
+
+// Nutricionista 10
+        Usuario usuarioNutricionista10 = new Usuario();
+        usuarioNutricionista10.setUsername("nutricionista10");
+        usuarioNutricionista10.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista10.setActivo(true);
+        usuarioNutricionista10.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista10 = new DetalleUsuario();
+        detalleUsuarioNutricionista10.setNombre("Nombre del nutricionista 10");
+        detalleUsuarioNutricionista10.setApellidos("Apellidos del nutricionista 10");
+        detalleUsuarioNutricionista10.setDireccion("Direccion del nutricionista 10");
+        detalleUsuarioNutricionista10.setDni("098765440");
+        detalleUsuarioNutricionista10.setEmail("nutricionista10@example.com");
+
+        detalleUsuarioNutricionista10.setUsuario(usuarioNutricionista10);
+        usuarioNutricionista10.setDetalleUsuario(detalleUsuarioNutricionista10);
+
+        usuarioRepository.save(usuarioNutricionista10);
+
+// Nutricionista 11
+        Usuario usuarioNutricionista11 = new Usuario();
+        usuarioNutricionista11.setUsername("nutricionista11");
+        usuarioNutricionista11.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista11.setActivo(true);
+        usuarioNutricionista11.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista11 = new DetalleUsuario();
+        detalleUsuarioNutricionista11.setNombre("Nombre del nutricionista 11");
+        detalleUsuarioNutricionista11.setApellidos("Apellidos del nutricionista 11");
+        detalleUsuarioNutricionista11.setDireccion("Direccion del nutricionista 11");
+        detalleUsuarioNutricionista11.setDni("098765441");
+        detalleUsuarioNutricionista11.setEmail("nutricionista11@example.com");
+
+        detalleUsuarioNutricionista11.setUsuario(usuarioNutricionista11);
+        usuarioNutricionista11.setDetalleUsuario(detalleUsuarioNutricionista11);
+
+        usuarioRepository.save(usuarioNutricionista11);
+
+// Nutricionista 12
+        Usuario usuarioNutricionista12 = new Usuario();
+        usuarioNutricionista12.setUsername("nutricionista12");
+        usuarioNutricionista12.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista12.setActivo(true);
+        usuarioNutricionista12.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista12 = new DetalleUsuario();
+        detalleUsuarioNutricionista12.setNombre("Nombre del nutricionista 12");
+        detalleUsuarioNutricionista12.setApellidos("Apellidos del nutricionista 12");
+        detalleUsuarioNutricionista12.setDireccion("Direccion del nutricionista 12");
+        detalleUsuarioNutricionista12.setDni("098765442");
+        detalleUsuarioNutricionista12.setEmail("nutricionista12@example.com");
+
+        detalleUsuarioNutricionista12.setUsuario(usuarioNutricionista12);
+        usuarioNutricionista12.setDetalleUsuario(detalleUsuarioNutricionista12);
+
+        usuarioRepository.save(usuarioNutricionista12);
+
+// Nutricionista 13
+        Usuario usuarioNutricionista13 = new Usuario();
+        usuarioNutricionista13.setUsername("nutricionista13");
+        usuarioNutricionista13.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista13.setActivo(true);
+        usuarioNutricionista13.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista13 = new DetalleUsuario();
+        detalleUsuarioNutricionista13.setNombre("Nombre del nutricionista 13");
+        detalleUsuarioNutricionista13.setApellidos("Apellidos del nutricionista 13");
+        detalleUsuarioNutricionista13.setDireccion("Direccion del nutricionista 13");
+        detalleUsuarioNutricionista13.setDni("098765443");
+        detalleUsuarioNutricionista13.setEmail("nutricionista13@example.com");
+
+        detalleUsuarioNutricionista13.setUsuario(usuarioNutricionista13);
+        usuarioNutricionista13.setDetalleUsuario(detalleUsuarioNutricionista13);
+
+        usuarioRepository.save(usuarioNutricionista13);
+
+// Nutricionista 14
+        Usuario usuarioNutricionista14 = new Usuario();
+        usuarioNutricionista14.setUsername("nutricionista14");
+        usuarioNutricionista14.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista14.setActivo(true);
+        usuarioNutricionista14.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista14 = new DetalleUsuario();
+        detalleUsuarioNutricionista14.setNombre("Nombre del nutricionista 14");
+        detalleUsuarioNutricionista14.setApellidos("Apellidos del nutricionista 14");
+        detalleUsuarioNutricionista14.setDireccion("Direccion del nutricionista 14");
+        detalleUsuarioNutricionista14.setDni("098765444");
+        detalleUsuarioNutricionista14.setEmail("nutricionista14@example.com");
+
+        detalleUsuarioNutricionista14.setUsuario(usuarioNutricionista14);
+        usuarioNutricionista14.setDetalleUsuario(detalleUsuarioNutricionista14);
+
+        usuarioRepository.save(usuarioNutricionista14);
+
+// Nutricionista 15
+        Usuario usuarioNutricionista15 = new Usuario();
+        usuarioNutricionista15.setUsername("nutricionista15");
+        usuarioNutricionista15.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
+        usuarioNutricionista15.setActivo(true);
+        usuarioNutricionista15.setRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"));
+
+        DetalleUsuario detalleUsuarioNutricionista15 = new DetalleUsuario();
+        detalleUsuarioNutricionista15.setNombre("Nombre del nutricionista 15");
+        detalleUsuarioNutricionista15.setApellidos("Apellidos del nutricionista 15");
+        detalleUsuarioNutricionista15.setDireccion("Direccion del nutricionista 15");
+        detalleUsuarioNutricionista15.setDni("098765445");
+        detalleUsuarioNutricionista15.setEmail("nutricionista15@example.com");
+
+        detalleUsuarioNutricionista15.setUsuario(usuarioNutricionista15);
+        usuarioNutricionista15.setDetalleUsuario(detalleUsuarioNutricionista15);
+
+        usuarioRepository.save(usuarioNutricionista15);
+
+
+        ////////////////////////////////////////////////////////
+
+
         // Crea un usuario con rol ROLE_ENTRENADOR
         Usuario usuarioEntrenador = new Usuario();
         usuarioEntrenador.setUsername("entrenador");
@@ -191,6 +483,352 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
         // Guarda el usuario con rol ROLE_ENTRENADOR
         usuarioRepository.save(usuarioEntrenador);
+
+
+        // Usuario 1
+        Usuario usuarioEntrenadorA = new Usuario();
+        usuarioEntrenadorA.setUsername("entrenador1");
+        usuarioEntrenadorA.setPassword(bCryptPasswordEncoder.encode("password1"));
+        usuarioEntrenadorA.setActivo(true);
+        usuarioEntrenadorA.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorA = new DetalleUsuario();
+        detalleUsuarioEntrenadorA.setNombre("Juan");
+        detalleUsuarioEntrenadorA.setApellidos("Perez");
+        detalleUsuarioEntrenadorA.setDireccion("Calle 1");
+        detalleUsuarioEntrenadorA.setDni("1234567890");
+        detalleUsuarioEntrenadorA.setEmail("juan.perez@example.com");
+
+        detalleUsuarioEntrenadorA.setUsuario(usuarioEntrenadorA);
+        usuarioEntrenadorA.setDetalleUsuario(detalleUsuarioEntrenadorA);
+
+        usuarioRepository.save(usuarioEntrenadorA);
+
+        // Usuario 2
+        Usuario usuarioEntrenadorB = new Usuario();
+        usuarioEntrenadorB.setUsername("entrenador2");
+        usuarioEntrenadorB.setPassword(bCryptPasswordEncoder.encode("password2"));
+        usuarioEntrenadorB.setActivo(true);
+        usuarioEntrenadorB.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorB = new DetalleUsuario();
+        detalleUsuarioEntrenadorB.setNombre("Maria");
+        detalleUsuarioEntrenadorB.setApellidos("Lopez");
+        detalleUsuarioEntrenadorB.setDireccion("Calle 2");
+        detalleUsuarioEntrenadorB.setDni("2345678901");
+        detalleUsuarioEntrenadorB.setEmail("maria.lopez@example.com");
+
+        detalleUsuarioEntrenadorB.setUsuario(usuarioEntrenadorB);
+        usuarioEntrenadorB.setDetalleUsuario(detalleUsuarioEntrenadorB);
+
+        usuarioRepository.save(usuarioEntrenadorB);
+
+// Usuario 3
+        Usuario usuarioEntrenadorC = new Usuario();
+        usuarioEntrenadorC.setUsername("entrenador3");
+        usuarioEntrenadorC.setPassword(bCryptPasswordEncoder.encode("password3"));
+        usuarioEntrenadorC.setActivo(true);
+        usuarioEntrenadorC.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorC = new DetalleUsuario();
+        detalleUsuarioEntrenadorC.setNombre("Carlos");
+        detalleUsuarioEntrenadorC.setApellidos("Garcia");
+        detalleUsuarioEntrenadorC.setDireccion("Calle 3");
+        detalleUsuarioEntrenadorC.setDni("3456789012");
+        detalleUsuarioEntrenadorC.setEmail("carlos.garcia@example.com");
+
+        detalleUsuarioEntrenadorC.setUsuario(usuarioEntrenadorC);
+        usuarioEntrenadorC.setDetalleUsuario(detalleUsuarioEntrenadorC);
+
+        usuarioRepository.save(usuarioEntrenadorC);
+
+// Usuario 4
+        Usuario usuarioEntrenadorD = new Usuario();
+        usuarioEntrenadorD.setUsername("entrenador4");
+        usuarioEntrenadorD.setPassword(bCryptPasswordEncoder.encode("password4"));
+        usuarioEntrenadorD.setActivo(true);
+        usuarioEntrenadorD.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorD = new DetalleUsuario();
+        detalleUsuarioEntrenadorD.setNombre("Laura");
+        detalleUsuarioEntrenadorD.setApellidos("Martinez");
+        detalleUsuarioEntrenadorD.setDireccion("Calle 4");
+        detalleUsuarioEntrenadorD.setDni("4567890123");
+        detalleUsuarioEntrenadorD.setEmail("laura.martinez@example.com");
+
+        detalleUsuarioEntrenadorD.setUsuario(usuarioEntrenadorD);
+        usuarioEntrenadorD.setDetalleUsuario(detalleUsuarioEntrenadorD);
+
+        usuarioRepository.save(usuarioEntrenadorD);
+
+// Usuario 5
+        Usuario usuarioEntrenadorE = new Usuario();
+        usuarioEntrenadorE.setUsername("entrenador5");
+        usuarioEntrenadorE.setPassword(bCryptPasswordEncoder.encode("password5"));
+        usuarioEntrenadorE.setActivo(true);
+        usuarioEntrenadorE.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorE = new DetalleUsuario();
+        detalleUsuarioEntrenadorE.setNombre("Luis");
+        detalleUsuarioEntrenadorE.setApellidos("Hernandez");
+        detalleUsuarioEntrenadorE.setDireccion("Calle 5");
+        detalleUsuarioEntrenadorE.setDni("5678901234");
+        detalleUsuarioEntrenadorE.setEmail("luis.hernandez@example.com");
+
+        detalleUsuarioEntrenadorE.setUsuario(usuarioEntrenadorE);
+        usuarioEntrenadorE.setDetalleUsuario(detalleUsuarioEntrenadorE);
+
+        usuarioRepository.save(usuarioEntrenadorE);
+
+// Usuario 6
+        Usuario usuarioEntrenadorF = new Usuario();
+        usuarioEntrenadorF.setUsername("entrenador6");
+        usuarioEntrenadorF.setPassword(bCryptPasswordEncoder.encode("password6"));
+        usuarioEntrenadorF.setActivo(true);
+        usuarioEntrenadorF.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorF = new DetalleUsuario();
+        detalleUsuarioEntrenadorF.setNombre("Ana");
+        detalleUsuarioEntrenadorF.setApellidos("Fernandez");
+        detalleUsuarioEntrenadorF.setDireccion("Calle 6");
+        detalleUsuarioEntrenadorF.setDni("6789012345");
+        detalleUsuarioEntrenadorF.setEmail("ana.fernandez@example.com");
+
+        detalleUsuarioEntrenadorF.setUsuario(usuarioEntrenadorF);
+        usuarioEntrenadorF.setDetalleUsuario(detalleUsuarioEntrenadorF);
+
+        usuarioRepository.save(usuarioEntrenadorF);
+
+// Usuario 7
+        Usuario usuarioEntrenadorG = new Usuario();
+        usuarioEntrenadorG.setUsername("entrenador7");
+        usuarioEntrenadorG.setPassword(bCryptPasswordEncoder.encode("password7"));
+        usuarioEntrenadorG.setActivo(true);
+        usuarioEntrenadorG.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorG = new DetalleUsuario();
+        detalleUsuarioEntrenadorG.setNombre("David");
+        detalleUsuarioEntrenadorG.setApellidos("Ruiz");
+        detalleUsuarioEntrenadorG.setDireccion("Calle 7");
+        detalleUsuarioEntrenadorG.setDni("7890123456");
+        detalleUsuarioEntrenadorG.setEmail("david.ruiz@example.com");
+
+        detalleUsuarioEntrenadorG.setUsuario(usuarioEntrenadorG);
+        usuarioEntrenadorG.setDetalleUsuario(detalleUsuarioEntrenadorG);
+
+        usuarioRepository.save(usuarioEntrenadorG);
+
+// Usuario 8
+        Usuario usuarioEntrenadorH = new Usuario();
+        usuarioEntrenadorH.setUsername("entrenador8");
+        usuarioEntrenadorH.setPassword(bCryptPasswordEncoder.encode("password8"));
+        usuarioEntrenadorH.setActivo(true);
+        usuarioEntrenadorH.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorH = new DetalleUsuario();
+        detalleUsuarioEntrenadorH.setNombre("Sofia");
+        detalleUsuarioEntrenadorH.setApellidos("Gutierrez");
+        detalleUsuarioEntrenadorH.setDireccion("Calle 8");
+        detalleUsuarioEntrenadorH.setDni("8901234567");
+        detalleUsuarioEntrenadorH.setEmail("sofia.gutierrez@example.com");
+
+        detalleUsuarioEntrenadorH.setUsuario(usuarioEntrenadorH);
+        usuarioEntrenadorH.setDetalleUsuario(detalleUsuarioEntrenadorH);
+
+        usuarioRepository.save(usuarioEntrenadorH);
+
+// Usuario 9
+        Usuario usuarioEntrenadorI = new Usuario();
+        usuarioEntrenadorI.setUsername("entrenador9");
+        usuarioEntrenadorI.setPassword(bCryptPasswordEncoder.encode("password9"));
+        usuarioEntrenadorI.setActivo(true);
+        usuarioEntrenadorI.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenadorI = new DetalleUsuario();
+        detalleUsuarioEntrenadorI.setNombre("Jorge");
+        detalleUsuarioEntrenadorI.setApellidos("Diaz");
+        detalleUsuarioEntrenadorI.setDireccion("Calle 9");
+        detalleUsuarioEntrenadorI.setDni("9012345678");
+        detalleUsuarioEntrenadorI.setEmail("jorge.diaz@example.com");
+
+        detalleUsuarioEntrenadorI.setUsuario(usuarioEntrenadorI);
+        usuarioEntrenadorI.setDetalleUsuario(detalleUsuarioEntrenadorI);
+
+        usuarioRepository.save(usuarioEntrenadorI);
+
+
+        // Usuario 1
+        Usuario usuarioEntrenador1 = new Usuario();
+        usuarioEntrenador1.setUsername("entrenador1");
+        usuarioEntrenador1.setPassword(bCryptPasswordEncoder.encode("password1"));
+        usuarioEntrenador1.setActivo(true);
+        usuarioEntrenador1.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador1 = new DetalleUsuario();
+        detalleUsuarioEntrenador1.setNombre("Juan");
+        detalleUsuarioEntrenador1.setApellidos("Perez");
+        detalleUsuarioEntrenador1.setDireccion("Calle 1");
+        detalleUsuarioEntrenador1.setDni("1234567890");
+        detalleUsuarioEntrenador1.setEmail("juan.perez@example.com");
+
+        detalleUsuarioEntrenador1.setUsuario(usuarioEntrenador1);
+        usuarioEntrenador1.setDetalleUsuario(detalleUsuarioEntrenador1);
+
+        usuarioRepository.save(usuarioEntrenador1);
+
+        // Usuario 2
+        Usuario usuarioEntrenador2 = new Usuario();
+        usuarioEntrenador2.setUsername("entrenador2");
+        usuarioEntrenador2.setPassword(bCryptPasswordEncoder.encode("password2"));
+        usuarioEntrenador2.setActivo(true);
+        usuarioEntrenador2.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador2 = new DetalleUsuario();
+        detalleUsuarioEntrenador2.setNombre("Maria");
+        detalleUsuarioEntrenador2.setApellidos("Lopez");
+        detalleUsuarioEntrenador2.setDireccion("Calle 2");
+        detalleUsuarioEntrenador2.setDni("2345678901");
+        detalleUsuarioEntrenador2.setEmail("maria.lopez@example.com");
+
+        detalleUsuarioEntrenador2.setUsuario(usuarioEntrenador2);
+        usuarioEntrenador2.setDetalleUsuario(detalleUsuarioEntrenador2);
+
+        usuarioRepository.save(usuarioEntrenador2);
+
+        // Usuario 3
+        Usuario usuarioEntrenador3 = new Usuario();
+        usuarioEntrenador3.setUsername("entrenador3");
+        usuarioEntrenador3.setPassword(bCryptPasswordEncoder.encode("password3"));
+        usuarioEntrenador3.setActivo(true);
+        usuarioEntrenador3.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador3 = new DetalleUsuario();
+        detalleUsuarioEntrenador3.setNombre("Carlos");
+        detalleUsuarioEntrenador3.setApellidos("Garcia");
+        detalleUsuarioEntrenador3.setDireccion("Calle 3");
+        detalleUsuarioEntrenador3.setDni("3456789012");
+        detalleUsuarioEntrenador3.setEmail("carlos.garcia@example.com");
+
+        detalleUsuarioEntrenador3.setUsuario(usuarioEntrenador3);
+        usuarioEntrenador3.setDetalleUsuario(detalleUsuarioEntrenador3);
+
+        usuarioRepository.save(usuarioEntrenador3);
+
+        // Usuario 4
+        Usuario usuarioEntrenador4 = new Usuario();
+        usuarioEntrenador4.setUsername("entrenador4");
+        usuarioEntrenador4.setPassword(bCryptPasswordEncoder.encode("password4"));
+        usuarioEntrenador4.setActivo(true);
+        usuarioEntrenador4.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador4 = new DetalleUsuario();
+        detalleUsuarioEntrenador4.setNombre("Laura");
+        detalleUsuarioEntrenador4.setApellidos("Martinez");
+        detalleUsuarioEntrenador4.setDireccion("Calle 4");
+        detalleUsuarioEntrenador4.setDni("4567890123");
+        detalleUsuarioEntrenador4.setEmail("laura.martinez@example.com");
+
+        detalleUsuarioEntrenador4.setUsuario(usuarioEntrenador4);
+        usuarioEntrenador4.setDetalleUsuario(detalleUsuarioEntrenador4);
+
+        usuarioRepository.save(usuarioEntrenador4);
+
+        // Usuario 5
+        Usuario usuarioEntrenador5 = new Usuario();
+        usuarioEntrenador5.setUsername("entrenador5");
+        usuarioEntrenador5.setPassword(bCryptPasswordEncoder.encode("password5"));
+        usuarioEntrenador5.setActivo(true);
+        usuarioEntrenador5.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador5 = new DetalleUsuario();
+        detalleUsuarioEntrenador5.setNombre("Luis");
+        detalleUsuarioEntrenador5.setApellidos("Hernandez");
+        detalleUsuarioEntrenador5.setDireccion("Calle 5");
+        detalleUsuarioEntrenador5.setDni("5678901234");
+        detalleUsuarioEntrenador5.setEmail("luis.hernandez@example.com");
+
+        detalleUsuarioEntrenador5.setUsuario(usuarioEntrenador5);
+        usuarioEntrenador5.setDetalleUsuario(detalleUsuarioEntrenador5);
+
+        usuarioRepository.save(usuarioEntrenador5);
+
+        // Usuario 6
+        Usuario usuarioEntrenador6 = new Usuario();
+        usuarioEntrenador6.setUsername("entrenador6");
+        usuarioEntrenador6.setPassword(bCryptPasswordEncoder.encode("password6"));
+        usuarioEntrenador6.setActivo(true);
+        usuarioEntrenador6.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador6 = new DetalleUsuario();
+        detalleUsuarioEntrenador6.setNombre("Ana");
+        detalleUsuarioEntrenador6.setApellidos("Fernandez");
+        detalleUsuarioEntrenador6.setDireccion("Calle 6");
+        detalleUsuarioEntrenador6.setDni("6789012345");
+        detalleUsuarioEntrenador6.setEmail("ana.fernandez@example.com");
+
+        detalleUsuarioEntrenador6.setUsuario(usuarioEntrenador6);
+        usuarioEntrenador6.setDetalleUsuario(detalleUsuarioEntrenador6);
+
+        usuarioRepository.save(usuarioEntrenador6);
+
+        // Usuario 7
+        Usuario usuarioEntrenador7 = new Usuario();
+        usuarioEntrenador7.setUsername("entrenador7");
+        usuarioEntrenador7.setPassword(bCryptPasswordEncoder.encode("password7"));
+        usuarioEntrenador7.setActivo(true);
+        usuarioEntrenador7.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador7 = new DetalleUsuario();
+        detalleUsuarioEntrenador7.setNombre("David");
+        detalleUsuarioEntrenador7.setApellidos("Ruiz");
+        detalleUsuarioEntrenador7.setDireccion("Calle 7");
+        detalleUsuarioEntrenador7.setDni("7890123456");
+        detalleUsuarioEntrenador7.setEmail("david.ruiz@example.com");
+
+        detalleUsuarioEntrenador7.setUsuario(usuarioEntrenador7);
+        usuarioEntrenador7.setDetalleUsuario(detalleUsuarioEntrenador7);
+
+        usuarioRepository.save(usuarioEntrenador7);
+
+        // Usuario 8
+        Usuario usuarioEntrenador8 = new Usuario();
+        usuarioEntrenador8.setUsername("entrenador8");
+        usuarioEntrenador8.setPassword(bCryptPasswordEncoder.encode("password8"));
+        usuarioEntrenador8.setActivo(true);
+        usuarioEntrenador8.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador8 = new DetalleUsuario();
+        detalleUsuarioEntrenador8.setNombre("Sofia");
+        detalleUsuarioEntrenador8.setApellidos("Gutierrez");
+        detalleUsuarioEntrenador8.setDireccion("Calle 8");
+        detalleUsuarioEntrenador8.setDni("8901234567");
+        detalleUsuarioEntrenador8.setEmail("sofia.gutierrez@example.com");
+
+        detalleUsuarioEntrenador8.setUsuario(usuarioEntrenador8);
+        usuarioEntrenador8.setDetalleUsuario(detalleUsuarioEntrenador8);
+
+        usuarioRepository.save(usuarioEntrenador8);
+
+        // Usuario 9
+        Usuario usuarioEntrenador9 = new Usuario();
+        usuarioEntrenador9.setUsername("entrenador9");
+        usuarioEntrenador9.setPassword(bCryptPasswordEncoder.encode("password9"));
+        usuarioEntrenador9.setActivo(true);
+        usuarioEntrenador9.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
+
+        DetalleUsuario detalleUsuarioEntrenador9 = new DetalleUsuario();
+        detalleUsuarioEntrenador9.setNombre("Jorge");
+        detalleUsuarioEntrenador9.setApellidos("Diaz");
+        detalleUsuarioEntrenador9.setDireccion("Calle 9");
+        detalleUsuarioEntrenador9.setDni("9012345678");
+        detalleUsuarioEntrenador9.setEmail("jorge.diaz@example.com");
+
+        detalleUsuarioEntrenador9.setUsuario(usuarioEntrenador9);
+        usuarioEntrenador9.setDetalleUsuario(detalleUsuarioEntrenador9);
+
+        usuarioRepository.save(usuarioEntrenador9);
+
+        ////////////////////////////////////////////////////////
 
         Usuario usuario1 = new Usuario();
         usuario1.setUsername("anonimo");

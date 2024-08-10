@@ -1,11 +1,8 @@
 package com.eoi.NutriFit.Controladores;
 
-import com.example.jpa_formacion.dto.GrupoTrabajoDto;
-import com.example.jpa_formacion.model.GrupoTrabajo;
-import com.example.jpa_formacion.service.GrupoService;
-import com.example.jpa_formacion.service.MenuService;
+/*
 import jakarta.servlet.http.HttpSession;
-import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -223,3 +220,4 @@ public class AppDemoGeneralController extends AbstractController <GrupoTrabajoDt
         return String.format("redirect:/demogeneral/%s", grupoTrabajoDto1.getId());
     }
 }
+*/

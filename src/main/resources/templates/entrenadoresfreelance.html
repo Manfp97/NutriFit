@@ -21,19 +21,6 @@
                             <p>Encuentra al entrenador ideal para ayudarte a alcanzar tus objetivos.</p>
                         </div>
                     </div>
-
-                    <!-- Opciones de filtrado o botones adicionales para roles específicos -->
-                    <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                        <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                            <li class="nav-item me-2">
-                                <a class="btn btn-primary" th:href="@{/entrenadores/list}" th:text="'Lista completa'"></a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="btn btn-success" th:href="@{/entrenadores/nuevo}" th:text="'Nuevo entrenador'"
-                                   th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"></a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
 
                 <div class="row g-5">
@@ -49,24 +36,26 @@
                     </div>
                 </div>
 
+
                 <!-- Paginación -->
-                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                <div th:if="${pagina.totalPages > 1}" class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/entrenadores(size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <a th:href="@{/usuario/entrenadores(size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/entrenadores(size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                            <a th:href="@{/usuario/entrenadores(size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                         </li>
                         <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/entrenadores(size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <a th:href="@{/usuario/entrenadores(size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </section>
 </div>

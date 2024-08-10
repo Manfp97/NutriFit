@@ -1,20 +1,33 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404</title>
+    <title>Listado de Nutricionistas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div>
-    <div layout:fragment="content">
-        <!-- Sección Nutricionistas -->
-        <div class="tab-pane fade" th:classappend="${rol == 'ROLE_NUTRICIONISTA'} ? 'active show' : ''" id="nutricionistas">
+
+<div layout:fragment="content">
+
+
+    <section id="nutricionistas" class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-0 gx-5 align-items-end">
+                <div class="col-lg-6">
+                    <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                        <h1 class="display-5 mb-3">Nutricionistas</h1>
+                        <p>Encuentra al nutricionista ideal para ayudarte a alcanzar tus objetivos.</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="row g-5">
-                <div th:each="usuario : ${usuarios}" class="col-lg-4">
-                    <div class="card">
+                <div class="col-lg-4" th:each="usuario : ${usuarios}">
+                    <div class="card h-100 wow fadeInUp" data-wow-delay="0.1s">
                         <img src="img/nutricionista.jpg" class="card-img-top img-fluid max-height-225" alt="Nutricionista">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h5 th:text="${usuario.detalleUsuario.nombre}" class="card-title"></h5>
                             <p th:text="${usuario.detalleUsuario.email}" class="card-text"></p>
                             <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
@@ -22,27 +35,31 @@
                     </div>
                 </div>
             </div>
+
+
             <!-- Paginación -->
-            <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+            <div th:if="${pagina.totalPages > 1}" class="pagination-container mt-4">
                 <ul class="pagination justify-content-center">
                     <li th:if="${pagina.hasPrevious()}" class="page-item">
-                        <a th:href="@{/freelance/nutricionistas(size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                        <a th:href="@{/usuario/nutricionistas(size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                        <a th:href="@{/freelance/nutricionistas(size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                        <a th:href="@{/usuario/nutricionistas(size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
                     </li>
                     <li th:if="${pagina.hasNext()}" class="page-item">
-                        <a th:href="@{/freelance/nutricionistas(size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                        <a th:href="@{/usuario/nutricionistas(size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
             </div>
-        </div>
 
-    </div>
+        </div>
+    </section>
 </div>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

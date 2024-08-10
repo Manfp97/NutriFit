@@ -42,59 +42,76 @@ public class UsuarioController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+
     @GetMapping("/entrenadores")
     public String listEntrenadores(
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "9") int size,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size,
             Model model
     ) {
+        // Ajustar el valor de 'page' si es negativo
+        if (page < 0) {
+            page = 0;
+        }
+
         Pageable pageable = PageRequest.of(page, size);
         Page<Usuario> usuariosPage = usuarioRepo.findByRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"), pageable);
 
-        if (usuariosPage.isEmpty()) {
-            return "error"; // Página de error o vacía
-        } else {
-            // Crea la lista de números de página
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, usuariosPage.getTotalPages())
-                    .boxed()
-                    .collect(Collectors.toList());
-
-            // Añade los atributos al modelo
-            model.addAttribute("pagina", usuariosPage);
-            model.addAttribute("pageNumbers", pageNumbers);
-            model.addAttribute("usuarios", usuariosPage.getContent());
-            model.addAttribute("rol", "ROLE_ENTRENADOR");
-            return "entrenadoresfreelance";
+        // Si se solicita una página fuera de rango, redirigir a la primera página
+        if (usuariosPage.isEmpty() && page > 0) {
+            return "redirect:/entrenadores?page=0&size=" + size;
         }
+
+        // Crear la lista de números de página
+        int totalPages = usuariosPage.getTotalPages();
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+
+        // Añadir atributos al modelo
+        model.addAttribute("pagina", usuariosPage);
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("usuarios", usuariosPage.getContent());
+        model.addAttribute("rol", "ROLE_ENTRENADOR");
+
+        return "entrenadoresfreelance";
     }
+
 
     // Controlador para nutricionistas
     @GetMapping("/nutricionistas")
     public String listNutricionistas(
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "9") int size,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size,
             Model model
     ) {
+        // Ajustar el valor de 'page' si es negativo
+        if (page < 0) {
+            page = 0;
+        }
+
         Pageable pageable = PageRequest.of(page, size);
         Page<Usuario> usuariosPage = usuarioRepo.findByRol(rolesRepo.findByNombreRol("ROLE_NUTRICIONISTA"), pageable);
 
-        if (usuariosPage.isEmpty()) {
-            return "error"; // Página de error o vacía
-        } else {
-            // Crea la lista de números de página
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, usuariosPage.getTotalPages())
-                    .boxed()
-                    .collect(Collectors.toList());
-
-            // Añade los atributos al modelo
-            model.addAttribute("pagina", usuariosPage);
-            model.addAttribute("pageNumbers", pageNumbers);
-            model.addAttribute("usuarios", usuariosPage.getContent());
-            model.addAttribute("rol", "ROLE_NUTRICIONISTA");
-            return "nutricionistasfreelance";
+        // Si se solicita una página fuera de rango, redirigir a la primera página
+        if (usuariosPage.isEmpty() && page > 0) {
+            return "redirect:/nutricionistas?page=0&size=" + size;
         }
-    }
 
+        // Crear la lista de números de página
+        int totalPages = usuariosPage.getTotalPages();
+        List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+
+        // Añadir atributos al modelo
+        model.addAttribute("pagina", usuariosPage);
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("usuarios", usuariosPage.getContent());
+        model.addAttribute("rol", "ROLE_NUTRICIONISTA");
+
+        return "nutricionistasfreelance";
+    }
 
 
 
