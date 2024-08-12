@@ -1,91 +1,87 @@
 package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.Producto;
-import com.eoi.NutriFit.Repositorios.ProductoRepo;
+import com.eoi.NutriFit.Servicios.ProductoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/carrito")
 public class CarritoController {
 
     @Autowired
-    private ProductoRepo productoRepository;
+    private ProductoService productoService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final String CARRITO_COOKIE_NAME = "carrito";
 
-    @GetMapping("/carrito")
-    public String listarProductos(Model model) {
-        List<Producto> productos = productoRepository.findAll();
-        model.addAttribute("productos", productos);
-        return "listaProductos"; // Nombre de la vista de listado de productos
+    @GetMapping
+    public String mostrarCarrito(HttpServletRequest request, Model model) throws JsonProcessingException {
+        List<Producto> carrito = obtenerCarritoDeCookies(request);
+        model.addAttribute("carrito", carrito);
+        return "carrito";
     }
 
-    @GetMapping("/carrito/ver")
-    public String verCarrito(@CookieValue(name = "carrito", defaultValue = "") String carritoJson, Model model) throws IOException {
-        List<Producto> productosCarrito = obtenerProductosDelCarrito(carritoJson);
-        model.addAttribute("productosCarrito", productosCarrito);
-        return "verCarrito"; // Nombre de la vista para ver el carrito
+    @PostMapping("/agregar/{idProducto}")
+    public String agregarProductoAlCarrito(@PathVariable Integer idProducto, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        Producto producto = productoService.encuentraPorId(idProducto)
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+        List<Producto> carrito = obtenerCarritoDeCookies(request);
+        carrito.add(producto);
+        guardarCarritoEnCookies(carrito, response);
+        return "redirect:/carrito";
     }
 
-    @PostMapping("/carrito/agregar/{idProducto}")
-    public String agregarProductoAlCarrito(@PathVariable Integer idProducto,
-                                           @CookieValue(name = "carrito", defaultValue = "") String carritoJson,
-                                           HttpServletResponse response) throws IOException {
-        Producto producto = productoRepository.findById(idProducto).orElse(null);
-        if (producto != null) {
-            List<Producto> productosCarrito = obtenerProductosDelCarrito(carritoJson);
-            productosCarrito.add(producto);
-            actualizarCookieCarrito(productosCarrito, response);
+    @PostMapping("/eliminar/{idProducto}")
+    public String eliminarProductoDelCarrito(@PathVariable Integer idProducto, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        List<Producto> carrito = obtenerCarritoDeCookies(request);
+        carrito.removeIf(p -> p.getId().equals(idProducto));
+        guardarCarritoEnCookies(carrito, response);
+        return "redirect:/carrito";
+    }
+
+    private List<Producto> obtenerCarritoDeCookies(HttpServletRequest request) throws JsonProcessingException {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (CARRITO_COOKIE_NAME.equals(cookie.getName())) {
+                    try {
+                        String carritoJson = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                        return objectMapper.readValue(carritoJson, new TypeReference<List<Producto>>() {});
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException("Error al decodificar el valor de la cookie", e);
+                    }
+                }
+            }
         }
-        return "redirect:/carrito/ver";
+        return new ArrayList<>();
     }
 
-    @PostMapping("/carrito/eliminar/{idProducto}")
-    public String eliminarProductoDelCarrito(@PathVariable Integer idProducto,
-                                             @CookieValue(name = "carrito", defaultValue = "") String carritoJson,
-                                             HttpServletResponse response) throws IOException {
-        List<Producto> productosCarrito = obtenerProductosDelCarrito(carritoJson);
-        productosCarrito.removeIf(producto -> producto.getId().equals(idProducto));
-        actualizarCookieCarrito(productosCarrito, response);
-        return "redirect:/carrito/ver";
-    }
-
-    @PostMapping("/carrito/confirmarCompra")
-    public String confirmarCompra(@CookieValue(name = "carrito", defaultValue = "") String carritoJson,
-                                  HttpServletResponse response) {
-        // Lógica para confirmar la compra (a implementar)
-        // Vaciar el carrito después de confirmar la compra
-        Cookie cookie = new Cookie("carrito", "");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-        return "confirmarCompra"; // Nombre de la vista para confirmar la compra
-    }
-
-    // Método para obtener productos del carrito a partir de la cookie
-    private List<Producto> obtenerProductosDelCarrito(String carritoJson) throws IOException {
-        if (carritoJson == null || carritoJson.isEmpty()) {
-            return new ArrayList<>();
+    private void guardarCarritoEnCookies(List<Producto> carrito, HttpServletResponse response) throws JsonProcessingException {
+        try {
+            String carritoJson = objectMapper.writeValueAsString(carrito);
+            String carritoEncoded = URLEncoder.encode(carritoJson, "UTF-8");
+            Cookie cookie = new Cookie(CARRITO_COOKIE_NAME, carritoEncoded);
+            cookie.setMaxAge(7 * 24 * 60 * 60); // La cookie dura 7 días
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Error al codificar el valor de la cookie", e);
         }
-        return objectMapper.readValue(carritoJson, new TypeReference<List<Producto>>() {});
-    }
-
-    // Método para actualizar la cookie del carrito
-    private void actualizarCookieCarrito(List<Producto> productosCarrito, HttpServletResponse response) throws IOException {
-        String carritoJson = objectMapper.writeValueAsString(productosCarrito);
-        Cookie cookie = new Cookie("carrito", carritoJson);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // Expira en 7 días
-        cookie.setPath("/");
-        response.addCookie(cookie);
     }
 }

@@ -62,12 +62,14 @@ public class SecurityConfig <S extends Session>{
                     .requestMatchers("/fonts/**").permitAll()
                     .requestMatchers("/static/lib/**").permitAll()
                     .requestMatchers("/static/scss/**").permitAll()
-                    //Producto security
+                    // Producto security
                     .requestMatchers(HttpMethod.GET, "/producto/list").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.GET, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.POST, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.POST, "/producto/**").hasRole("ADMIN")
-                    //Dietas security
+                    // Carrito security
+                    .requestMatchers(HttpMethod.POST, "/carrito/agregar/**").authenticated()
+                    // Dietas security
                     .requestMatchers(HttpMethod.GET, "/dietaUsuario/list").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.GET, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.POST, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")

@@ -53,6 +53,11 @@
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
                                 <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                                <!-- Dentro del div con la clase "card-body" en cada producto -->
+                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
+                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -87,6 +92,11 @@
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
                                 <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                                <!-- Dentro del div con la clase "card-body" en cada producto -->
+                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
+                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -121,6 +131,11 @@
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
                                 <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                                <!-- Dentro del div con la clase "card-body" en cada producto -->
+                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
+                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -154,6 +169,11 @@
                                 <h5 th:text="${producto.nombre}" class="card-title"></h5>
                                 <p th:text="${producto.precio}" class="card-text"></p>
                                 <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                                <!-- Dentro del div con la clase "card-body" en cada producto -->
+                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
+                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
