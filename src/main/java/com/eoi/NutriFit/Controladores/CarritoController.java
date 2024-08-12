@@ -33,7 +33,15 @@ public class CarritoController {
     @GetMapping
     public String mostrarCarrito(HttpServletRequest request, Model model) throws JsonProcessingException {
         List<Producto> carrito = obtenerCarritoDeCookies(request);
+
+        // Calcula el precio total del carrito
+        double carritoTotal = carrito.stream()
+                .mapToDouble(Producto::getPrecio) // Usa mapToDouble para manejar precios decimales
+                .sum();
+
         model.addAttribute("carrito", carrito);
+        model.addAttribute("carritoTotal", carritoTotal);
+
         return "carrito";
     }
 
