@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros</title>
+</head>
+<body>
+<div>
+    <div layout:fragment="content">
+        <<h1>Confirmación de Compra</h1>
+        <p>Total a pagar: <span th:text="${preciototal}"></span> €</p>
+        <form th:action="@{/carrito/confirmarCompra}" method="post">
+            <button type="submit">Confirmar Compra</button>
+        </form>
+        <a href="/carrito/ver">Volver al Carrito</a>
+    </div>
+</div>
+</body>
+</html>

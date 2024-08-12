@@ -42,7 +42,7 @@ public class UsuarioController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
+    // Controlador para entrenadores
     @GetMapping("/entrenadores")
     public String listEntrenadores(
             @RequestParam(defaultValue = "0") int page,

@@ -1,0 +1,52 @@
+<section id="producto" class="container-xxl py-5" th:fragment="productolistacarrito">
+    <div class="container">
+        <!-- Cabecera -->
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-6">
+                <div class="section-header text-start mb-5" style="max-width: 500px;">
+                    <h1 class="display-5 mb-3">Producto</h1>
+                    <p>No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Listado de productos -->
+        <div class="tab-content">
+            <div class="row g-5">
+                <div class="col-lg-4" th:each="producto : ${productos}">
+                    <div class="card">
+                        <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto">
+                        <div class="card-body">
+                            <h5 th:text="${producto.nombre}" class="card-title"></h5>
+                            <p th:text="${producto.precio} + ' €'" class="card-text"></p>
+                            <!-- Botón para añadir al carrito -->
+                            <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
+                                <button type="submit" class="btn btn-primary rounded-pill">Añadir al Carrito</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paginación -->
+            <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
+                <ul class="pagination justify-content-center">
+                    <li th:if="${pagina.hasPrevious()}" class="page-item">
+                        <a th:href="@{/producto(categoria=${categoria}, size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
+                        <a th:href="@{/producto(categoria=${categoria}, size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
+                    </li>
+                    <li th:if="${pagina.hasNext()}" class="page-item">
+                        <a th:href="@{/producto(categoria=${categoria}, size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
