@@ -62,6 +62,7 @@ public class SecurityConfig <S extends Session>{
                     .requestMatchers("/fonts/**").permitAll()
                     .requestMatchers("/static/lib/**").permitAll()
                     .requestMatchers("/static/scss/**").permitAll()
+                    .requestMatchers("/chat-websocket/**").hasAnyRole("USER", "ENTRENADOR", "NUTRICIONISTA") // Protege el endpoint del WebSocket
                     // Producto security
                     .requestMatchers(HttpMethod.GET, "/producto/list").hasAnyRole("ADMIN", "EMPLEADO")
                     .requestMatchers(HttpMethod.GET, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")

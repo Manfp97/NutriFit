@@ -79,14 +79,14 @@ public class ProveedoresController {
 
                 service.guardar(updatedProveedores);
                 model.addAttribute("mensaje", "Proveedores actualizada con éxito");
-                return "redirect:/proveedores";
+                return "redirect:/proveedores/list";
             } else {
                 model.addAttribute("mensaje", "Proveedores no encontrada");
                 return "redirect:/proveedores";
             }
         } catch (Exception e) {
             model.addAttribute("mensaje", "Error al actualizar proveedores: " + e.getMessage());
-            return "redirect:/proveedores";
+            return "redirect:/proveedores/list";
         }
     }
 
@@ -95,7 +95,7 @@ public class ProveedoresController {
     public String delete(@PathVariable Integer id) {
         try {
             service.eliminarPorId(id);
-            return "redirect:/proveedores";
+            return "redirect:/proveedores/list";
         } catch (EntityNotFoundException e) {
             return "redirect:/404";
         }

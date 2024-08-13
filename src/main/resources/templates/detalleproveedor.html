@@ -36,7 +36,7 @@
 
 
                         <!-- Formulario para eliminar el proveedor -->
-                        <form th:action="@{/proveedor/delete/{id}(id=${proveedor.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proveedor?');">
+                        <form th:action="@{/proveedores/delete/{id}(id=${proveedores.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proveedor?');">
                             <input type="hidden" name="_method" value="delete" />
                             <div class="text-center">
                                 <button type="submit" class="btn btn-danger rounded-3 px-5 py-2">Eliminar Proveedor</button>
