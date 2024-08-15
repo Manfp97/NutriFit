@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat Notifications</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="/js/chat.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Chat Notifications</h1>
+  <ul id="notification-list" class="list-group">
+    <!-- Las notificaciones aparecerán aquí -->
+  </ul>
+  <div id="chat-container" style="display:none;">
+    <!-- Aquí puedes agregar la interfaz de chat -->
+    <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+
+  <!-- Campo oculto para currentUserId -->
+  <script>
+    var currentUserId = /*[[${currentUserId}]]*/ 'defaultUserId'; // Reemplaza 'defaultUserId' con el valor adecuado si es necesario
+  </script>
+</div>
+</body>
+</html>

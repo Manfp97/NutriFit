@@ -1,68 +1,85 @@
-let socket = new SockJS('http://localhost:8091/chats');
 let stompClient = null;
 
 function connect() {
-    console.log('Intentando conectar...');
-    socket = new SockJS('/chats');
+    let socket = new SockJS('/chat-socket');
     stompClient = Stomp.over(socket);
-
-    stompClient.connect({}, function (frame) {
-        console.log('Conexión exitosa');
-        setConnected(true);
+    stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/canal1', function (greeting) {
-            console.log('Mensaje recibido:', greeting);
-            // Asegúrate de que el cuerpo del mensaje esté en formato JSON
-            let message = JSON.parse(greeting.body);
-            showGreeting(message.body);  // Mostrar el contenido correcto
+
+        // Suscribirse al canal de notificaciones para el usuario actual
+        stompClient.subscribe('/topic/notifications/' + currentUserId, function(notification) {
+            let notif = JSON.parse(notification.body);
+            showNotification(notif);
         });
-    }, function(error) {
-        console.error('Error en la conexión:', error);
-        setConnected(false);
     });
 }
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#greetings").html("");
-}
-
-function disconnect() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-    }
-    setConnected(false);
-    console.log("Desconectado");
-}
-
-function sendName() {
-    if (stompClient !== null && stompClient.connected) {
-        stompClient.send("/app/chat", {}, JSON.stringify({'body': $("#name").val()}));
-    } else {
-        console.error('No conectado al servidor WebSocket');
+function sendMessage() {
+    let messageInput = document.getElementById('message-input');
+    let message = messageInput.value;
+    if (message && stompClient && roomId) {
+        let chatMessage = {
+            message: message,
+            user: currentUserId
+        };
+        stompClient.send("/app/chat/message/" + roomId, {}, JSON.stringify(chatMessage));
+        messageInput.value = '';
     }
 }
 
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+
+function showMessage(message) {
+    let messageElement = document.createElement('div');
+    messageElement.innerHTML = message.user + ': ' + message.message;
+    document.getElementById('chat-messages').appendChild(messageElement);
 }
 
-$(function () {
-    $("form").on('submit', (e) => e.preventDefault());
-    $("#connect").click(() => connect());
-    $("#disconnect").click(() => disconnect());
-    $("#send").click(() => sendName());
-});
+function connectToChatRoom(room) {
+    roomId = room; // Actualizar la variable roomId
+    stompClient.subscribe('/topic/' + roomId, function(chatMessage) {
+        showMessage(JSON.parse(chatMessage.body));
+    });
+}
 
-// Manejo de errores adicional
-window.onerror = function(message, source, lineno, colno, error) {
-    console.error('Error no capturado:', message, 'en', source, 'línea', lineno);
-    return true;
-};
+function searchConversation(currentUserId, recipientId) {
+    // Crear una conversación con el usuario seleccionado
+    var conversation = {
+        'senderId': currentUserId,
+        'recipientId': recipientId
+    };
+
+    // Enviar la solicitud de conversación al servidor
+    stompClient.send('/app/startConversation', {}, JSON.stringify(conversation));
+
+    // Mostrar el contenedor de conversación
+    document.getElementById('chat-container').style.display = 'block';
+}
+
+function createNewConversation(currentUserId, recipientId) {
+    // Realiza la solicitud AJAX para crear una nueva conversación
+    $.ajax({
+        type: "POST",
+        url: "/api/createConversation",
+        data: { userId: currentUserId, otherUserId: recipientId },
+        success: function(room) {
+            console.log(`Created new chat room ${room}`);
+            // Conecta al usuario a la nueva sala de chat
+            connectToChatRoom(room);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al crear conversación:", error);
+        }
+    });
+}
+
+// Mostrar notificaciones
+function showNotification(notification) {
+    const notificationList = document.getElementById('notification-list');
+    const listItem = document.createElement('li');
+    listItem.className = 'list-group-item';
+    listItem.textContent = `${notification.senderName}: ${notification.message}`;
+    notificationList.appendChild(listItem);
+}
+
+// Conectar al WebSocket cuando se carga la página
+window.onload = connect;

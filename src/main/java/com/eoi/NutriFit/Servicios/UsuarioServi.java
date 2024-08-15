@@ -2,6 +2,7 @@ package com.eoi.NutriFit.Servicios;
 
 import com.eoi.NutriFit.Entidades.Usuario;
 import com.eoi.NutriFit.Repositorios.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -12,6 +13,9 @@ public class UsuarioServi extends AbstractBusinessService<Usuario, Integer, Usua
         super(usuarioRepository);
     }
 
+    public Usuario findByUsername(String username) {
+        return getRepo().findUsuarioByUsernameAndActivoTrue(username).orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+    }
 
 }
 
