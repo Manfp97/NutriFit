@@ -13,9 +13,9 @@
 </div>
 
 <script th:inline="javascript">
-    const roomId = [[${roomId}]];
-    const currentUserId = [[${currentUserId}]];
-    const recipientId = [[${recipientId}]];
+    const roomId = /*[[${roomId}]]*/ 'defaultRoomId'; // Asegúrate de que `roomId` se reemplaza correctamente
+    const currentUserId = /*[[${currentUserId}]]*/ 'defaultUserId'; // Asegúrate de que `currentUserId` se reemplaza correctamente
+    const recipientId = /*[[${recipientId}]]*/ 'defaultRecipientId'; // Asegúrate de que `recipientId` se reemplaza correctamente
 </script>
 <script src="/js/chat.js"></script>
 </body>

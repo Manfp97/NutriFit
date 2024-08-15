@@ -25,24 +25,12 @@ public class WebSocketController {
 
     @MessageMapping("/chat/message/{roomId}")
     @SendTo("/topic/chat/{roomId}")
-    public ChatMessage chat(ChatMessage message, Principal principal, @PathVariable String roomId) {
-        String user = principal.getName();
-        System.out.println("User " + user + " is sending a message");
+    public ChatMessage chat(ChatMessage message, @DestinationVariable String roomId) {
         return new ChatMessage(message.getMessage(), message.getUser());
     }
 
     @MessageMapping("/chat/notify/{recipientId}")
     public void sendMessageToUser(@DestinationVariable String recipientId, NotificationMessage message) {
         messagingTemplate.convertAndSend("/topic/notifications/" + recipientId, message);
-    }
-
-    @RequestMapping("/searchConversation")
-    public String searchConversation(@RequestParam String userId, @RequestParam String otherUserId) {
-        String roomId = getRoomId(userId, otherUserId);
-        return roomId;
-    }
-
-    private String getRoomId(String userId, String otherUserId) {
-        return "/topic/chat/" + Math.min(Long.parseLong(userId), Long.parseLong(otherUserId)) + "_" + Math.max(Long.parseLong(userId), Long.parseLong(otherUserId));
     }
 }

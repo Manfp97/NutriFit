@@ -35,7 +35,7 @@ public class ChatController {
         String roomId = chatRoomService.createChatRoomId(currentUserId, recipientId, recipientId);
 
         model.addAttribute("roomId", roomId);
-        model.addAttribute("currentUserId", currentUserId); // Se pasa al frontend
+        model.addAttribute("currentUserId", currentUserId);
         model.addAttribute("recipientId", recipientId);
 
         // Enviar notificación al usuario destinatario
@@ -43,10 +43,5 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/notifications/" + recipientId, notification);
 
         return "chatroom";
-    }
-    @MessageMapping("/notify-user/{recipientId}")
-    @SendTo("/topic/notifications/{recipientId}")
-    public NotificationMessage notifyUser(NotificationMessage notificationMessage, @DestinationVariable String recipientId) {
-        return notificationMessage;
     }
 }
