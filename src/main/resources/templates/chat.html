@@ -38,6 +38,12 @@
             color: #888;
             clear: both;
         }
+
+        .new-message {
+            font-weight: bold;
+            color: #007bff;
+        }
+
     </style>
 </head>
 <body onload="disconnect()">
@@ -189,16 +195,47 @@
         if (!privateChats[to]) {
             createPrivateChatTab(to);
         }
-        showMessageOutput({from, text, time: new Date().toLocaleTimeString()}, 'privateChatArea-' + to);
+        showMessageOutput({from, to, text, time: new Date().toLocaleTimeString()}, 'privateChatArea-' + to);
     }
 
     function handlePrivateMessage(messageOutput) {
         var from = messageOutput.from;
-        if (!privateChats[from]) {
-            createPrivateChatTab(from);
+        var to = messageOutput.to;
+        var currentUser = document.getElementById('from').value;
+
+        // Determine if the current user is the recipient
+        var isRecipient = to === currentUser;
+
+        // Create or show chat tab for the other user
+        var otherUser = isRecipient ? from : to;
+
+        if (!privateChats[otherUser]) {
+            createPrivateChatTab(otherUser);
         }
-        showMessageOutput(messageOutput, 'privateChatArea-' + from);
+
+        showMessageOutput(messageOutput, 'privateChatArea-' + otherUser);
+
+        // If this user is the recipient, show a notification or highlight the tab
+        if (isRecipient) {
+            notifyNewMessage(from);
+        }
     }
+
+    function notifyNewMessage(from) {
+        // Find the tab for this sender
+        var tab = document.getElementById('private-tab-' + from);
+        if (tab) {
+            // Highlight the tab or show a notification indicator
+            tab.classList.add('new-message');
+            tab.innerHTML += ' <span class="badge bg-danger">New</span>';
+        }
+
+        // You could also show a browser notification here
+        if ("Notification" in window && Notification.permission === "granted") {
+            new Notification("New message from " + from);
+        }
+    }
+
 
     function createPrivateChatTab(to) {
         if (to !== document.getElementById('from').value) {
