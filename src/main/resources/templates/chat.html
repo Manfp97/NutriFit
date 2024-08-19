@@ -114,19 +114,82 @@
     var notificationCount = 0;
     var privateChats = {}; // Object to track private chat tabs
 
+    // Load saved data when the page loads
+    window.onload = function() {
+        loadSavedData();
+    };
+
+    function loadSavedData() {
+        // Load notification count
+        var savedNotificationCount = localStorage.getItem('notificationCount');
+        if (savedNotificationCount) {
+            notificationCount = parseInt(savedNotificationCount);
+        }
+
+        // Load private chats
+        var savedPrivateChats = JSON.parse(localStorage.getItem('privateChats') || '{}');
+        for (var otherUser in savedPrivateChats) {
+            createPrivateChatTab(otherUser);
+            var messages = savedPrivateChats[otherUser];
+            messages.forEach(function(message) {
+                showMessageOutput(message, 'privateChatArea-' + otherUser);
+            });
+        }
+
+        // Load public chat messages
+        var publicMessages = JSON.parse(localStorage.getItem('publicMessages') || '[]');
+        publicMessages.forEach(function(message) {
+            showMessageOutput(message, 'publicChatArea');
+        });
+
+        // Load connection status and reconnect if necessary
+        var wasConnected = localStorage.getItem('wasConnected') === 'true';
+        if (wasConnected) {
+            connect();
+        }
+    }
+
+    function saveData() {
+        localStorage.setItem('notificationCount', notificationCount);
+        localStorage.setItem('wasConnected', stompClient !== null);
+
+        var privateChatsData = {};
+        for (var otherUser in privateChats) {
+            privateChatsData[otherUser] = Array.from(document.getElementById('privateChatArea-' + otherUser).children).map(function(messageDiv) {
+                return {
+                    from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
+                    text: messageDiv.querySelector('.message-content').textContent,
+                    time: messageDiv.querySelector('.message-info').textContent.split(' • ')[1]
+                };
+            });
+        }
+        localStorage.setItem('privateChats', JSON.stringify(privateChatsData));
+
+        var publicMessages = Array.from(document.getElementById('publicChatArea').children).map(function(messageDiv) {
+            return {
+                from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
+                text: messageDiv.querySelector('.message-content').textContent,
+                time: messageDiv.querySelector('.message-info').textContent.split(' • ')[1]
+            };
+        });
+        localStorage.setItem('publicMessages', JSON.stringify(publicMessages));
+    }
+
     function setConnected(connected) {
         document.getElementById('connect').disabled = connected;
         document.getElementById('disconnect').disabled = !connected;
         document.getElementById('publicChatArea').style.visibility = connected ? 'visible' : 'hidden';
         document.getElementById('privateChatArea').style.visibility = connected ? 'visible' : 'hidden';
-        document.getElementById('publicChatArea').innerHTML = '';
-        document.getElementById('privateChatArea').innerHTML = '';
-        // Hide private chat tabs when disconnected
-        for (var key in privateChats) {
-            document.getElementById('chatTabContent').removeChild(privateChats[key]);
-            document.getElementById('chatTabs').removeChild(document.getElementById('tab-' + key));
+        if (!connected) {
+            document.getElementById('publicChatArea').innerHTML = '';
+            document.getElementById('privateChatArea').innerHTML = '';
+            for (var key in privateChats) {
+                document.getElementById('chatTabContent').removeChild(privateChats[key]);
+                document.getElementById('chatTabs').removeChild(document.getElementById('tab-' + key));
+            }
+            privateChats = {};
         }
-        privateChats = {};
+        saveData();
     }
 
     function connect() {
@@ -137,20 +200,28 @@
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/messages', function(messageOutput) {
-                showMessageOutput(JSON.parse(messageOutput.body), 'publicChatArea');
+                var message = JSON.parse(messageOutput.body);
+                showMessageOutput(message, 'publicChatArea');
+                saveData();
             });
             stompClient.subscribe('/user/topic/private-messages', function (messageOutput) {
                 handlePrivateMessage(JSON.parse(messageOutput.body));
+                saveData();
             });
 
             stompClient.subscribe('/topic/global-notifications', function (messageOutput) {
                 notificationCount = notificationCount + 1;
+                saveData();
             });
 
             stompClient.subscribe('/user/topic/private-notifications', function (message) {
                 notificationCount = notificationCount + 1;
+                saveData();
             });
             saveuserinfo();
+        }, function(error) {
+            console.log('STOMP error ' + error);
+            disconnect();
         });
     }
 
@@ -193,9 +264,10 @@
         var to = document.getElementById('to').value;
 
         if (to && text) {
-            stompClient.send("/app/private-message", {}, JSON.stringify({'from':from, 'to':to, 'text':text}));
+            var message = {'from':from, 'to':to, 'text':text, time: new Date().toLocaleTimeString()};
+            stompClient.send("/app/private-message", {}, JSON.stringify(message));
             document.getElementById('privateText').value = '';
-            handlePrivateMessage({'from':from, 'to':to, 'text':text, time: new Date().toLocaleTimeString()});
+            handlePrivateMessage(message);
         } else {
             console.error("Recipient or message is empty");
         }
@@ -229,6 +301,7 @@
         } else {
             console.error("Invalid otherUser:", otherUser);
         }
+        saveData();
     }
 
     function notifyNewMessage(from) {
@@ -305,10 +378,11 @@
             var text = inputField.value;
             if (text) {
                 console.log('Enviando mensaje desde ' + from + ' a ' + otherUser);
-                stompClient.send("/app/private-message", {}, JSON.stringify({'from': from, 'to': otherUser, 'text': text}));
+                var message = {'from': from, 'to': otherUser, 'text': text, time: new Date().toLocaleTimeString()};
+                stompClient.send("/app/private-message", {}, JSON.stringify(message));
                 console.log('Mensaje enviado');
                 inputField.value = '';
-                handlePrivateMessage({from: from, to: otherUser, text: text, time: new Date().toLocaleTimeString()});
+                handlePrivateMessage(message);
             }
         };
 
@@ -326,6 +400,7 @@
         // Activate the new tab
         var bootstrapTab = new bootstrap.Tab(document.getElementById('private-tab-' + otherUser));
         bootstrapTab.show();
+        saveData();
     }
 
     function showMessageOutput(messageOutput, chatAreaId) {
@@ -346,6 +421,7 @@
         chatArea.appendChild(messageDiv);
 
         chatArea.scrollTop = chatArea.scrollHeight;
+        saveData();
     }
 
     function updateMemberList(members) {
@@ -357,8 +433,24 @@
             memberDiv.textContent = member;
             memberList.appendChild(memberDiv);
         });
+        saveData();
     }
 
+    // Add event listener for when the page is about to unload
+    window.addEventListener('beforeunload', function() {
+        saveData();
+    });
+
+    // Attempt to reconnect if the connection is lost
+    function attemptReconnect() {
+        if (stompClient === null || !stompClient.connected) {
+            console.log('Attempting to reconnect...');
+            connect();
+        }
+    }
+
+    // Check connection status periodically
+    setInterval(attemptReconnect, 5000);
 
 </script>
 
