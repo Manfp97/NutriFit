@@ -109,6 +109,7 @@
 </div>
 
 <script type="text/javascript">
+
     var stompClient = null;
     var notificationCount = 0;
     var privateChats = {}; // Object to track private chat tabs
@@ -190,12 +191,14 @@
         var from = document.getElementById('from').value;
         var text = document.getElementById('privateText').value;
         var to = document.getElementById('to').value;
-        stompClient.send("/app/private-message", {}, JSON.stringify({'from':from, 'to':to, 'text':text}));
-        document.getElementById('privateText').value = '';
-        if (!privateChats[to]) {
-            createPrivateChatTab(to);
+
+        if (to && text) {
+            stompClient.send("/app/private-message", {}, JSON.stringify({'from':from, 'to':to, 'text':text}));
+            document.getElementById('privateText').value = '';
+            handlePrivateMessage({'from':from, 'to':to, 'text':text, time: new Date().toLocaleTimeString()});
+        } else {
+            console.error("Recipient or message is empty");
         }
-        showMessageOutput({from, to, text, time: new Date().toLocaleTimeString()}, 'privateChatArea-' + to);
     }
 
     function handlePrivateMessage(messageOutput) {
@@ -203,21 +206,28 @@
         var to = messageOutput.to;
         var currentUser = document.getElementById('from').value;
 
-        // Determine if the current user is the recipient
-        var isRecipient = to === currentUser;
+        console.log('handlePrivateMessage:', messageOutput);
+        console.log('currentUser:', currentUser);
 
-        // Create or show chat tab for the other user
-        var otherUser = isRecipient ? from : to;
+        // Determine the other user (not the current user)
+        var otherUser = (from === currentUser) ? to : from;
+        console.log('otherUser:', otherUser);
 
-        if (!privateChats[otherUser]) {
-            createPrivateChatTab(otherUser);
-        }
+        if (otherUser && otherUser !== "undefined") {
+            // Create chat tab if it doesn't exist
+            if (!privateChats[otherUser]) {
+                createPrivateChatTab(otherUser);
+            }
 
-        showMessageOutput(messageOutput, 'privateChatArea-' + otherUser);
+            // Show message in the correct tab
+            showMessageOutput(messageOutput, 'privateChatArea-' + otherUser);
 
-        // If this user is the recipient, show a notification or highlight the tab
-        if (isRecipient) {
-            notifyNewMessage(from);
+            // If this user is the recipient, show a notification
+            if (to === currentUser) {
+                notifyNewMessage(from);
+            }
+        } else {
+            console.error("Invalid otherUser:", otherUser);
         }
     }
 
@@ -236,79 +246,86 @@
         }
     }
 
+    function createPrivateChatTab(otherUser) {
+        if (!otherUser || otherUser === "undefined" || otherUser === document.getElementById('from').value || privateChats[otherUser]) {
+            console.log("Not creating tab for:", otherUser);
+            return; // Don't create a tab for invalid users, self, or if it already exists
+        }
 
-    function createPrivateChatTab(to) {
-        if (to !== document.getElementById('from').value) {
-            // Create a new tab for the private chat
-            var tab = document.createElement('li');
-            tab.className = 'nav-item';
-            tab.role = 'presentation';
-            tab.id = 'tab-' + to;
+        console.log("Creating tab for:", otherUser);
 
-            var tabButton = document.createElement('button');
-            tabButton.className = 'nav-link';
-            tabButton.id = 'private-tab-' + to;
-            tabButton.setAttribute('data-bs-toggle', 'tab');
-            tabButton.setAttribute('data-bs-target', '#private-' + to);
-            tabButton.type = 'button';
-            tabButton.role = 'tab';
-            tabButton.ariaControls = 'private-' + to;
-            tabButton.ariaSelected = 'false';
-            tabButton.textContent = 'Chat with ' + to;
+        var tab = document.createElement('li');
+        tab.className = 'nav-item';
+        tab.role = 'presentation';
+        tab.id = 'tab-' + otherUser;
 
-            tab.appendChild(tabButton);
-            document.getElementById('chatTabs').appendChild(tab);
+        var tabButton = document.createElement('button');
+        tabButton.className = 'nav-link';
+        tabButton.id = 'private-tab-' + otherUser;
+        tabButton.setAttribute('data-bs-toggle', 'tab');
+        tabButton.setAttribute('data-bs-target', '#private-' + otherUser);
+        tabButton.type = 'button';
+        tabButton.role = 'tab';
+        tabButton.ariaControls = 'private-' + otherUser;
+        tabButton.ariaSelected = 'false';
+        tabButton.textContent = 'Chat with ' + otherUser;
 
-            // Create the tab content
-            var tabPane = document.createElement('div');
-            tabPane.className = 'tab-pane fade';
-            tabPane.id = 'private-' + to;
-            tabPane.role = 'tabpanel';
-            tabPane.ariaLabelledby = 'private-tab-' + to;
+        tab.appendChild(tabButton);
+        document.getElementById('chatTabs').appendChild(tab);
 
-            var card = document.createElement('div');
-            card.className = 'card';
+        var tabPane = document.createElement('div');
+        tabPane.className = 'tab-pane fade';
+        tabPane.id = 'private-' + otherUser;
+        tabPane.role = 'tabpanel';
+        tabPane.ariaLabelledby = 'private-tab-' + otherUser;
 
-            var cardBody = document.createElement('div');
-            cardBody.className = 'card-body chat-container';
-            cardBody.id = 'privateChatArea-' + to;
+        var card = document.createElement('div');
+        card.className = 'card';
 
-            var cardFooter = document.createElement('div');
-            cardFooter.className = 'card-footer';
+        var cardBody = document.createElement('div');
+        cardBody.className = 'card-body chat-container';
+        cardBody.id = 'privateChatArea-' + otherUser;
 
-            var inputGroup = document.createElement('div');
-            inputGroup.className = 'input-group';
+        var cardFooter = document.createElement('div');
+        cardFooter.className = 'card-footer';
 
-            var inputField = document.createElement('input');
-            inputField.type = 'text';
-            inputField.className = 'form-control';
-            inputField.placeholder = 'Write a private message...';
+        var inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group';
 
-             sendButton.onclick = function() {
-                var from = document.getElementById('from').value;
-                var text = inputField.value;
-                console.log('Enviando mensaje desde ' + from + ' a ' + to);
-                stompClient.send("/app/private-message", {}, JSON.stringify({'from': from, 'to': to, 'text': text}));
+        var inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.className = 'form-control';
+        inputField.placeholder = 'Write a private message...';
+
+        var sendButton = document.createElement('button');
+        sendButton.className = 'btn btn-primary';
+        sendButton.textContent = 'Send';
+        sendButton.onclick = function() {
+            var from = document.getElementById('from').value;
+            var text = inputField.value;
+            if (text) {
+                console.log('Enviando mensaje desde ' + from + ' a ' + otherUser);
+                stompClient.send("/app/private-message", {}, JSON.stringify({'from': from, 'to': otherUser, 'text': text}));
                 console.log('Mensaje enviado');
                 inputField.value = '';
-                showMessageOutput({from, text, time: new Date().toLocaleTimeString()}, 'privateChatArea-' + to);
-            };
+                handlePrivateMessage({from: from, to: otherUser, text: text, time: new Date().toLocaleTimeString()});
+            }
+        };
 
-            inputGroup.appendChild(inputField);
-            inputGroup.appendChild(sendButton);
-            cardFooter.appendChild(inputGroup);
-            card.appendChild(cardBody);
-            card.appendChild(cardFooter);
-            tabPane.appendChild(card);
+        inputGroup.appendChild(inputField);
+        inputGroup.appendChild(sendButton);
+        cardFooter.appendChild(inputGroup);
+        card.appendChild(cardBody);
+        card.appendChild(cardFooter);
+        tabPane.appendChild(card);
 
-            document.getElementById('chatTabContent').appendChild(tabPane);
+        document.getElementById('chatTabContent').appendChild(tabPane);
 
-            privateChats[to] = tabPane;
+        privateChats[otherUser] = tabPane;
 
-            // Activate the new tab
-            var bootstrapTab = new bootstrap.Tab(document.getElementById('private-tab-' + to));
-            bootstrapTab.show();
-        }
+        // Activate the new tab
+        var bootstrapTab = new bootstrap.Tab(document.getElementById('private-tab-' + otherUser));
+        bootstrapTab.show();
     }
 
     function showMessageOutput(messageOutput, chatAreaId) {
@@ -331,7 +348,6 @@
         chatArea.scrollTop = chatArea.scrollHeight;
     }
 
-    // Function to populate the member list (you'll need to implement the logic to get the member list)
     function updateMemberList(members) {
         var memberList = document.getElementById('memberList');
         memberList.innerHTML = '';
@@ -343,8 +359,7 @@
         });
     }
 
-    // Call this function when you receive updates about connected members
-    // updateMemberList(['User1', 'User2', 'User3']);11
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
