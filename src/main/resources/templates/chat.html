@@ -62,11 +62,9 @@
         <div class="col-md-8">
             <ul class="nav nav-tabs" id="chatTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="public-tab" data-bs-toggle="tab" data-bs-target="#public" type="button" role="tab" aria-controls="public" aria-selected="true">Public Chat</button>
-                </li>
-                <li class="nav-item" role="presentation">
                     <button class="nav-link" id="private-tab" data-bs-toggle="tab" data-bs-target="#private" type="button" role="tab" aria-controls="private" aria-selected="false">Private Chat</button>
                 </li>
+                <!-- Private Chat Tabs will be dynamically added here -->
             </ul>
             <div class="tab-content" id="chatTabContent">
                 <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
@@ -98,6 +96,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Dynamic Private Chat Content -->
             </div>
         </div>
     </div>
@@ -106,6 +105,7 @@
 <script type="text/javascript">
     var stompClient = null;
     var notificationCount = 0;
+    var privateChats = {}; // Object to track private chat tabs
 
     function setConnected(connected) {
         document.getElementById('connect').disabled = connected;
@@ -114,6 +114,12 @@
         document.getElementById('privateChatArea').style.visibility = connected ? 'visible' : 'hidden';
         document.getElementById('publicChatArea').innerHTML = '';
         document.getElementById('privateChatArea').innerHTML = '';
+        // Hide private chat tabs when disconnected
+        for (var key in privateChats) {
+            document.getElementById('chatTabContent').removeChild(privateChats[key]);
+            document.getElementById('chatTabs').removeChild(document.getElementById('tab-' + key));
+        }
+        privateChats = {};
     }
 
     function connect() {
@@ -127,7 +133,7 @@
                 showMessageOutput(JSON.parse(messageOutput.body), 'publicChatArea');
             });
             stompClient.subscribe('/user/topic/private-messages', function (messageOutput) {
-                showMessageOutput(JSON.parse(messageOutput.body), 'privateChatArea');
+                handlePrivateMessage(JSON.parse(messageOutput.body));
             });
 
             stompClient.subscribe('/topic/global-notifications', function (messageOutput) {
@@ -180,6 +186,92 @@
         var to = document.getElementById('to').value;
         stompClient.send("/app/private-message", {}, JSON.stringify({'from':from, 'to':to, 'text':text}));
         document.getElementById('privateText').value = '';
+        if (!privateChats[to]) {
+            createPrivateChatTab(to);
+        }
+        showMessageOutput({from, text, time: new Date().toLocaleTimeString()}, 'privateChatArea-' + to);
+    }
+
+    function handlePrivateMessage(messageOutput) {
+        var from = messageOutput.from;
+        if (!privateChats[from]) {
+            createPrivateChatTab(from);
+        }
+        showMessageOutput(messageOutput, 'privateChatArea-' + from);
+    }
+
+    function createPrivateChatTab(to) {
+        if (to !== document.getElementById('from').value) {
+            // Create a new tab for the private chat
+            var tab = document.createElement('li');
+            tab.className = 'nav-item';
+            tab.role = 'presentation';
+            tab.id = 'tab-' + to;
+
+            var tabButton = document.createElement('button');
+            tabButton.className = 'nav-link';
+            tabButton.id = 'private-tab-' + to;
+            tabButton.setAttribute('data-bs-toggle', 'tab');
+            tabButton.setAttribute('data-bs-target', '#private-' + to);
+            tabButton.type = 'button';
+            tabButton.role = 'tab';
+            tabButton.ariaControls = 'private-' + to;
+            tabButton.ariaSelected = 'false';
+            tabButton.textContent = 'Chat with ' + to;
+
+            tab.appendChild(tabButton);
+            document.getElementById('chatTabs').appendChild(tab);
+
+            // Create the tab content
+            var tabPane = document.createElement('div');
+            tabPane.className = 'tab-pane fade';
+            tabPane.id = 'private-' + to;
+            tabPane.role = 'tabpanel';
+            tabPane.ariaLabelledby = 'private-tab-' + to;
+
+            var card = document.createElement('div');
+            card.className = 'card';
+
+            var cardBody = document.createElement('div');
+            cardBody.className = 'card-body chat-container';
+            cardBody.id = 'privateChatArea-' + to;
+
+            var cardFooter = document.createElement('div');
+            cardFooter.className = 'card-footer';
+
+            var inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+
+            var inputField = document.createElement('input');
+            inputField.type = 'text';
+            inputField.className = 'form-control';
+            inputField.placeholder = 'Write a private message...';
+
+             sendButton.onclick = function() {
+                var from = document.getElementById('from').value;
+                var text = inputField.value;
+                console.log('Enviando mensaje desde ' + from + ' a ' + to);
+                stompClient.send("/app/private-message", {}, JSON.stringify({'from': from, 'to': to, 'text': text}));
+                console.log('Mensaje enviado');
+                inputField.value = '';
+                showMessageOutput({from, text, time: new Date().toLocaleTimeString()}, 'privateChatArea-' + to);
+            };
+
+            inputGroup.appendChild(inputField);
+            inputGroup.appendChild(sendButton);
+            cardFooter.appendChild(inputGroup);
+            card.appendChild(cardBody);
+            card.appendChild(cardFooter);
+            tabPane.appendChild(card);
+
+            document.getElementById('chatTabContent').appendChild(tabPane);
+
+            privateChats[to] = tabPane;
+
+            // Activate the new tab
+            var bootstrapTab = new bootstrap.Tab(document.getElementById('private-tab-' + to));
+            bootstrapTab.show();
+        }
     }
 
     function showMessageOutput(messageOutput, chatAreaId) {
@@ -215,7 +307,7 @@
     }
 
     // Call this function when you receive updates about connected members
-    // updateMemberList(['User1', 'User2', 'User3']);q
+    // updateMemberList(['User1', 'User2', 'User3']);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
