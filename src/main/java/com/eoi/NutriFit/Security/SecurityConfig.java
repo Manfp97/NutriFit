@@ -1,6 +1,5 @@
 package com.eoi.NutriFit.Security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,22 +11,17 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.session.Session;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
-import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig <S extends Session>{
-
+public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -46,60 +40,53 @@ public class SecurityConfig <S extends Session>{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-
-
-        http.formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
-        );
-
-        http.logout(logout -> logout
-                .logoutUrl("/logout")  // URL para el logout
-                .logoutSuccessUrl("/") // Redirige a la página principal después del logout
-                .invalidateHttpSession(true) // Invalidar la sesión HTTP
-                .deleteCookies("JSESSIONID") // Eliminar cookies
-        );
-
-
-        http.authorizeHttpRequests(customizer -> {
-            customizer
-                    .requestMatchers("/js/**").permitAll()
-                    .requestMatchers("/img/**").permitAll()
-                    .requestMatchers("/css/**").permitAll()
-                    .requestMatchers("/fonts/**").permitAll()
-                    .requestMatchers("/static/lib/**").permitAll()
-                    .requestMatchers("/static/scss/**").permitAll()
-                    .requestMatchers("/chats/**").permitAll()
-                    // Producto security
-                    .requestMatchers(HttpMethod.GET, "/producto/list").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers(HttpMethod.GET, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers(HttpMethod.POST, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers(HttpMethod.POST, "/producto/**").hasRole("ADMIN")
-                    // Carrito security
-                    .requestMatchers(HttpMethod.POST, "/carrito/agregar/**").authenticated()
-                    // Dietas security
-                    .requestMatchers(HttpMethod.GET, "/dietaUsuario/list").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers(HttpMethod.GET, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers(HttpMethod.POST, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
-                    .requestMatchers(HttpMethod.POST, "/dietaUsuario/**").hasRole("ADMIN")
-                    .requestMatchers("/").permitAll(); // Permitir todas las solicitudes por defecto
-            customizer.anyRequest().authenticated();
-        });
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/js/**", "/img/**", "/css/**", "/fonts/**", "/static/lib/**", "/static/scss/**", "/chats/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/producto/list").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers(HttpMethod.GET, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers(HttpMethod.POST, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers(HttpMethod.POST, "/producto/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/carrito/agregar/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/dietaUsuario/list").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers(HttpMethod.GET, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers(HttpMethod.POST, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers(HttpMethod.POST, "/dietaUsuario/**").hasRole("ADMIN")
+                        .requestMatchers("/ws/**", "/chat/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                );
 
         return http.build();
     }
 
     @Bean
-    public SpringSessionRememberMeServices rememberMeServices() {
-        SpringSessionRememberMeServices rememberMeServices =
-                new SpringSessionRememberMeServices();
-        // optionally customize
-        rememberMeServices.setAlwaysRemember(true);
-        return rememberMeServices;
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:8091",
+                "http://localhost:3000",
+                "https://3d52-46-6-26-199.ngrok-free.app"
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
-
-
 
     @Bean
     static GrantedAuthorityDefaults grantedAuthorityDefaults() {
