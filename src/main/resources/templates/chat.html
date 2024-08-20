@@ -109,125 +109,53 @@
 </div>
 
 <script type="text/javascript">
-
     var stompClient = null;
     var notificationCount = 0;
     var privateChats = {}; // Object to track private chat tabs
-
-    // Load saved data when the page loads
-    window.onload = function() {
-        loadSavedData();
-    };
-
-    function loadSavedData() {
-        // Load notification count
-        var savedNotificationCount = localStorage.getItem('notificationCount');
-        if (savedNotificationCount) {
-            notificationCount = parseInt(savedNotificationCount);
-        }
-
-        // Load private chats
-        var savedPrivateChats = JSON.parse(localStorage.getItem('privateChats') || '{}');
-        for (var otherUser in savedPrivateChats) {
-            createPrivateChatTab(otherUser);
-            var messages = savedPrivateChats[otherUser];
-            messages.forEach(function(message) {
-                showMessageOutput(message, 'privateChatArea-' + otherUser);
-            });
-        }
-
-        // Load public chat messages
-        var publicMessages = JSON.parse(localStorage.getItem('publicMessages') || '[]');
-        publicMessages.forEach(function(message) {
-            showMessageOutput(message, 'publicChatArea');
-        });
-
-        // Load connection status and reconnect if necessary
-        var wasConnected = localStorage.getItem('wasConnected') === 'true';
-        if (wasConnected) {
-            connect();
-        }
-    }
-
-    function saveData() {
-        localStorage.setItem('notificationCount', notificationCount);
-        localStorage.setItem('wasConnected', stompClient !== null);
-
-        var privateChatsData = {};
-        for (var otherUser in privateChats) {
-            privateChatsData[otherUser] = Array.from(document.getElementById('privateChatArea-' + otherUser).children).map(function(messageDiv) {
-                return {
-                    from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
-                    text: messageDiv.querySelector('.message-content').textContent,
-                    time: messageDiv.querySelector('.message-info').textContent.split(' • ')[1]
-                };
-            });
-        }
-        localStorage.setItem('privateChats', JSON.stringify(privateChatsData));
-
-        var publicMessages = Array.from(document.getElementById('publicChatArea').children).map(function(messageDiv) {
-            return {
-                from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
-                text: messageDiv.querySelector('.message-content').textContent,
-                time: messageDiv.querySelector('.message-info').textContent.split(' • ')[1]
-            };
-        });
-        localStorage.setItem('publicMessages', JSON.stringify(publicMessages));
-    }
 
     function setConnected(connected) {
         document.getElementById('connect').disabled = connected;
         document.getElementById('disconnect').disabled = !connected;
         document.getElementById('publicChatArea').style.visibility = connected ? 'visible' : 'hidden';
         document.getElementById('privateChatArea').style.visibility = connected ? 'visible' : 'hidden';
-        if (!connected) {
-            document.getElementById('publicChatArea').innerHTML = '';
-            document.getElementById('privateChatArea').innerHTML = '';
-            for (var key in privateChats) {
-                document.getElementById('chatTabContent').removeChild(privateChats[key]);
-                document.getElementById('chatTabs').removeChild(document.getElementById('tab-' + key));
-            }
-            privateChats = {};
+        document.getElementById('publicChatArea').innerHTML = '';
+        document.getElementById('privateChatArea').innerHTML = '';
+        // Hide private chat tabs when disconnected
+        for (var key in privateChats) {
+            document.getElementById('chatTabContent').removeChild(privateChats[key]);
+            document.getElementById('chatTabs').removeChild(document.getElementById('tab-' + key));
         }
-        saveData();
+        privateChats = {};
     }
 
     function connect() {
-        var socket = new SockJS('https://3d52-46-6-26-199.ngrok-free.app/chat');
+        var socket = new SockJS('/chat');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function(frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/messages', function(messageOutput) {
-                var message = JSON.parse(messageOutput.body);
-                showMessageOutput(message, 'publicChatArea');
-                saveData();
+                showMessageOutput(JSON.parse(messageOutput.body), 'publicChatArea');
             });
             stompClient.subscribe('/user/topic/private-messages', function (messageOutput) {
                 handlePrivateMessage(JSON.parse(messageOutput.body));
-                saveData();
             });
 
             stompClient.subscribe('/topic/global-notifications', function (messageOutput) {
                 notificationCount = notificationCount + 1;
-                saveData();
             });
 
             stompClient.subscribe('/user/topic/private-notifications', function (message) {
                 notificationCount = notificationCount + 1;
-                saveData();
             });
             saveuserinfo();
-        }, function(error) {
-            console.log('STOMP error ' + error);
-            disconnect();
         });
     }
 
     function saveuserinfo() {
         var from = document.getElementById('from').value;
-        var url = 'https://3d52-46-6-26-199.ngrok-free.app/registerwebsocket/' + from
+        var url = 'http://localhost:8091/registerwebsocket/' + from
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -264,10 +192,9 @@
         var to = document.getElementById('to').value;
 
         if (to && text) {
-            var message = {'from':from, 'to':to, 'text':text, time: new Date().toLocaleTimeString()};
-            stompClient.send("/app/private-message", {}, JSON.stringify(message));
+            stompClient.send("/app/private-message", {}, JSON.stringify({'from':from, 'to':to, 'text':text}));
             document.getElementById('privateText').value = '';
-            handlePrivateMessage(message);
+            handlePrivateMessage({'from':from, 'to':to, 'text':text, time: new Date().toLocaleTimeString()});
         } else {
             console.error("Recipient or message is empty");
         }
@@ -301,7 +228,6 @@
         } else {
             console.error("Invalid otherUser:", otherUser);
         }
-        saveData();
     }
 
     function notifyNewMessage(from) {
@@ -378,11 +304,10 @@
             var text = inputField.value;
             if (text) {
                 console.log('Enviando mensaje desde ' + from + ' a ' + otherUser);
-                var message = {'from': from, 'to': otherUser, 'text': text, time: new Date().toLocaleTimeString()};
-                stompClient.send("/app/private-message", {}, JSON.stringify(message));
+                stompClient.send("/app/private-message", {}, JSON.stringify({'from': from, 'to': otherUser, 'text': text}));
                 console.log('Mensaje enviado');
                 inputField.value = '';
-                handlePrivateMessage(message);
+                handlePrivateMessage({from: from, to: otherUser, text: text, time: new Date().toLocaleTimeString()});
             }
         };
 
@@ -400,7 +325,6 @@
         // Activate the new tab
         var bootstrapTab = new bootstrap.Tab(document.getElementById('private-tab-' + otherUser));
         bootstrapTab.show();
-        saveData();
     }
 
     function showMessageOutput(messageOutput, chatAreaId) {
@@ -421,7 +345,6 @@
         chatArea.appendChild(messageDiv);
 
         chatArea.scrollTop = chatArea.scrollHeight;
-        saveData();
     }
 
     function updateMemberList(members) {
@@ -433,25 +356,7 @@
             memberDiv.textContent = member;
             memberList.appendChild(memberDiv);
         });
-        saveData();
     }
-
-    // Add event listener for when the page is about to unload
-    window.addEventListener('beforeunload', function() {
-        saveData();
-    });
-
-    // Attempt to reconnect if the connection is lost
-    function attemptReconnect() {
-        if (stompClient === null || !stompClient.connected) {
-            console.log('Attempting to reconnect...');
-            connect();
-        }
-    }
-
-    // Check connection status periodically
-    setInterval(attemptReconnect, 5000);
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
