@@ -1,7 +1,6 @@
 package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.Dieta;
-import com.eoi.NutriFit.Entidades.Dieta;
 import com.eoi.NutriFit.Repositorios.DietaRepo;
 import com.eoi.NutriFit.Servicios.DietaService;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,15 +19,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Controlador para manejar las operaciones relacionadas con las dietas.
+ * Proporciona endpoints para listar, crear, actualizar y eliminar dietas.
+ *
+ * @author Francisco José Conejo Barranco, Juan María Avecilla Parrilla, Manuel Fernández Pernía
+ */
 @Controller
 @RequestMapping("/dietaUsuario")
 public class DietaController {
 
-    @Autowired
-    private DietaService service;
-
-    @Autowired
-    private DietaRepo dietaRepo;
+    private final DietaService service;
+    private final DietaRepo dietaRepo;
 
     @Autowired
     public DietaController(DietaService service, DietaRepo dietaRepo) {
@@ -36,6 +38,15 @@ public class DietaController {
         this.dietaRepo = dietaRepo;
     }
 
+    /**
+     * Lista todas las dietas con paginación y filtrado por categoría.
+     *
+     * @param page       Número de página para la paginación.
+     * @param size       Tamaño de la página para la paginación.
+     * @param categoria  Categoría para filtrar las dietas.
+     * @param model      Modelo para pasar datos a la vista.
+     * @return Vista con la lista de dietas.
+     */
     @GetMapping
     public String listAll(
             @RequestParam(required = false, defaultValue = "0") int page,
@@ -55,7 +66,6 @@ public class DietaController {
         if (dietasPage.isEmpty()) {
             return "dietanotfound";
         } else {
-
             // Crea la lista de números de página
             List<Integer> pageNumbers = IntStream.rangeClosed(1, dietasPage.getTotalPages())
                     .boxed()
@@ -71,7 +81,14 @@ public class DietaController {
         }
     }
 
-
+    /**
+     * Lista todas las dietas con paginación, accesible solo para roles ADMIN y EMPLEADO.
+     *
+     * @param page Número de página para la paginación.
+     * @param size Tamaño de la página para la paginación.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista con la lista de dietas editables.
+     */
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String listAllEditable(@RequestParam(defaultValue = "0") int page,
@@ -90,6 +107,13 @@ public class DietaController {
         return "listadietaseditable"; // El nombre del archivo Thymeleaf que mostraría la tabla
     }
 
+    /**
+     * Obtiene los detalles de una dieta específica por ID.
+     *
+     * @param id    ID de la dieta a obtener.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista con los detalles de la dieta o redirige a un error 404 si no se encuentra.
+     */
     @GetMapping("/{id}")
     public String getById(@PathVariable Integer id , Model model) {
         Optional<Dieta> dieta = service.encuentraPorId(id);
@@ -102,6 +126,14 @@ public class DietaController {
         }
     }
 
+    /**
+     * Actualiza los detalles de una dieta existente por ID.
+     *
+     * @param id       ID de la dieta a actualizar.
+     * @param dieta    Objeto con los datos actualizados.
+     * @param model    Modelo para pasar mensajes a la vista.
+     * @return Redirige a la lista de dietas con un mensaje de éxito o error.
+     */
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String update(@PathVariable Integer id, @ModelAttribute Dieta dieta, Model model) {
@@ -128,6 +160,12 @@ public class DietaController {
         }
     }
 
+    /**
+     * Elimina una dieta existente por ID.
+     *
+     * @param id ID de la dieta a eliminar.
+     * @return Redirige a la lista de dietas o a un error 404 si no se encuentra.
+     */
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@PathVariable Integer id) {
@@ -139,7 +177,12 @@ public class DietaController {
         }
     }
 
-
+    /**
+     * Muestra el formulario para crear una nueva dieta.
+     *
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista con el formulario de creación de dieta.
+     */
     @GetMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
     public String mostrarFormulario(Model model) {
@@ -147,6 +190,13 @@ public class DietaController {
         return "creardieta"; // nombre del archivo Thymeleaf (sin .html)
     }
 
+    /**
+     * Crea una nueva dieta con los datos proporcionados.
+     *
+     * @param dieta Objeto con los datos de la nueva dieta.
+     * @param model Modelo para pasar mensajes a la vista.
+     * @return Redirige al formulario de creación con un mensaje de éxito o error.
+     */
     @PostMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String crear(@ModelAttribute("dieta") Dieta dieta, Model model) {
@@ -159,5 +209,4 @@ public class DietaController {
             return "redirect:/404";
         }
     }
-    
 }

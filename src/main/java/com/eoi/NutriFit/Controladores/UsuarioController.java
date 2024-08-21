@@ -23,6 +23,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Controlador para la gestión de usuarios en la aplicación.
+ * Este controlador maneja operaciones CRUD y otras funcionalidades relacionadas con la entidad Usuario,
+ * incluyendo la visualización, creación, actualización y eliminación de usuarios.
+ *
+ * @author Francisco José Conejo Barranco, Juan María Avecilla Parrilla, Manuel Fernández Pernía
+ */
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -42,7 +49,14 @@ public class UsuarioController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // Controlador para entrenadores
+    /**
+     * Muestra una lista paginada de entrenadores.
+     *
+     * @param page Número de página a mostrar (0 por defecto).
+     * @param size Tamaño de la página (9 por defecto).
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista que muestra la lista de entrenadores.
+     */
     @GetMapping("/entrenadores")
     public String listEntrenadores(
             @RequestParam(defaultValue = "0") int page,
@@ -77,8 +91,14 @@ public class UsuarioController {
         return "entrenadoresfreelance";
     }
 
-
-    // Controlador para nutricionistas
+    /**
+     * Muestra una lista paginada de nutricionistas.
+     *
+     * @param page Número de página a mostrar (0 por defecto).
+     * @param size Tamaño de la página (9 por defecto).
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista que muestra la lista de nutricionistas.
+     */
     @GetMapping("/nutricionistas")
     public String listNutricionistas(
             @RequestParam(defaultValue = "0") int page,
@@ -113,9 +133,15 @@ public class UsuarioController {
         return "nutricionistasfreelance";
     }
 
-
-
-
+    /**
+     * Muestra una lista paginada de usuarios editables.
+     *
+     * @param page Número de página a mostrar (0 por defecto).
+     * @param size Tamaño de la página (10 por defecto).
+     * @param rol Rol de los usuarios a mostrar, puede ser null para mostrar todos los usuarios.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista que muestra la lista de usuarios editables.
+     */
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String listAllEditable(@RequestParam(defaultValue = "0") int page,
@@ -147,6 +173,13 @@ public class UsuarioController {
         return "listausuarioseditable";
     }
 
+    /**
+     * Muestra los detalles de un usuario específico por su ID.
+     *
+     * @param id Identificador del usuario a recuperar.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista que muestra los detalles del usuario, o redirige a una página de error si no se encuentra el usuario.
+     */
     @GetMapping("/{id}")
     public String getById(@PathVariable Integer id, Model model) {
         Optional<Usuario> usuario = service.encuentraPorId(id);
@@ -161,6 +194,12 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Muestra el formulario para crear un nuevo usuario.
+     *
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista que muestra el formulario de creación de usuario.
+     */
     @GetMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String mostrarFormulario(Model model) {
@@ -169,7 +208,13 @@ public class UsuarioController {
         return "crearusuario";
     }
 
-
+    /**
+     * Crea un nuevo usuario con la información proporcionada en el formulario.
+     *
+     * @param usuario Objeto Usuario con los datos del nuevo usuario.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista a la que redirige después de la creación del usuario, o el mismo formulario si ocurre un error.
+     */
     @PostMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String crear(@ModelAttribute("usuario") Usuario usuario, Model model) {
@@ -192,10 +237,9 @@ public class UsuarioController {
             }
             usuario.setRol(rol);
 
-            //  Encoder de la password del usuario
+            // Codifica la contraseña del usuario
             String encodedPassword = passwordEncoder.encode(usuario.getPassword());
             usuario.setPassword(encodedPassword);
-
 
             // Guarda el usuario
             service.guardar(usuario);
@@ -208,6 +252,14 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Actualiza un usuario existente con la información proporcionada.
+     *
+     * @param id Identificador del usuario a actualizar.
+     * @param usuario Objeto Usuario con los datos actualizados.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Nombre de la vista a la que redirige después de la actualización, o una página de error si ocurre un problema.
+     */
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String actualizar(@PathVariable Integer id, @ModelAttribute("usuario") Usuario usuario, Model model) {
@@ -262,14 +314,18 @@ public class UsuarioController {
         }
     }
 
-
-
+    /**
+     * Elimina un usuario específico por su ID.
+     *
+     * @param id Identificador del usuario a eliminar.
+     * @return Nombre de la vista a la que redirige después de la eliminación, o una página de error si el usuario no se encuentra.
+     */
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@PathVariable Integer id) {
         try {
             service.eliminarPorId(id);
-            return  "redirect:/usuario/list";
+            return "redirect:/usuario/list";
         } catch (EntityNotFoundException e) {
             return "redirect:/404";
         }

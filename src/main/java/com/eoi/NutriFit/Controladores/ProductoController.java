@@ -19,20 +19,41 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Controlador para la gestión de los productos.
+ * Este controlador maneja las operaciones CRUD relacionadas con los productos,
+ * así como la visualización de los productos y sus detalles.
+ *
+ * @author Francisco José Conejo Barranco, Juan María Avecilla Parrilla, Manuel Fernández Pernía
+ */
 @Controller
 @RequestMapping("/producto")
 public class ProductoController {
 
     @Autowired
     private ProductoService service;
+
     @Autowired
     private ProductoRepo productoRepo;
 
+    /**
+     * Constructor del controlador de productos.
+     *
+     * @param service Servicio de productos utilizado para operaciones CRUD.
+     */
     public ProductoController(ProductoService service) {
         this.service = service;
     }
 
-
+    /**
+     * Maneja las solicitudes para listar todos los productos con paginación y filtrado por categoría.
+     *
+     * @param page Número de página (paginación).
+     * @param size Número de productos por página (paginación).
+     * @param categoria Categoría de productos para filtrar.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return El nombre de la vista para mostrar los productos.
+     */
     @GetMapping
     public String listAll(
             @RequestParam(required = false, defaultValue = "0") int page,
@@ -49,7 +70,7 @@ public class ProductoController {
         } else {
             productosPage = productoRepo.findAll(pageable);
         }
-        if (productosPage.isEmpty()){
+        if (productosPage.isEmpty()) {
             return "error";
         } else {
             // Crea la lista de números de página
@@ -63,11 +84,17 @@ public class ProductoController {
             model.addAttribute("productos", productosPage.getContent());
             model.addAttribute("categoria", categoria);
             return "product";
-
         }
-
     }
 
+    /**
+     * Maneja las solicitudes para listar todos los productos con paginación para usuarios con roles específicos.
+     *
+     * @param page Número de página (paginación).
+     * @param size Número de productos por página (paginación).
+     * @param model Modelo para agregar atributos a la vista.
+     * @return El nombre de la vista para mostrar los productos editables.
+     */
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String listAllEditable(@RequestParam(defaultValue = "0") int page,
@@ -86,9 +113,15 @@ public class ProductoController {
         return "listaproductoseditable"; // El nombre del archivo Thymeleaf que mostraría la tabla
     }
 
-
+    /**
+     * Maneja las solicitudes para obtener los detalles de un producto específico por su ID.
+     *
+     * @param id Identificador del producto.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return El nombre de la vista para mostrar los detalles del producto o una redirección en caso de no encontrarse.
+     */
     @GetMapping("/{id}")
-    public String getById(@PathVariable Integer id , Model model) {
+    public String getById(@PathVariable Integer id, Model model) {
         Optional<Producto> producto = service.encuentraPorId(id);
 
         if (producto.isPresent()) {
@@ -99,7 +132,12 @@ public class ProductoController {
         }
     }
 
-
+    /**
+     * Muestra el formulario para crear un nuevo producto.
+     *
+     * @param model Modelo para agregar atributos a la vista.
+     * @return El nombre del archivo Thymeleaf para la creación de un nuevo producto.
+     */
     @GetMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
     public String mostrarFormulario(Model model) {
@@ -107,6 +145,13 @@ public class ProductoController {
         return "crearproducto"; // nombre del archivo Thymeleaf (sin .html)
     }
 
+    /**
+     * Maneja las solicitudes para crear un nuevo producto.
+     *
+     * @param producto El producto a ser creado.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Redirección a la página de creación de producto con un mensaje de éxito o error.
+     */
     @PostMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String crear(@ModelAttribute("producto") Producto producto, Model model) {
@@ -120,6 +165,14 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Maneja las solicitudes para actualizar un producto existente.
+     *
+     * @param id Identificador del producto a actualizar.
+     * @param producto El producto con los datos actualizados.
+     * @param model Modelo para agregar atributos a la vista.
+     * @return Redirección a la página de productos con un mensaje de éxito o error.
+     */
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String update(@PathVariable Integer id, @ModelAttribute Producto producto, Model model) {
@@ -146,7 +199,12 @@ public class ProductoController {
         }
     }
 
-
+    /**
+     * Maneja las solicitudes para eliminar un producto por su ID.
+     *
+     * @param id Identificador del producto a eliminar.
+     * @return Redirección a la página de productos o una redirección a la página de error en caso de que el producto no se encuentre.
+     */
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@PathVariable Integer id) {
