@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.eoi.NutriFit.Servicios.NotificationServiceEmail;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +42,9 @@ public class UsuarioController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private NotificationServiceEmail notificationServiceEmail;
 
     // Controlador para entrenadores
     @GetMapping("/entrenadores")
@@ -199,6 +203,15 @@ public class UsuarioController {
 
             // Guarda el usuario
             service.guardar(usuario);
+
+            // Suponiendo que `usuario` es una instancia de `Usuario` con detalles válidos
+            String userEmail = usuario.getDetalleUsuario().getEmail();
+            String userName = usuario.getUsername(); // Nombre de usuario desde `Usuario`
+
+            // Enviar notificación por correo electrónico
+            notificationServiceEmail.sendNotification(userEmail, userName);
+
+
             model.addAttribute("mensaje", "Usuario y detalles creados con éxito");
             return "redirect:/usuario/nuevo";
         } catch (Exception e) {
