@@ -1,40 +1,17 @@
-
 <div class="container-fluid bg-light bg-icon py-6" th:fragment="feature">
-    <!-- Feature Start -->
-    <div class="container-fluid bg-light bg-icon my-5 py-6">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
-                 style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Nuestras Dietas</h1>
-                <p></p>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="img/icon-1.png" alt="">
-                        <h4 class="mb-3">Pérdida de peso</h4>
-                        <p class="mb-4">Únete a nuestro programa de la mano de los mejores profesionales y las mejores técnicas</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Leer más</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="img/icon-2.png" alt="">
-                        <h4 class="mb-3">Musculación</h4>
-                        <p class="mb-4">Consigue el físico de tus sueños</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Leer más</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="img/icon-3.png" alt="">
-                        <h4 class="mb-3">Alimentación deportiva</h4>
-                        <p class="mb-4">Si necesitas acompañamiento a tu rutina deportiva, este es el sitio adecuado</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Leer más</a>
-                    </div>
+    <div class="container-fluid p-0">
+        <div class="position-relative">
+            <!-- Background GIF -->
+            <div class="hero bg-image" th:style="'background-image: url(' + @{/img/nutrifit.gif} + ');'">
+                <div class="overlay"></div>
+                <div class="container text-center text-light d-flex flex-column justify-content-center align-items-center text-white content">
+                    <!-- Hero Text -->
+                    <h1 class="display-3 mb-4 text-white-custom">Bienvenido a NutriFit</h1>
+                    <p class="lead mb-4">Transforma tu vida con nuestras dietas y programas de nutrición personalizados</p>
+                    <!-- CTA Button -->
+                    <a href="#explore" class="btn btn-light btn-lg py-3 px-5">Descubre más</a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Feature End -->
 </div>

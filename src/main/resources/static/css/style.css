@@ -1,4 +1,7 @@
 /********** Template CSS **********/
+
+
+
 :root {
     --primary: #3CB815;
     --secondary: #F65005;
@@ -466,5 +469,101 @@
     display: inline; /* Asegura que el formulario se muestre en línea con el botón */
 }
 
+.hero {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+
+}
 
 
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Cambia el valor alfa para ajustar la oscuridad */
+    z-index: 1; /* Asegúrate de que esté encima del GIF */
+}
+
+.content {
+    position: relative; /* Asegura que el contenido esté encima del overlay */
+    z-index: 2; /* Debe ser mayor que el z-index del overlay */
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-light {
+    color: #fff;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.display-3 {
+    font-size: 3rem;
+}
+
+.mb-4 {
+    margin-bottom: 4rem;
+}
+
+.lead {
+    font-size: 1.5rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.py-3 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.px-5 {
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+
+.text-white-custom {
+    color: #fff;
+}
