@@ -15,8 +15,20 @@ public class NotificationServiceEmail {
 
     public void sendNotification(String userEmail, String userName) {
         String subject = "¡Bienvenido a Nutrifit, " + userName + "!";
+        String body = createWelcomeEmailBody(userEmail, userName);
 
-        String body = "<html>" +
+        emailService.sendEmail(userEmail, subject, body);
+    }
+
+    public void sendPasswordResetEmail(String email, String resetUrl) {
+        String subject = "Restablecimiento de contraseña";
+        String body = createPasswordResetEmailBody(email, resetUrl);
+
+        emailService.sendEmail(email, subject, body);
+    }
+
+    private String createWelcomeEmailBody(String userEmail, String userName) {
+        return "<html>" +
                 "<body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>" +
                 "<h2 style='color: #4CAF50;'>¡Hola, " + userName + "!</h2>" +
                 "<p>Estamos encantados de darte la bienvenida a <strong>Nutrifit</strong>, tu compañero ideal para alcanzar tus metas de salud y bienestar.</p>" +
@@ -35,7 +47,20 @@ public class NotificationServiceEmail {
                 "<p style='font-size: 12px; color: #777;'>Este correo fue enviado a " + userEmail + ". Si no reconoces esta actividad, por favor contáctanos inmediatamente.</p>" +
                 "</body>" +
                 "</html>";
+    }
 
-        emailService.sendEmail(userEmail, subject, body);
+    private String createPasswordResetEmailBody(String email, String resetUrl) {
+        return "<html>" +
+                "<body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>" +
+                "<h2 style='color: #4CAF50;'>Restablecimiento de contraseña</h2>" +
+                "<p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para establecer una nueva:</p>" +
+                "<p><a href='" + resetUrl + "' style='color: #4CAF50;'>Restablecer contraseña</a></p>" +
+                "<p>Si no solicitaste este cambio, puedes ignorar este correo.</p>" +
+                "<p style='margin-bottom: 30px;'>Atentamente,<br/>" +
+                "El equipo de Nutrifit</p>" +
+                "<hr style='border: 0; height: 1px; background: #ddd; margin-top: 30px;'/>" +
+                "<p style='font-size: 12px; color: #777;'>Este correo fue enviado a " + email + ". Si no reconoces esta actividad, por favor contáctanos inmediatamente.</p>" +
+                "</body>" +
+                "</html>";
     }
 }

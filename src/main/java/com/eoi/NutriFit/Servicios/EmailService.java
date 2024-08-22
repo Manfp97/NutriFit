@@ -24,6 +24,11 @@ public class EmailService {
                 .html(htmlContent)
                 .build();
 
+        // Log email details for debugging
+        System.out.println("Enviando correo a: " + to);
+        System.out.println("Asunto: " + subject);
+        System.out.println("Contenido HTML: " + htmlContent);
+
         try {
             CreateEmailResponse data = resend.emails().send(params);
             return data.getId();

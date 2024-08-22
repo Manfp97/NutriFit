@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "usuarios")
 @Getter
@@ -24,6 +26,12 @@ public class Usuario {
 
     @Column(name = "activo")
     private boolean activo = true;
+
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "token_expiration")
+    private LocalDateTime tokenExpiration;
 
     @OneToOne
     @JoinColumn(name = "cliente_id")
