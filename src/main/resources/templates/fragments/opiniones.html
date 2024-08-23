@@ -1,69 +1,62 @@
-<!-- Testimonial Start -->
-<div class="container-fluid bg-light bg-icon py-6" th:fragment="opiniones">
-    <div class="container-fluid bg-light bg-icon py-6 mb-5">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
-                 style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Opiniones</h1>
-                <p>Estas son opiniones de usuarios que han probado nuestro método, 8 de cada 10 personas lo recomiendan.</p>
+<!-- Testimonios de Usuarios -->
+<section class="testimonios bg-light py-6" th:fragment="opiniones">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h2 class="display-4 text-primary fw-bold mb-4">Opiniones de Nuestros Usuarios</h2>
+                <p class="lead text-muted mb-5">Descubre cómo NutriFit ha transformado la vida de nuestros usuarios. 8 de cada 10 personas recomiendan nuestra plataforma.</p>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item position-relative bg-white p-5 mt-4">
-                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
-                    <p class="mb-4">¡Nutrifit me ha cambiado la vida! Como recién empiezo en esto del ejercicio y la alimentación saludable, necesitaba una guía clara
-                        y personalizada. La web me ha ayudado a crear hábitos saludables de forma gradual y sin sentirme abrumada. ¡Las recetas son
-                        deliciosas y los entrenamientos súper efectivos!</p>
-                    <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-1.jpg" alt="">
-                        <div class="ms-3">
-                            <h5 class="mb-1">Josefa</h5>
-                            <span>Psicóloga</span>
-                        </div>
+        </div>
+
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.3s">
+            <div class="testimonial-item bg-white p-5 rounded shadow-sm">
+                <i class="fas fa-quote-left fa-3x text-primary mb-4"></i>
+                <p class="mb-4">¡NutriFit me ha cambiado la vida! Como principiante en fitness y nutrición, necesitaba una guía clara y personalizada. La plataforma me ha ayudado a crear hábitos saludables de forma gradual. ¡Las recetas son deliciosas y los entrenamientos súper efectivos!</p>
+                <div class="d-flex align-items-center">
+                    <img class="flex-shrink-0 rounded-circle" th:src="@{/img/testimonial-1.jpg}" alt="Josefa" width="50" height="50">
+                    <div class="ms-3">
+                        <h5 class="mb-1 fw-bold">Josefa</h5>
+                        <span class="text-muted">Psicóloga</span>
                     </div>
                 </div>
-                <div class="testimonial-item position-relative bg-white p-5 mt-4">
-                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
-                    <p class="mb-4">Soy un apasionado del fitness y siempre estoy buscando nuevas herramientas para optimizar mis resultados.
-                        Nutrifit ha sido un gran descubrimiento. La posibilidad de personalizar completamente mis planes de entrenamiento y alimentación
-                        me permite adaptar la app a mis objetivos específicos. Además, el seguimiento de los datos es muy completo y me ayuda a analizar
-                        mi progreso de manera detallada.</p>
-                    <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-2.jpg" alt="">
-                        <div class="ms-3">
-                            <h5 class="mb-1">Eutropio</h5>
-                            <span>Pintor</span>
-                        </div>
+            </div>
+
+            <div class="testimonial-item bg-white p-5 rounded shadow-sm">
+                <i class="fas fa-quote-left fa-3x text-primary mb-4"></i>
+                <p class="mb-4">Soy un apasionado del fitness y NutriFit ha sido un gran descubrimiento. La personalización completa de planes de entrenamiento y alimentación me permite adaptar la app a mis objetivos específicos. El seguimiento detallado de datos me ayuda a analizar mi progreso de manera efectiva.</p>
+                <div class="d-flex align-items-center">
+                    <img class="flex-shrink-0 rounded-circle" th:src="@{/img/testimonial-2.jpg}" alt="Eutropio" width="50" height="50">
+                    <div class="ms-3">
+                        <h5 class="mb-1 fw-bold">Eutropio</h5>
+                        <span class="text-muted">Pintor</span>
                     </div>
                 </div>
-                <div class="testimonial-item position-relative bg-white p-5 mt-4">
-                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
-                    <p class="mb-4">Nutrifit ha sido clave para alcanzar mis metas de salud. Su interfaz intuitiva me permite llevar un seguimiento
-                        detallado de mi progreso sin esfuerzo, mientras que sus planes personalizados me han ayudado a mejorar mi alimentación y
-                        aumentar mi energía. ¡Es una herramienta fácil de usar y muy efectiva! He logrado todo estogracias a las herramientas y
-                        el seguimiento que ofrece la app. </p>
-                    <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-3.jpg" alt="">
-                        <div class="ms-3">
-                            <h5 class="mb-1">Basilio</h5>
-                            <span>Administrativo</span>
-                        </div>
+            </div>
+
+            <div class="testimonial-item bg-white p-5 rounded shadow-sm">
+                <i class="fas fa-quote-left fa-3x text-primary mb-4"></i>
+                <p class="mb-4">NutriFit ha sido clave para alcanzar mis metas de salud. Su interfaz intuitiva me permite llevar un seguimiento detallado de mi progreso sin esfuerzo. Los planes personalizados han mejorado mi alimentación y aumentado mi energía. ¡Una herramienta fácil de usar y muy efectiva!</p>
+                <div class="d-flex align-items-center">
+                    <img class="flex-shrink-0 rounded-circle" th:src="@{/img/testimonial-3.jpg}" alt="Basilio" width="50" height="50">
+                    <div class="ms-3">
+                        <h5 class="mb-1 fw-bold">Basilio</h5>
+                        <span class="text-muted">Administrativo</span>
                     </div>
                 </div>
-                <div class="testimonial-item position-relative bg-white p-5 mt-4">
-                    <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
-                    <p class="mb-4">Nutrifit es una buena app, pero creo que podría mejorar en algunos aspectos. Por ejemplo, la base de datos
-                        de alimentos podría ser más amplia y la sección de recetas podría incluir más variedad de cocinas. Además, me gustaría tener
-                        la opción de personalizar aún más los planes de entrenamiento.</p>
-                    <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="img/testimonial-4.jpg" alt="">
-                        <div class="ms-3">
-                            <h5 class="mb-1">Trinidad</h5>
-                            <span>Ama de casa</span>
-                        </div>
+            </div>
+
+            <div class="testimonial-item bg-white p-5 rounded shadow-sm">
+                <i class="fas fa-quote-left fa-3x text-primary mb-4"></i>
+                <p class="mb-4">NutriFit es una buena app, pero tiene áreas de mejora. La base de datos de alimentos podría ser más amplia y la sección de recetas podría incluir más variedad de cocinas. Me gustaría tener la opción de personalizar aún más los planes de entrenamiento.</p>
+                <div class="d-flex align-items-center">
+                    <img class="flex-shrink-0 rounded-circle" th:src="@{/img/testimonial-4.jpg}" alt="Trinidad" width="50" height="50">
+                    <div class="ms-3">
+                        <h5 class="mb-1 fw-bold">Trinidad</h5>
+                        <span class="text-muted">Ama de casa</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Testimonial End -->
+</section>
+<!-- Fin de Testimonios de Usuarios -->

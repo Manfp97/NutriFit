@@ -1,17 +1,31 @@
-<div class="container-fluid bg-light bg-icon py-6" th:fragment="feature">
+
+
+
+
+<section class="hero-section" th:fragment="feature">
     <div class="container-fluid p-0">
-        <div class="position-relative">
-            <!-- Background GIF -->
-            <div class="hero bg-image" th:style="'background-image: url(' + @{/img/nutrifit.gif} + ');'">
-                <div class="overlay"></div>
-                <div class="container text-center text-light d-flex flex-column justify-content-center align-items-center text-white content">
-                    <!-- Hero Text -->
-                    <h1 class="display-3 mb-4 text-white-custom">Bienvenido a NutriFit</h1>
-                    <p class="lead mb-4">Transforma tu vida con nuestras dietas y programas de nutrición personalizados</p>
-                    <!-- CTA Button -->
-                    <a href="#explore" class="btn btn-light btn-lg py-3 px-5">Descubre más</a>
+        <div class="hero" style="background-image: url('/img/nutrifit.gif');">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center align-items-center min-vh-100">
+                    <div class="col-lg-8 text-center">
+                        <h1 class="display-2 fw-bold text-white mb-4 animate__animated animate__fadeInDown">
+                            Bienvenido a NutriFit
+                        </h1>
+                        <p class="lead text-white mb-5 animate__animated animate__fadeInUp">
+                            Transforma tu vida con nuestras dietas y programas de nutrición personalizados
+                        </p>
+                        <div class="animate__animated animate__fadeInUp animate__delay-1s">
+                            <a href="#explore" class="btn btn-primary btn-lg me-3">
+                                Descubre más
+                            </a>
+                            <a href="#contact" class="btn btn-outline-light btn-lg">
+                                Contáctanos
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
