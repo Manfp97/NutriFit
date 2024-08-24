@@ -33,6 +33,10 @@ public class ProgresionesEntrenamiento {
     @Column(name = "peso")
     private int peso;
 
+    @Column(name = "ejercicio")
+    private String ejercicio;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idEntrenamiento")
     private Entrenamiento entrenamiento;

@@ -49,9 +49,14 @@
                 <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
                     <small class="fas fa-search text-body"></small>
                 </a>
-                <div>
-                    <small class="fas fa-user text-body"></small>
-                    <span id="username" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <small class="fas fa-user text-body"></small>
+                        <span id="username" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/usuario/perfil}">Ver perfil</a></li>
+                    </ul>
                 </div>
 
 

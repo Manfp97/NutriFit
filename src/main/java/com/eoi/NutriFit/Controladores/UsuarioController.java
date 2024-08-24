@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,6 +80,43 @@ public class UsuarioController {
         model.addAttribute("rol", "ROLE_ENTRENADOR");
 
         return "entrenadoresfreelance";
+    }
+
+    @GetMapping("/perfil")
+    public String mostrarPerfil(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Usuario usuario = service.findByUsername(username);
+        model.addAttribute("usuario", usuario);
+        return "perfil";
+    }
+
+    @PostMapping("/perfil")
+    public String actualizarPerfil(@ModelAttribute Usuario usuario, @RequestParam(required = false) String password) {
+        try {
+            Usuario usuarioExistente = service.encuentraPorId(usuario.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+
+            // Actualizar campos
+            usuarioExistente.setUsername(usuario.getUsername());
+            if (password != null && !password.isEmpty()) {
+                usuarioExistente.setPassword(passwordEncoder.encode(password));
+            }
+
+            // Actualizar detalles del usuario
+            DetalleUsuario detalles = usuarioExistente.getDetalleUsuario();
+            detalles.setNombre(usuario.getDetalleUsuario().getNombre());
+            detalles.setApellidos(usuario.getDetalleUsuario().getApellidos());
+            detalles.setDireccion(usuario.getDetalleUsuario().getDireccion());
+            detalles.setDni(usuario.getDetalleUsuario().getDni());
+            detalles.setEmail(usuario.getDetalleUsuario().getEmail());
+
+            service.guardar(usuarioExistente);
+            return "redirect:/usuario/perfil";
+        } catch (Exception e) {
+            // Manejar la excepción aquí
+            // Por ejemplo, puedes agregar un mensaje de error al modelo y volver a la página de perfil
+            return "redirect:/usuario/perfil?error=true";
+        }
     }
 
 

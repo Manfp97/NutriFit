@@ -2,7 +2,6 @@ package com.eoi.NutriFit.Controladores;
 
 import com.eoi.NutriFit.Entidades.ProgresionesEntrenamiento;
 import com.eoi.NutriFit.Servicios.ProgresionesEntrenamientoServi;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,49 +19,59 @@ public class ProgresionesEntrenamientoController {
         this.service = service;
     }
 
+
+    @GetMapping("/listar")
+    @ResponseBody
+    public List<ProgresionesEntrenamiento> listarProgresiones() {
+        return service.buscarEntidades();
+    }
+
     @GetMapping
-    public String getAll(Model model) {
-        List<ProgresionesEntrenamiento> listaProgresiones = service.buscarEntidades();
-        model.addAttribute("progresionesEntrenamiento", listaProgresiones);
-        return "progresionesentrenamiento"; // This should match the template file name
+    public String mostrarProgresiones(Model model) {
+        List<ProgresionesEntrenamiento> progresiones = service.buscarEntidades();
+        model.addAttribute("progresiones", progresiones);
+        return "progresiones"; // Make sure this matches your HTML file name
     }
 
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProgresionesEntrenamiento> getById(@PathVariable Integer id) {
-        Optional<ProgresionesEntrenamiento> progresionEntrenamiento = service.encuentraPorId(id);
-        if (progresionEntrenamiento.isPresent()) {
-            return ResponseEntity.ok(progresionEntrenamiento.get());
-        } else {
-            return ResponseEntity.notFound().build();
+    @PostMapping("/guardar")
+    public String guardarProgresion(@ModelAttribute("progresion") ProgresionesEntrenamiento progresion, Model model) {
+        try {
+            service.guardar(progresion);
+            return "redirect:/progresionesEntrenamientos"; // Redirige a la lista de progresiones
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al guardar la progresión");
+            return "progresiones"; // Devuelve la misma vista con el mensaje de error
         }
     }
 
-    @PostMapping
-    public ProgresionesEntrenamiento create(@RequestBody ProgresionesEntrenamientoServi progresionEntrenamiento) throws Exception {
-        return service.guardar(new ProgresionesEntrenamiento());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ProgresionesEntrenamiento> update(@PathVariable Integer id, @RequestBody ProgresionesEntrenamiento progresionEntrenamiento) throws Exception {
-        Optional<ProgresionesEntrenamiento> existingProgresionEntrenamiento = service.encuentraPorId(id);
-        if (existingProgresionEntrenamiento.isPresent()) {
-            progresionEntrenamiento.setId(id);
-            return ResponseEntity.ok(service.guardar(progresionEntrenamiento));
+    @GetMapping("/editar/{id}")
+    public String editarProgresion(@PathVariable Integer id, Model model) {
+        Optional<ProgresionesEntrenamiento> progresion = service.encuentraPorId(id);
+        if (progresion.isPresent()) {
+            model.addAttribute("progresion", progresion.get());
+            return "editarProgresion"; // Nombre de la vista para editar
         } else {
-            return ResponseEntity.notFound().build();
+            return "redirect:/progresionesEntrenamientos";
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (service.encuentraPorId(id).isPresent()) {
-            service.eliminarPorId(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+    @PostMapping("/actualizar/{id}")
+    public String actualizarProgresion(@PathVariable Integer id, @ModelAttribute("progresion") ProgresionesEntrenamiento progresion) {
+        try {
+            progresion.setId(id);
+            service.guardar(progresion);
+            return "redirect:/progresionesEntrenamientos";
+        } catch (Exception e) {
+            // Manejo de la excepción - puedes registrar el error y devolver un mensaje al usuario
+            e.printStackTrace();
+            return "redirect:/error"; // o redirigir a una página de error
         }
+    }
+
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarProgresion(@PathVariable Integer id) {
+        service.eliminarPorId(id);
+        return "redirect:/progresionesEntrenamientos";
     }
 }
-
