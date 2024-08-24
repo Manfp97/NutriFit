@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/js/**", "/img/**", "/css/**", "/fonts/**", "/static/lib/**", "/static/scss/**", "/chats/**").permitAll()
+                        .requestMatchers("/login", "/crearusuario", "/auth/reset-password", "/auth/forgot-password", "/usuario/nuevo").permitAll()
                         .requestMatchers(HttpMethod.GET, "/producto/list").hasAnyRole("ADMIN", "EMPLEADO")
                         .requestMatchers(HttpMethod.GET, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                         .requestMatchers(HttpMethod.POST, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")

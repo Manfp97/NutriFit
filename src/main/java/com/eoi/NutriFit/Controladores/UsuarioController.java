@@ -213,7 +213,6 @@ public class UsuarioController {
 
 
     @PostMapping("/nuevo")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String crear(@ModelAttribute("usuario") Usuario usuario, Model model) {
         try {
             // Verifica que el detalleUsuario no sea null

@@ -13,23 +13,53 @@
             --dark-green: #388E3C;
             --white: #FFFFFF;
             --light-gray: #F5F5F5;
+            --off-white: #FAFAFA;
+            --light-border: #E0E0E0;
         }
         body {
             background-color: var(--light-gray);
             color: #333;
         }
         .navbar {
-            background-color: var(--primary-green);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-green);
         }
         .sidebar {
-            background-color: var(--white);
+            background-color: var(--off-white);
             height: calc(100vh - 56px);
             position: fixed;
             top: 56px;
             left: 0;
             width: 250px;
             padding-top: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            border-right: 1px solid var(--light-border);
+        }
+        .sidebar .nav-link {
+            color: #555;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            color: var(--primary-green);
+            background-color: var(--light-gray);
+        }
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
         }
         .main-content {
             margin-left: 250px;
@@ -37,41 +67,35 @@
         }
         .card {
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
         .card-header {
             background-color: var(--primary-green);
             color: var(--white);
-            border-radius: 15px 15px 0 0;
+            border-radius: 10px 10px 0 0;
+            padding: 1rem 1.25rem;
         }
         .btn-primary {
             background-color: var(--primary-green);
             border-color: var(--primary-green);
+            transition: all 0.3s ease;
         }
         .btn-primary:hover {
             background-color: var(--dark-green);
             border-color: var(--dark-green);
         }
-        .nav-link {
-            color: #333;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-green);
-            background-color: var(--light-gray);
-        }
-        .profile-header {
-            background-color: var(--light-green);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--white);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -80,7 +104,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -90,7 +114,17 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/progresionesEntrenamientos}">
-                                <i class="fas fa-chart-line"></i> Progresiones entrenamientos
+                                <i class="fas fa-chart-line"></i> Progresiones
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cog"></i> Configuración
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-question-circle"></i> Ayuda
                             </a>
                         </li>
                     </ul>
@@ -107,24 +141,19 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body text-center">
-                                <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                <h5 class="card-title" th:text="${usuario.detalleUsuario.nombre + ' ' + usuario.detalleUsuario.apellidos}">Nombre del Usuario</h5>
-                                <p class="card-text" th:text="${usuario.username}">@username</p>
+                                <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="profile-img mb-3">
+                                <p class="card-text" th:text="${'@' + usuario.username}">@username</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header">
                                 <h5 class="card-title mb-0">Editar Perfil</h5>
                             </div>
                             <div class="card-body">
                                 <form th:action="@{/usuario/{id}(id=${usuario.id})}" method="post" th:object="${usuario}">
                                     <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="username" class="form-label">Nombre de usuario</label>
-                                            <input type="text" class="form-control" id="username" th:field="*{username}" required>
-                                        </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="password" class="form-label">Nueva contraseña</label>
                                             <input type="password" class="form-control" id="password" name="password" placeholder="Dejar en blanco si no desea cambiarla">
@@ -133,25 +162,25 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="nombre" th:field="*{detalleUsuario.nombre}" required>
+                                            <input type="text" class="form-control" id="nombre" th:field="*{detalleUsuario.nombre}" th:placeholder="*{detalleUsuario.nombre}" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="apellidos" class="form-label">Apellidos</label>
-                                            <input type="text" class="form-control" id="apellidos" th:field="*{detalleUsuario.apellidos}" required>
+                                            <input type="text" class="form-control" id="apellidos" th:field="*{detalleUsuario.apellidos}" th:placeholder="*{detalleUsuario.apellidos}" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="direccion" class="form-label">Dirección</label>
-                                        <input type="text" class="form-control" id="direccion" th:field="*{detalleUsuario.direccion}">
+                                        <input type="text" class="form-control" id="direccion" th:field="*{detalleUsuario.direccion}" th:placeholder="*{detalleUsuario.direccion}">
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="dni" class="form-label">DNI</label>
-                                            <input type="text" class="form-control" id="dni" th:field="*{detalleUsuario.dni}">
+                                            <input type="text" class="form-control" id="dni" th:field="*{detalleUsuario.dni}" th:placeholder="*{detalleUsuario.dni}">
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" th:field="*{detalleUsuario.email}" required>
+                                            <input type="email" class="form-control" id="email" th:field="*{detalleUsuario.email}" th:placeholder="*{detalleUsuario.email}" required>
                                         </div>
                                     </div>
                                     <div class="text-end">

@@ -157,9 +157,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
         // Crea un detalle de usuario para ROLE_NUTRICIONISTA
         DetalleUsuario detalleUsuarioNutricionista = new DetalleUsuario();
-        detalleUsuarioNutricionista.setNombre("Nombre del nutricionista");
-        detalleUsuarioNutricionista.setApellidos("Apellidos del nutricionista");
-        detalleUsuarioNutricionista.setDireccion("Direccion del nutricionista");
+        detalleUsuarioNutricionista.setNombre("Francisco josé");
+        detalleUsuarioNutricionista.setApellidos("Conejo Barranco");
+        detalleUsuarioNutricionista.setDireccion("Antequera");
         detalleUsuarioNutricionista.setDni("0987654321");
         detalleUsuarioNutricionista.setEmail("nutricionista@example.com");
 
@@ -679,7 +679,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         // Usuario 2
         Usuario usuarioEntrenador2 = new Usuario();
         usuarioEntrenador2.setUsername("entrenador2");
-        usuarioEntrenador2.setPassword(bCryptPasswordEncoder.encode("password2"));
+        usuarioEntrenador2.setPassword(bCryptPasswordEncoder.encode("noteladigo"));
         usuarioEntrenador2.setActivo(true);
         usuarioEntrenador2.setRol(rolesRepo.findByNombreRol("ROLE_ENTRENADOR"));
 
