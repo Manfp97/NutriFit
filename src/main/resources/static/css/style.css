@@ -738,3 +738,398 @@
         padding: 1.5rem !important;
     }
 }
+
+/* Estilos específicos para la sección de lista de productos */
+.producto-lista-section {
+    padding: 4rem 0;
+}
+
+.producto-lista-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.producto-lista-header p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.producto-lista-admin-buttons .btn {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.producto-lista-categorias {
+    margin-bottom: 2rem;
+}
+
+.producto-lista-categorias .btn {
+    margin: 0 0.25rem 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.producto-lista-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.producto-lista-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.producto-lista-card-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.producto-lista-card-body {
+    padding: 1.25rem;
+}
+
+.producto-lista-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.producto-lista-card-text {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.producto-lista-card-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+.producto-lista-card-buttons .btn {
+    margin-bottom: 0.5rem;
+}
+
+.producto-lista-pagination {
+    margin-top: 3rem;
+}
+
+.producto-lista-pagination .page-link {
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.producto-lista-pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Estilos para efectos de animación (si estás usando WOW.js) */
+.producto-lista-fadeInUp {
+    animation-name: productoListaFadeInUp;
+    animation-duration: 1s;
+}
+
+@keyframes productoListaFadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+:root {
+    --primary-green: #28a745;
+    --primary-green-dark: #218838;
+    --primary-green-light: #34ce57;
+    --secondary-green: #5cb85c;
+    --text-dark: #333;
+    --text-light: #666;
+    --background-light: #f8f9fa;
+}
+
+.dieta-section {
+    background-color: var(--background-light);
+}
+
+.dieta-section-header {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.dieta-title {
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.dieta-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.dieta-admin-buttons {
+    margin-bottom: 2rem;
+}
+
+.dieta-admin-btn {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.dieta-admin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dieta-category-buttons {
+    margin-bottom: 3rem;
+}
+
+.dieta-category-btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.dieta-category-btn:hover,
+.dieta-category-btn.active {
+    background-color: var(--primary-green);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.card-text {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary.rounded-pill {
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-primary.rounded-pill:hover {
+    background-color: var(--primary-green-dark);
+    border-color: var(--primary-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-container {
+    margin-top: 3rem;
+}
+
+.pagination .page-link {
+    color: var(--primary-green);
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.2rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover,
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-green);
+    color: #fff;
+}
+
+/* Ajustes adicionales para botones existentes */
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-green-dark);
+    border-color: var(--primary-green-dark);
+}
+
+.btn-success {
+    background-color: var(--secondary-green);
+    border-color: var(--secondary-green);
+}
+
+.btn-success:hover {
+    background-color: #4cae4c;
+    border-color: #4cae4c;
+}
+
+.btn-outline-primary {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    color: #fff;
+}
+
+:root {
+    --primary-green: #28a745;
+    --primary-green-dark: #218838;
+    --primary-green-light: #34ce57;
+    --secondary-green: #5cb85c;
+    --text-dark: #333;
+    --text-light: #666;
+    --background-light: #f8f9fa;
+}
+
+
+.entrenamiento-section {
+    background-color: var(--background-light);
+}
+
+.entrenamiento-section-header {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.entrenamiento-title {
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.entrenamiento-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.entrenamiento-category-buttons {
+    margin-bottom: 3rem;
+}
+
+.entrenamiento-category-btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.entrenamiento-category-btn:hover,
+.entrenamiento-category-btn.active {
+    background-color: var(--primary-green);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.card-text {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary.rounded-pill {
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-primary.rounded-pill:hover {
+    background-color: var(--primary-green-dark);
+    border-color: var(--primary-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-container {
+    margin-top: 3rem;
+}
+
+.pagination .page-link {
+    color: var(--primary-green);
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.2rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover,
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-green);
+    color: #fff;
+}
+
+/* Ajustes adicionales para botones existentes */
+.btn-outline-primary {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    color: #fff;
+}

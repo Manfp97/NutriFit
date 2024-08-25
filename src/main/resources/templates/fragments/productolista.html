@@ -1,202 +1,79 @@
-<section id="producto" class="container-xxl py-5" th:fragment="productolista">
+<section id="producto" class="producto-lista-section" th:fragment="productolista">
     <div class="container">
-        <div class="row g-0 gx-5 align-items-end">
+        <div class="row g-0 gx-5 align-items-end mb-5">
             <div class="col-lg-6">
-                <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h1 class="display-5 mb-3">Producto</h1>
+                <div class="producto-lista-header producto-lista-fadeInUp" data-wow-delay="0.1s">
+                    <h1>Nuestros Productos</h1>
                     <p>No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
                 </div>
             </div>
 
-            <!-- Botones que sólo se mostrarán a usuarios con ROLE_ADMIN o ROLE_EMPLEADO -->
-            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                    <li class="nav-item me-2">
-                        <a class="btn btn-primary" th:href="@{/producto/list}"
-                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"
-                           th:text="'Lista de productos'"></a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-success" th:href="@{/producto/nuevo}"
-                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"
-                           th:text="'Nuevo producto'"></a>
-                    </li>
-                </ul>
+            <!-- Botones administrativos -->
+            <div class="col-lg-6 text-lg-end mt-4 mt-lg-0 producto-lista-admin-buttons producto-lista-fadeInUp" data-wow-delay="0.2s">
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}">
+                    <a class="btn btn-primary me-2 mb-2" th:href="@{/producto/list}">Lista de productos</a>
+                    <a class="btn btn-success mb-2" th:href="@{/producto/nuevo}">Nuevo producto</a>
+                </div>
             </div>
+        </div>
 
-
-            <div  class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=0)}" th:text="'proteina'" th:classappend="${categoria == 'proteina'} ? 'active'"></a>
+        <!-- Filtros de categoría -->
+        <div class="row mb-5">
+            <div class="col-12 producto-lista-categorias producto-lista-fadeInUp" data-wow-delay="0.3s">
+                <ul class="nav nav-pills justify-content-center">
+                    <li class="nav-item mx-1 mb-2">
+                        <a class="btn btn-outline-primary" th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=0)}" th:classappend="${categoria == 'proteina'} ? 'active'">Proteína</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=0)}" th:text="'creatina'" th:classappend="${categoria == 'creatina'} ? 'active'"></a>
+                    <li class="nav-item mx-1 mb-2">
+                        <a class="btn btn-outline-primary" th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=0)}" th:classappend="${categoria == 'creatina'} ? 'active'">Creatina</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=0)}" th:text="'snacks'" th:classappend="${categoria == 'snacks'} ? 'active'"></a>
+                    <li class="nav-item mx-1 mb-2">
+                        <a class="btn btn-outline-primary" th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=0)}" th:classappend="${categoria == 'snacks'} ? 'active'">Snacks</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=0)}" th:text="'vitaminas'" th:classappend="${categoria == 'vitaminas'} ? 'active'"></a>
+                    <li class="nav-item mx-1 mb-2">
+                        <a class="btn btn-outline-primary" th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=0)}" th:classappend="${categoria == 'vitaminas'} ? 'active'">Vitaminas</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="tab-content">
-            <!-- Sección Proteina -->
-            <div class="tab-pane fade show" th:classappend="${categoria == 'proteina'} ? 'active show' : ''" id="proteina">
-                <div class="row g-5">
-                    <div class="col-lg-4" th:each="producto : ${productos}">
-                        <div class="card">
-                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Proteina">
-                            <div class="card-body">
-                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.precio}" class="card-text"></p>
-                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
-                                <!-- Dentro del div con la clase "card-body" en cada producto -->
-                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
-                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
-                                </form>
 
-                            </div>
+        <!-- Lista de productos -->
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 col-xl-3" th:each="producto : ${productos}">
+                <div class="producto-lista-card producto-lista-fadeInUp" data-wow-delay="0.1s">
+                    <img th:src="@{img/Creatina-Creapure-Justloading-2.jpg}" class="producto-lista-card-img" alt="Imagen del producto">
+                    <div class="producto-lista-card-body">
+                        <h5 class="producto-lista-card-title" th:text="${producto.nombre}"></h5>
+                        <p class="producto-lista-card-text" th:text="${#strings.abbreviate(producto.descripcion, 100)}"></p>
+                        <p class="producto-lista-card-price" th:text="${#numbers.formatDecimal(producto.precio, 0, 'POINT', 2, 'COMMA') + ' €'}"></p>
+                        <div class="producto-lista-card-buttons">
+                            <a class="btn btn-primary w-100 mb-2" th:href="@{})}">Ver más</a>
+                            <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
+                                <button type="submit" class="btn btn-outline-primary w-100">Añadir al carrito</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <!-- Paginación -->
-                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
-                    <ul class="pagination justify-content-center">
-                        <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
-                        </li>
-                        <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/producto(categoria='proteina', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Sección Musculación -->
-            <div class="tab-pane fade" th:classappend="${categoria == 'creatina'} ? 'active show' : ''" id="creatina">
-                <div class="row g-5">
-                    <div class="col-lg-4" th:each="producto : ${productos}">
-                        <div class="card">
-                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Musculación">
-                            <div class="card-body">
-                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.precio}" class="card-text"></p>
-                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
-                                <!-- Dentro del div con la clase "card-body" en cada producto -->
-                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
-                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Paginación -->
-                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
-                    <ul class="pagination justify-content-center">
-                        <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
-                        </li>
-                        <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/producto(categoria='creatina', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Sección Peso Corporal -->
-            <div class="tab-pane fade" th:classappend="${categoria == 'snacks'} ? 'active show' : ''" id="snacks">
-                <div class="row g-5">
-                    <div class="col-lg-4" th:each="producto : ${productos}">
-                        <div class="card">
-                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Peso Corporal">
-                            <div class="card-body">
-                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.precio}" class="card-text"></p>
-                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
-                                <!-- Dentro del div con la clase "card-body" en cada producto -->
-                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
-                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Paginación -->
-                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
-                    <ul class="pagination justify-content-center">
-                        <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
-                        </li>
-                        <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/producto(categoria='snacks', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Sección Vitaminas -->
-            <div class="tab-pane fade" th:classappend="${categoria == 'vitaminas'} ? 'active show' : ''" id="vitaminas">
-                <div class="row g-5">
-                    <div class="col-lg-4" th:each="producto : ${productos}">
-                        <div class="card">
-                            <img src="img/proteina.jpg" class="card-img-top img-fluid max-height-225" alt="Producto de Vitaminas">
-                            <div class="card-body">
-                                <h5 th:text="${producto.nombre}" class="card-title"></h5>
-                                <p th:text="${producto.precio}" class="card-text"></p>
-                                <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
-                                <!-- Dentro del div con la clase "card-body" en cada producto -->
-                                <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
-                                    <button type="submit" class="btn btn-primary rounded-pill">Añadir al carrito</button>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Paginación -->
-                <div th:if="${pagina.totalPages > 0}" class="pagination-container mt-4">
-                    <ul class="pagination justify-content-center">
-                        <li th:if="${pagina.hasPrevious()}" class="page-item">
-                            <a th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=${pagina.number - 1})}" class="page-link" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber - 1 == pagina.number} ? 'active' : ''">
-                            <a th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}" class="page-link"></a>
-                        </li>
-                        <li th:if="${pagina.hasNext()}" class="page-item">
-                            <a th:href="@{/producto(categoria='vitaminas', size=${pagina.size}, page=${pagina.number + 1})}" class="page-link" aria-label="Siguiente">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
+
+        <!-- Paginación -->
+        <nav th:if="${pagina.totalPages > 0}" class="producto-lista-pagination producto-lista-fadeInUp" data-wow-delay="0.2s">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!pagina.hasPrevious()} ? 'disabled'">
+                    <a class="page-link" th:href="@{/producto(categoria=${categoria}, size=${pagina.size}, page=${pagina.number - 1})}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}" th:classappend="${pageNumber - 1 == pagina.number} ? 'active'">
+                    <a class="page-link" th:href="@{/producto(categoria=${categoria}, size=${pagina.size}, page=${pageNumber - 1})}" th:text="${pageNumber}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!pagina.hasNext()} ? 'disabled'">
+                    <a class="page-link" th:href="@{/producto(categoria=${categoria}, size=${pagina.size}, page=${pagina.number + 1})}" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </section>

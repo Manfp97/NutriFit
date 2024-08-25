@@ -1,25 +1,25 @@
-<section id="entrenamiento" class="container-xxl py-5" th:fragment="entrenamientolista">
+<section id="entrenamiento" class="entrenamiento-section container-xxl py-5" th:fragment="entrenamientolista">
     <div class="container">
         <div class="row g-0 gx-5 align-items-end">
             <div class="col-lg-6">
-                <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h1 class="display-5 mb-3">Entrenamiento</h1>
-                    <p>No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
+                <div class="entrenamiento-section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                    <h1 class="entrenamiento-title display-5 mb-3">Entrenamiento</h1>
+                    <p class="entrenamiento-subtitle">No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
                 </div>
             </div>
             <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=0)}" th:text="'Musculacion'" th:classappend="${categoria == 'musculacion'} ? 'active'"></a>
+                <ul class="entrenamiento-category-buttons nav nav-pills d-inline-flex justify-content-end mb-5 flex-wrap">
+                    <li class="nav-item me-2 mb-2">
+                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=0)}" th:text="'Musculación'" th:classappend="${categoria == 'musculacion'} ? 'active'"></a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=0)}" th:text="'Mantenimiento'" th:classappend="${categoria == 'mantenimiento'} ? 'active'"></a>
+                    <li class="nav-item me-2 mb-2">
+                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=0)}" th:text="'Mantenimiento'" th:classappend="${categoria == 'mantenimiento'} ? 'active'"></a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=0)}" th:text="'Peso Corporal'" th:classappend="${categoria == 'pesocorporal'} ? 'active'"></a>
+                    <li class="nav-item me-2 mb-2">
+                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=0)}" th:text="'Peso Corporal'" th:classappend="${categoria == 'pesocorporal'} ? 'active'"></a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=0)}" th:text="'Cardio'" th:classappend="${categoria == 'cardio'} ? 'active'"></a>
+                    <li class="nav-item me-2 mb-2">
+                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=0)}" th:text="'Cardio'" th:classappend="${categoria == 'cardio'} ? 'active'"></a>
                     </li>
                 </ul>
             </div>
@@ -28,9 +28,9 @@
             <!-- Sección Musculacion -->
             <div class="tab-pane fade" th:classappend="${categoria == 'musculacion'} ? 'show active' : ''" id="musculacion">
                 <div class="row g-5">
-                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
+                    <div class="col-lg-4" th:each="entrenamiento, iterStat : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/musculacion.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Musculacion">
+                            <img th:src="@{'/img/entrenamiento' + ${iterStat.count % 4 + 1} + '.jpg'}" class="card-img-top img-fluid max-height-225" th:alt="${entrenamiento.nombre}">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
@@ -62,9 +62,9 @@
             <!-- Sección Mantenimiento -->
             <div class="tab-pane fade" th:classappend="${categoria == 'mantenimiento'} ? 'show active' : ''" id="mantenimiento">
                 <div class="row g-5">
-                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
+                    <div class="col-lg-4" th:each="entrenamiento, iterStat : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/mantenimiento.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Mantenimiento">
+                            <img th:src="@{'/img/entrenamiento' + ${iterStat.count % 4 + 1} + '.jpg'}" class="card-img-top img-fluid max-height-225" th:alt="${entrenamiento.nombre}">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
@@ -96,9 +96,9 @@
             <!-- Sección Peso Corporal -->
             <div class="tab-pane fade" th:classappend="${categoria == 'pesocorporal'} ? 'show active' : ''" id="pesocorporal">
                 <div class="row g-5">
-                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
+                    <div class="col-lg-4" th:each="entrenamiento, iterStat : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/pesocorporal.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Peso Corporal">
+                            <img th:src="@{'/img/entrenamiento' + ${iterStat.count % 4 + 1} + '.jpg'}" class="card-img-top img-fluid max-height-225" th:alt="${entrenamiento.nombre}">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
@@ -130,9 +130,9 @@
             <!-- Sección Cardio -->
             <div class="tab-pane fade" th:classappend="${categoria == 'cardio'} ? 'show active' : ''" id="cardio">
                 <div class="row g-5">
-                    <div class="col-lg-4" th:each="entrenamiento : ${entrenamientos}">
+                    <div class="col-lg-4" th:each="entrenamiento, iterStat : ${entrenamientos}">
                         <div class="card">
-                            <img src="img/cardio.jpg" class="card-img-top img-fluid max-height-225" alt="Entrenamiento de Cardio">
+                            <img th:src="@{'/img/entrenamiento' + ${iterStat.count % 4 + 1} + '.jpg'}" class="card-img-top img-fluid max-height-225" th:alt="${entrenamiento.nombre}">
                             <div class="card-body">
                                 <h5 th:text="${entrenamiento.nombre}" class="card-title"></h5>
                                 <p th:text="${entrenamiento.objetivos}" class="card-text"></p>
