@@ -47,7 +47,7 @@
                         <p class="producto-lista-card-text" th:text="${#strings.abbreviate(producto.descripcion, 100)}"></p>
                         <p class="producto-lista-card-price" th:text="${#numbers.formatDecimal(producto.precio, 0, 'POINT', 2, 'COMMA') + ' €'}"></p>
                         <div class="producto-lista-card-buttons">
-                            <a class="btn btn-primary w-100 mb-2" th:href="@{})}">Ver más</a>
+                            <a class="btn btn-primary w-100 mb-2">Ver más</a>
                             <form th:action="@{/carrito/agregar/{idProducto}(idProducto=${producto.id})}" method="post">
                                 <button type="submit" class="btn btn-outline-primary w-100">Añadir al carrito</button>
                             </form>
