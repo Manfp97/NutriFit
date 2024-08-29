@@ -1133,3 +1133,80 @@
     border-color: var(--primary-green);
     color: #fff;
 }
+
+
+
+
+
+.page-andalucia {
+    --andalucia-green: #008c45;
+    --andalucia-white: #ffffff;
+    --andalucia-light-green: #e6f3ed;
+}
+
+.page-andalucia .btn-andalucia {
+    background-color: var(--andalucia-green);
+    color: var(--andalucia-white);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.page-andalucia .btn-andalucia:hover {
+    background-color: #006633;
+    color: var(--andalucia-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-andalucia .service-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background-color: var(--andalucia-light-green);
+}
+
+.page-andalucia .service-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 140, 69, 0.2);
+    transform: translateY(-5px);
+}
+
+.page-andalucia .service-card .card-body {
+    padding: 2rem;
+}
+
+.page-andalucia .service-card .card-title {
+    color: var(--andalucia-green);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.page-andalucia .service-icon {
+    font-size: 3rem;
+    color: var(--andalucia-green);
+    margin-bottom: 1rem;
+}
+
+.page-andalucia .section-title {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.page-andalucia .section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--andalucia-green);
+}
+
+.page-andalucia .intro-text {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+

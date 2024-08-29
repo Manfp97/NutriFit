@@ -46,6 +46,9 @@
         #progressChart {
             max-height: 300px;
         }
+        .btn-volver {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +91,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-header">
             <h3 class="mb-0">Gráfico de Progreso</h3>
         </div>
@@ -96,6 +99,10 @@
             <canvas id="progressChart"></canvas>
         </div>
     </div>
+
+    <a class="btn btn-primary btn-lg btn-volver" th:href="@{/usuario/perfil}">
+        <i class="fas fa-arrow-left me-2"></i>Volver
+    </a>
 </div>
 
 <!-- Modal para añadir/editar progresión -->

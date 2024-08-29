@@ -35,9 +35,9 @@ public class MainController {
         return "feature";
     }
 
-    @GetMapping({"/about"})
-    public String about() {
-        return "about";
+    @GetMapping({"/descubremas"})
+    public String descubremas() {
+        return "descubremas";
     }
 
 
