@@ -12,45 +12,71 @@
         body {
             background-color: #f8f9fa;
         }
+
         .container {
             max-width: 1200px;
         }
+
         .card-header {
             background-color: #4caf50;
             color: #fff;
         }
+
         .card-body {
             background-color: #fff;
         }
+
         .card-body p {
             margin-bottom: 0;
         }
+
         .btn-primary {
             background-color: #007bff;
             border: none;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
         .btn-danger {
             background-color: #dc3545;
             border: none;
         }
+
         .btn-danger:hover {
             background-color: #c82333;
         }
+
         .btn-success {
             background-color: #28a745;
             border: none;
         }
+
         .btn-success:hover {
             background-color: #218838;
         }
+
+        .btn-secondary {
+            background-color: #28a745;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #218838;
+        }
+
         .list-group-item {
             border: none;
         }
+
         .list-group-item strong {
             font-size: 1.25rem;
+        }
+
+        .btn-spacing {
+            margin-top: 15px;
+            text-align: center;
         }
     </style>
 </head>
@@ -123,6 +149,11 @@
                         </li>
                     </ul>
                     <button type="button" class="btn btn-success btn-lg btn-block">Proceder al pago</button>
+                    <div class="btn-spacing">
+                        <a class="btn btn-secondary btn-lg" th:href="@{/producto}">
+                            <i class="fas fa-arrow-left me-2"></i>Volver a la tienda
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

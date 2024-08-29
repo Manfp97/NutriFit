@@ -52,7 +52,7 @@ public class CarritoController {
         List<Producto> carrito = obtenerCarritoDeCookies(request);
         carrito.add(producto);
         guardarCarritoEnCookies(carrito, response);
-        return "redirect:/carrito";
+        return "redirect:/producto";
     }
 
     @PostMapping("/eliminar/{idProducto}")

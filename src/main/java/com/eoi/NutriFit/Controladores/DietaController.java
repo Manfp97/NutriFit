@@ -102,6 +102,18 @@ public class DietaController {
         }
     }
 
+    @GetMapping("/vermas/{id}")
+    public String getByIdVerMas(@PathVariable Integer id, Model model) {
+        Optional<Dieta> dieta = service.encuentraPorId(id);
+
+        if (dieta.isPresent()) {
+            model.addAttribute("dieta", dieta.get());
+            return "vermasdietas";  // Usa la nueva plantilla "vermasdietas"
+        } else {
+            return "redirect:/404";
+        }
+    }
+
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
     public String update(@PathVariable Integer id, @ModelAttribute Dieta dieta, Model model) {

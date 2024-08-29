@@ -94,10 +94,22 @@ public class EntrenamientoController {
     @GetMapping("/{id}")
     public String getById(@PathVariable Integer id, Model model) {
         Optional<Entrenamiento> entrenamiento = service.encuentraPorId(id);
-        
+
         if (entrenamiento.isPresent()) {
             model.addAttribute("entrenamiento", entrenamiento.get());
             return "detalleentrenamiento";
+        } else {
+            return "redirect:/404";
+        }
+    }
+
+    @GetMapping("/vermas/{id}")
+    public String getByIdVerMas(@PathVariable Integer id, Model model) {
+        Optional<Entrenamiento> entrenamiento = service.encuentraPorId(id);
+
+        if (entrenamiento.isPresent()) {
+            model.addAttribute("entrenamiento", entrenamiento.get());
+            return "vermasentrenamientos";
         } else {
             return "redirect:/404";
         }
