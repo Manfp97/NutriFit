@@ -12,68 +12,53 @@
         body {
             background-color: #f8f9fa;
         }
-
         .container {
             max-width: 1200px;
         }
-
         .card-header {
             background-color: #4caf50;
             color: #fff;
         }
-
         .card-body {
             background-color: #fff;
         }
-
         .card-body p {
             margin-bottom: 0;
         }
-
         .btn-primary {
             background-color: #007bff;
             border: none;
         }
-
         .btn-primary:hover {
             background-color: #0056b3;
         }
-
         .btn-danger {
             background-color: #dc3545;
             border: none;
         }
-
         .btn-danger:hover {
             background-color: #c82333;
         }
-
         .btn-success {
             background-color: #28a745;
             border: none;
         }
-
         .btn-success:hover {
             background-color: #218838;
         }
-
         .btn-secondary {
             background-color: #28a745;
             border: none;
         }
-
         .btn-secondary:hover {
             background-color: #218838;
         }
-
         .list-group-item {
             border: none;
         }
-
         .list-group-item strong {
             font-size: 1.25rem;
         }
-
         .btn-spacing {
             margin-top: 15px;
             text-align: center;
@@ -91,32 +76,31 @@
                         <h5 class="mb-0">Carrito - <span th:text="${carrito.size()}"></span> productos</h5>
                     </div>
                     <div class="card-body">
-                        <div th:each="producto : ${carrito}" class="row mb-4">
+                        <div th:each="productoCarrito : ${carrito}" class="row mb-4">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-light hover-overlay hover-zoom ripple rounded">
                                     <img th:src="@{/img/PROTE}" class="w-100 rounded" alt="Producto"/>
                                 </div>
                             </div>
                             <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                <p><strong th:text="${producto.nombre}">Nombre del Producto</strong></p>
-                                <p><span th:text="'Precio: $' + ${producto.precio}"></span></p>
-                                <form th:action="@{'/carrito/eliminar/' + ${producto.id}}" method="post">
+                                <p><strong th:text="${productoCarrito.producto.nombre}">Nombre del Producto</strong></p>
+                                <p><span th:id="@{'pvp_' + ${productoCarrito.producto.getId()}}"
+                                         th:attr="data-pvp=${productoCarrito.producto.getPrecio()}"
+                                         th:text="'Precio: $' + ${productoCarrito.producto.getPrecio()}"></span></p>
+                                <form th:action="@{'/carrito/eliminar/' + ${productoCarrito.producto.getId()}}" method="post">
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                <form th:action="@{'/carrito/agregar/' + ${producto.id}}" method="post">
-                                    <!--<button type="submit" class="btn btn-primary">Añadir uno más</button>-->
-                                    <div class="input-group mb-3">
-                                        <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(event, -1)" th:attr="data-idprod=${producto.id}, data-precio=${producto.precio}">-</button>
-                                        <input th:id="@{'cant_' + ${producto.id}}" type="text" class="form-control" placeholder="" value="1" readonly>
-                                        <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(event, 1)" th:attr="data-idprod=${producto.id}, data-precio=${producto.precio}">+</button>
-                                    </div>
-                                </form>
+                                <div class="input-group mb-3">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(this, -1)" th:attr="data-idprod=${productoCarrito.producto.getId()}, data-precio=${productoCarrito.producto.getPrecio()}">-</button>
+                                    <input th:id="@{'cant_' + ${productoCarrito.producto.id}}" type="text" class="form-control" placeholder="" th:value="${productoCarrito.cantidad}" onchange="updateQuantity(this, 0)">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(this, 1)" th:attr="data-idprod=${productoCarrito.producto.getId()}, data-precio=${productoCarrito.producto.getPrecio()}">+</button>
+                                </div>
                                 <p class="text-start text-md-center mt-2">
-                                    <strong>Total: $<span th:id="@{'tot_' + ${producto.id}}" th:text="${producto.precio}"></span></strong>
+                                    <strong th:id="@{'tot_' + ${productoCarrito.producto.id}}" th:text="'Total: $' + ${productoCarrito.producto.getPrecio() * productoCarrito.cantidad}"> </strong>
                                 </p>
                             </div>
                         </div>
@@ -172,10 +156,9 @@
 
 <!-- JS LOCAL -->
 <script type="application/javascript">
-    function updateQuantity(e, change) {
-        const button = e.target;
-        const prod = button.dataset.idprod;
-        const precio = parseFloat(button.dataset.precio);
+    function updateQuantity(element, change) {
+        const prod = element.dataset.idprod || element.id.split('_')[1];
+        const precio = parseFloat(document.getElementById('pvp_' + prod).dataset.pvp);
         const inp = document.getElementById("cant_" + prod);
         const totSpan = document.getElementById("tot_" + prod);
 
@@ -183,7 +166,8 @@
         if (newValue < 1) newValue = 1;
 
         inp.value = newValue;
-        totSpan.textContent = (precio * newValue).toFixed(2);
+        const total = (precio * newValue).toFixed(2);
+        totSpan.textContent = 'Total: $' + total;
 
         updateCartTotal();
     }
@@ -193,7 +177,7 @@
         let cartTotal = 0;
 
         totalElements.forEach(el => {
-            cartTotal += parseFloat(el.textContent);
+            cartTotal += parseFloat(el.textContent.split('$')[1]);
         });
 
         document.getElementById('subtotal').textContent = '$' + cartTotal.toFixed(2);
@@ -202,13 +186,6 @@
 
     // Initialize totals on page load
     document.addEventListener('DOMContentLoaded', () => {
-        const quantityInputs = document.querySelectorAll('[id^="cant_"]');
-        quantityInputs.forEach(input => {
-            const prod = input.id.split('_')[1];
-            const precio = parseFloat(document.querySelector(`button[data-idprod="${prod}"]`).dataset.precio);
-            const totSpan = document.getElementById("tot_" + prod);
-            totSpan.textContent = (precio * parseInt(input.value)).toFixed(2);
-        });
         updateCartTotal();
     });
 </script>
