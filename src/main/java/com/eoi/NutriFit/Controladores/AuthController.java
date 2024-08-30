@@ -27,17 +27,17 @@ public class AuthController {
     private String resetPasswordBaseUrl;
 
 
-    private final NotificationServiceEmail notificationServiceEmail;
+    //private final NotificationServiceEmail notificationServiceEmail;
     private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final EmailService emailService;
+    //private final EmailService emailService;
 
     @Autowired
     public AuthController(NotificationServiceEmail notificationServiceEmail, UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, EmailService emailService) {
-        this.notificationServiceEmail = notificationServiceEmail;
+        //this.notificationServiceEmail = notificationServiceEmail;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
+        //this.emailService = emailService;
     }
 
     // Método GET para mostrar el formulario de "Olvidé mi contraseña"
@@ -64,7 +64,7 @@ public class AuthController {
 
             try {
                 System.out.println("Intentando enviar correo de restablecimiento a: " + email);
-                notificationServiceEmail.sendPasswordResetEmail(email, resetUrl);
+                //notificationServiceEmail.sendPasswordResetEmail(email, resetUrl);
                 System.out.println("Correo de restablecimiento enviado con éxito a: " + email);
                 model.addAttribute("message", "Correo de restablecimiento de contraseña enviado.");
             } catch (Exception e) {

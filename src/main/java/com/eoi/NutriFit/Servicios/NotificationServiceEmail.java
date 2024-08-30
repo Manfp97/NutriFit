@@ -2,10 +2,10 @@ package com.eoi.NutriFit.Servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class NotificationServiceEmail {
 
+ /*
     private final EmailService emailService;
 
     @Autowired
@@ -63,4 +63,6 @@ public class NotificationServiceEmail {
                 "</body>" +
                 "</html>";
     }
+*/
 }
+

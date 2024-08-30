@@ -1,3 +1,4 @@
+
 package com.eoi.NutriFit.Servicios;
 
 import com.resend.*;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-
+/*
     private final Resend resend;
 
     public EmailService(@Value("${resend.api.key}") String apiKey) {
@@ -37,4 +38,5 @@ public class EmailService {
             throw new RuntimeException("Error sending email", e);
         }
     }
+*/
 }

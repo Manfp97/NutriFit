@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,8 +99,10 @@
                             </div>
                             <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                 <p><strong th:text="${producto.nombre}">Nombre del Producto</strong></p>
-                                <p><span th:text="'Precio: $' + ${producto.precio}"></span></p>
-                                <form th:action="@{'/carrito/eliminar/' + ${producto.id}}" method="post">
+                                <p><span th:id="@{'pvp_' + ${producto.getId()}}"
+                                         th:attr="data-pvp=${producto.getPrecio()}"
+                                         th:text="'Precio: $' + ${producto.getPrecio()}"></span></p>
+                                <form th:action="@{'/carrito/eliminar/' + ${producto.getId()}}" method="post">
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
@@ -108,10 +110,16 @@
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                 <form th:action="@{'/carrito/agregar/' + ${producto.id}}" method="post">
-                                    <button type="submit" class="btn btn-primary">Añadir uno más</button>
+                                    <!-- <button type="submit" class="btn btn-primary">Añadir uno más</button> -->
+	                                <div class="input-group mb-3">
+		                                <button class="btn btn-outline-secondary" type="button" onclick="otromenos(event)" th:attr="data-idprod=${producto.getId()}">-</button>
+		                                <input th:id="@{'cant_' + ${producto.id}}" type="text" class="form-control" placeholder="" value="0"
+		                                       onchange="cambiaCantidad()">
+		                                <button class="btn btn-outline-secondary" type="button" onclick="otromas(event)" th:attr="data-idprod=${producto.getId()}">+</button>
+	                                </div>
                                 </form>
                                 <p class="text-start text-md-center mt-2">
-                                    <strong th:text="'Total: $' + ${producto.precio}"></strong>
+                                    <strong th:id="@{'tot_' + ${producto.id}}" > </strong>
                                 </p>
                             </div>
                         </div>
@@ -164,5 +172,44 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- JS local  -->
+<script type="application/javascript">
+	function otromas(e) {
+		// obtenemos el id del producto a modificar
+		const prod = e.target.dataset["idprod"]
+		// localizamos el input correspondiente al producto
+		const inp = document.getElementById("cant_" + prod)
+		// leemos el valor actual
+		const va = inp.value;
+		// incrementamos en uno el valor
+		inp.value = parseInt(va) + 1;
+		// recalcular el total
+		// cogemos el precio del producto
+		const pvp = document.getElementById("pvp_" + prod).dataset["pvp"]
+		// calculamos el total y lo ponemos
+		const tot = parseInt(inp.value) * pvp
+		const totalprod = document.getElementById("tot_" + prod)
+		totalprod.textContent = "Total: " + tot.toString();
+	}
+	
+	function otromenos(e) {
+		// obtenemos el id del producto a modificar
+		const prod = e.target.dataset["idprod"]
+		// localizamos el input correspondiente al producto
+		const inp = document.getElementById("cant_" + prod)
+		// leemos el valor actual
+		const va = inp.value;
+		// incrementamos en uno el valor
+		if(parseInt(va) > 0){
+			inp.value = parseInt(va) - 1;
+		}
+	}
+	
+	function cambiaCantidad(e) {
+		console.log(e.target)
+	}
+</script>
+
 </body>
 </html>

@@ -44,8 +44,8 @@ public class UsuarioController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private NotificationServiceEmail notificationServiceEmail;
+    //@Autowired
+    //private NotificationServiceEmail notificationServiceEmail;
 
     // Controlador para entrenadores
     @GetMapping("/entrenadores")
@@ -246,7 +246,7 @@ public class UsuarioController {
             String userName = usuario.getUsername(); // Nombre de usuario desde `Usuario`
 
             // Enviar notificación por correo electrónico
-            notificationServiceEmail.sendNotification(userEmail, userName);
+            //notificationServiceEmail.sendNotification(userEmail, userName);
 
 
             model.addAttribute("mensaje", "Usuario y detalles creados con éxito");
