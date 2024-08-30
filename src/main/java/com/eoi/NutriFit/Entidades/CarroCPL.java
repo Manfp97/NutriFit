@@ -1,7 +1,11 @@
 package com.eoi.NutriFit.Entidades;
 
 /*
-    Esta clase representa la tabla intermedia que contiene el carro de la compra
+    Esta clase representa la tabla intermedia que contiene el carro de la compra.
+    Debe declararse de forma explícita porque tiene que contener, entre otros, las unidades de cada producto. Además,
+    no va a permitir que un cliente ponga en el carro el mismo producto dos veces (se creará un error de BBDD)
+
+    Eso debe ser controlado desde el código (controlador y/o JS)
  */
 
 import jakarta.persistence.*;
