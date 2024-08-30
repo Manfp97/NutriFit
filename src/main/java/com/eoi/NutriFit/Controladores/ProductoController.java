@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +29,10 @@ public class ProductoController {
     @Autowired
     private ProductoRepo productoRepo;
 
-    public ProductoController(ProductoService service) {
+    public ProductoController(ProductoRepo productoRepo, ProductoService service) {
+        this.productoRepo = productoRepo;
         this.service = service;
     }
-
 
     @GetMapping
     public String listAll(
@@ -43,30 +44,27 @@ public class ProductoController {
         Pageable pageable = PageRequest.of(page, size);
         Page<Producto> productosPage;
 
-        // Verifica si la categoría no es nula ni vacía
         if (categoria != null && !categoria.isEmpty()) {
             productosPage = productoRepo.findByCategoria(categoria, pageable);
         } else {
             productosPage = productoRepo.findAll(pageable);
         }
-        if (productosPage.isEmpty()){
+
+        if (productosPage.isEmpty()) {
             return "error";
         } else {
-            // Crea la lista de números de página
             List<Integer> pageNumbers = IntStream.rangeClosed(1, productosPage.getTotalPages())
                     .boxed()
                     .collect(Collectors.toList());
 
-            // Añade los atributos al modelo
             model.addAttribute("pagina", productosPage);
             model.addAttribute("pageNumbers", pageNumbers);
             model.addAttribute("productos", productosPage.getContent());
             model.addAttribute("categoria", categoria);
             return "product";
-
         }
-
     }
+
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
@@ -109,20 +107,21 @@ public class ProductoController {
 
     @PostMapping("/nuevo")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
-    public String crear(@ModelAttribute("producto") Producto producto, Model model) {
+    public String crear(@ModelAttribute("producto") Producto producto, RedirectAttributes redirectAttributes) {
         try {
             service.guardar(producto);
-            model.addAttribute("mensaje", "Producto creado con éxito");
+            redirectAttributes.addFlashAttribute("mensaje", "Producto creado con éxito");
             return "redirect:/producto/nuevo";
         } catch (Exception e) {
-            model.addAttribute("mensaje", "Error al crear producto");
+            redirectAttributes.addFlashAttribute("mensaje", "Error al crear producto");
             return "redirect:/producto/nuevo";
         }
     }
 
+
     @PostMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
-    public String update(@PathVariable Integer id, @ModelAttribute Producto producto, Model model) {
+    public String update(@PathVariable Integer id, @ModelAttribute Producto producto, RedirectAttributes redirectAttributes) {
         try {
             Optional<Producto> existingProducto = service.encuentraPorId(id);
             if (existingProducto.isPresent()) {
@@ -131,20 +130,20 @@ public class ProductoController {
                 updatedProducto.setPrecio(producto.getPrecio());
                 updatedProducto.setCategoria(producto.getCategoria());
                 updatedProducto.setDescripcion(producto.getDescripcion());
-                // Actualizar otros campos necesarios si es necesario
 
                 service.guardar(updatedProducto);
-                model.addAttribute("mensaje", "Producto actualizado con éxito");
+                redirectAttributes.addFlashAttribute("mensaje", "Producto actualizado con éxito");
                 return "redirect:/producto";
             } else {
-                model.addAttribute("mensaje", "Producto no encontrado");
+                redirectAttributes.addFlashAttribute("mensaje", "Producto no encontrado");
                 return "redirect:/producto";
             }
         } catch (Exception e) {
-            model.addAttribute("mensaje", "Error al actualizar producto: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("mensaje", "Error al actualizar producto: " + e.getMessage());
             return "redirect:/producto";
         }
     }
+
 
 
     @PostMapping("/delete/{id}")

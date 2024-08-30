@@ -1,9 +1,7 @@
 package com.eoi.NutriFit.Entidades;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +9,8 @@ import java.time.LocalDateTime;
 @Table(name = "usuarios")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString(exclude = {"detalleUsuario", "rol"})
 public class Usuario {
     @Id
