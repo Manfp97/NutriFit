@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setAllowedOrigins(
                         "http://localhost:8091",
                         "http://localhost:3000",
-                        "https://3d52-46-6-26-199.ngrok-free.app"
+                        "https://a5a6-46-6-26-62.ngrok-free.app"
                 )
                 .setHandshakeHandler(new UserHandshakeHandler())
                 .withSockJS();

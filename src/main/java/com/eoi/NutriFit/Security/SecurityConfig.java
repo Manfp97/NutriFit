@@ -51,6 +51,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/producto/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                         .requestMatchers(HttpMethod.POST, "/producto/**").hasRole("ADMIN")
                         .requestMatchers("/carrito/**").permitAll() // Permitir todas las solicitudes a /carrito/**
+                        .requestMatchers("/index/**").permitAll() // Permitir todas las solicitudes a /index/**
+                        .requestMatchers("/").permitAll() // Permitir todas las solicitudes a /
                         .requestMatchers("/progresionesEntrenamientos/**").authenticated() // Añade esta línea
                         .requestMatchers(HttpMethod.POST, "/carrito/agregar/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/dietaUsuario/list").hasAnyRole("ADMIN", "EMPLEADO")
@@ -81,7 +83,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:8091",
                 "http://localhost:3000",
-                "https://83dd-46-6-26-62.ngrok-free.app"
+                " https://9a5f-46-6-26-62.ngrok-free.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);

@@ -108,10 +108,15 @@
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                 <form th:action="@{'/carrito/agregar/' + ${producto.id}}" method="post">
-                                    <button type="submit" class="btn btn-primary">Añadir uno más</button>
+                                    <!--<button type="submit" class="btn btn-primary">Añadir uno más</button>-->
+                                    <div class="input-group mb-3">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(event, -1)" th:attr="data-idprod=${producto.id}, data-precio=${producto.precio}">-</button>
+                                        <input th:id="@{'cant_' + ${producto.id}}" type="text" class="form-control" placeholder="" value="1" readonly>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(event, 1)" th:attr="data-idprod=${producto.id}, data-precio=${producto.precio}">+</button>
+                                    </div>
                                 </form>
                                 <p class="text-start text-md-center mt-2">
-                                    <strong th:text="'Total: $' + ${producto.precio}"></strong>
+                                    <strong>Total: $<span th:id="@{'tot_' + ${producto.id}}" th:text="${producto.precio}"></span></strong>
                                 </p>
                             </div>
                         </div>
@@ -132,7 +137,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                             Productos
-                            <span th:text="'$' + ${carritoTotal}"></span>
+                            <span id="subtotal">$0.00</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Envío
@@ -145,7 +150,7 @@
                                     <p class="mb-0">(incluye IVA)</p>
                                 </strong>
                             </div>
-                            <span><strong th:text="'$' + ${carritoTotal}"></strong></span>
+                            <span><strong id="cartTotal">$0.00</strong></span>
                         </li>
                     </ul>
                     <button type="button" class="btn btn-success btn-lg btn-block">Proceder al pago</button>
@@ -164,5 +169,48 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- JS LOCAL -->
+<script type="application/javascript">
+    function updateQuantity(e, change) {
+        const button = e.target;
+        const prod = button.dataset.idprod;
+        const precio = parseFloat(button.dataset.precio);
+        const inp = document.getElementById("cant_" + prod);
+        const totSpan = document.getElementById("tot_" + prod);
+
+        let newValue = parseInt(inp.value) + change;
+        if (newValue < 1) newValue = 1;
+
+        inp.value = newValue;
+        totSpan.textContent = (precio * newValue).toFixed(2);
+
+        updateCartTotal();
+    }
+
+    function updateCartTotal() {
+        const totalElements = document.querySelectorAll('[id^="tot_"]');
+        let cartTotal = 0;
+
+        totalElements.forEach(el => {
+            cartTotal += parseFloat(el.textContent);
+        });
+
+        document.getElementById('subtotal').textContent = '$' + cartTotal.toFixed(2);
+        document.getElementById('cartTotal').textContent = '$' + cartTotal.toFixed(2);
+    }
+
+    // Initialize totals on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const quantityInputs = document.querySelectorAll('[id^="cant_"]');
+        quantityInputs.forEach(input => {
+            const prod = input.id.split('_')[1];
+            const precio = parseFloat(document.querySelector(`button[data-idprod="${prod}"]`).dataset.precio);
+            const totSpan = document.getElementById("tot_" + prod);
+            totSpan.textContent = (precio * parseInt(input.value)).toFixed(2);
+        });
+        updateCartTotal();
+    });
+</script>
 </body>
 </html>
