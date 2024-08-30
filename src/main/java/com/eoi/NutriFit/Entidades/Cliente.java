@@ -1,10 +1,9 @@
 package com.eoi.NutriFit.Entidades;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +11,9 @@ import java.util.Set;
 @Table(name="clientes")
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor  // Añadido por CPL
+@AllArgsConstructor // Añadido por CPL
+//@ToString // disminuye la eficiencia por las relaciones uno a muchos)
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,9 +23,12 @@ public class Cliente {
     @OneToOne(mappedBy = "cliente")
     private Usuario usuario;
 
+    // Se desactiva para conectar el nuevo CarroCpl
+    //@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    //private Carrito carrito;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private Carrito carrito;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CarroCPL> productos = new HashSet<>();
 
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private DetallesCliente detallesCliente;

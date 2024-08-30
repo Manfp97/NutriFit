@@ -41,10 +41,8 @@ public class Producto {
     @Column(name = "stock")
     private Double stock;
 
-
-
-
-
+    // Desactivado para utilizar CarroCPL
+    /*
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "producto_carrito",
@@ -52,6 +50,10 @@ public class Producto {
             inverseJoinColumns = @JoinColumn(name = "idcarrito", foreignKey = @ForeignKey(name = "Fk_producto_carrito_carrito"))
     )
     private Set<Carrito> carritos = new HashSet<>();
+     */
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CarroCPL> clientes = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "proveedor_id", foreignKey = @ForeignKey(name = "Fk_proveedor_producto"))
