@@ -12,27 +12,33 @@
             max-height: 400px;
             overflow-y: auto;
         }
+
         .member-list {
             max-height: 300px;
             overflow-y: auto;
         }
+
         .message {
             margin-bottom: 15px;
         }
+
         .message-content {
             display: inline-block;
             padding: 10px;
             border-radius: 15px;
             max-width: 80%;
         }
+
         .message-sent .message-content {
             background-color: #dcf8c6;
             float: right;
         }
+
         .message-received .message-content {
             background-color: #f1f0f0;
             float: left;
         }
+
         .message-info {
             font-size: 0.8em;
             color: #888;
@@ -51,61 +57,72 @@
     <div class="row">
         <!-- Member List Column -->
         <div class="col-md-4 mb-4">
-            <h5 class="font-weight-bold mb-3 text-center text-lg-start">Members</h5>
+            <h5 class="font-weight-bold mb-3 text-center text-lg-start">Miembros</h5>
             <div class="card member-list">
                 <div class="card-body" id="memberList">
                     <!-- Member list will be populated here -->
                 </div>
             </div>
             <div class="mt-3">
-                <input type="text" id="from" class="form-control" placeholder="Your nickname" th:value="${#authentication.getName()}" readonly/>
-                <button id="connect" onclick="connect();" class="btn btn-primary mt-2">Connect</button>
-                <button id="disconnect" disabled="disabled" onclick="disconnect();" class="btn btn-secondary mt-2">Disconnect</button>
+                <input type="text" id="from" class="form-control" placeholder="Your nickname"
+                       th:value="${#authentication.getName()}" readonly/>
+                <button id="connect" onclick="connect();" class="btn btn-primary mt-2">Conectar</button>
+                <button id="disconnect" disabled="disabled" onclick="disconnect();" class="btn btn-secondary mt-2">
+                    Desconectar
+                </button>
+                <!-- Nuevo botón para redirigir al perfil -->
+                <a th:href="@{/usuario/perfil}" class="btn btn-success mt-2">Volver a tu perfil</a>
             </div>
         </div>
 
-        <!-- Chat Area Column -->
-        <div class="col-md-8">
-            <ul class="nav nav-tabs" id="chatTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="private-tab" data-bs-toggle="tab" data-bs-target="#private" type="button" role="tab" aria-controls="private" aria-selected="false">Private Chat</button>
-                </li>
-                <!-- Private Chat Tabs will be dynamically added here -->
-            </ul>
-            <div class="tab-content" id="chatTabContent">
-                <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
-                    <div class="card">
-                        <div class="card-body chat-container" id="publicChatArea">
-                            <!-- Public chat messages will appear here -->
-                        </div>
-                        <div class="card-footer">
-                            <div class="input-group">
-                                <input type="text" id="publicText" class="form-control" placeholder="Write a public message..."/>
-                                <button class="btn btn-primary" onclick="sendMessage();">Send</button>
-                            </div>
+    </div>
+
+    <!-- Chat Area Column -->
+    <div class="col-md-8">
+        <ul class="nav nav-tabs" id="chatTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="private-tab" data-bs-toggle="tab" data-bs-target="#private" type="button"
+                        role="tab" aria-controls="private" aria-selected="false">Chat Privado
+                </button>
+            </li>
+            <!-- Private Chat Tabs will be dynamically added here -->
+        </ul>
+        <div class="tab-content" id="chatTabContent">
+            <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
+                <div class="card">
+                    <div class="card-body chat-container" id="publicChatArea">
+                        <!-- Public chat messages will appear here -->
+                    </div>
+                    <div class="card-footer">
+                        <div class="input-group">
+                            <input type="text" id="publicText" class="form-control"
+                                   placeholder="Escribe un mensaje público..."/>
+                            <button class="btn btn-primary" onclick="sendMessage();">Enviar</button>
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
-                    <div class="card">
-                        <div class="card-body chat-container" id="privateChatArea">
-                            <!-- Private chat messages will appear here -->
-                        </div>
-                        <div class="card-footer">
-                            <div class="input-group mb-2">
-                                <input type="text" id="to" class="form-control" placeholder="Recipient's nickname"/>
-                            </div>
-                            <div class="input-group">
-                                <input type="text" id="privateText" class="form-control" placeholder="Write a private message..."/>
-                                <button class="btn btn-primary" onclick="sendPrivateMessage();">Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Dynamic Private Chat Content -->
             </div>
+            <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
+                <div class="card">
+                    <div class="card-body chat-container" id="privateChatArea">
+                        <!-- Private chat messages will appear here -->
+                    </div>
+                    <div class="card-footer">
+                        <div class="input-group mb-2">
+                            <input type="text" id="to" class="form-control" placeholder="Nombre del receptor"/>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="privateText" class="form-control"
+                                   placeholder="Escribe un mensaje privado..."/>
+                            <button class="btn btn-primary" onclick="sendPrivateMessage();">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Dynamic Private Chat Content -->
         </div>
     </div>
+</div>
 </div>
 
 <script type="text/javascript">
@@ -115,7 +132,7 @@
     var privateChats = {}; // Object to track private chat tabs
 
     // Load saved data when the page loads
-    window.onload = function() {
+    window.onload = function () {
         loadSavedData();
     };
 
@@ -131,14 +148,14 @@
         for (var otherUser in savedPrivateChats) {
             createPrivateChatTab(otherUser);
             var messages = savedPrivateChats[otherUser];
-            messages.forEach(function(message) {
+            messages.forEach(function (message) {
                 showMessageOutput(message, 'privateChatArea-' + otherUser);
             });
         }
 
         // Load public chat messages
         var publicMessages = JSON.parse(localStorage.getItem('publicMessages') || '[]');
-        publicMessages.forEach(function(message) {
+        publicMessages.forEach(function (message) {
             showMessageOutput(message, 'publicChatArea');
         });
 
@@ -155,7 +172,7 @@
 
         var privateChatsData = {};
         for (var otherUser in privateChats) {
-            privateChatsData[otherUser] = Array.from(document.getElementById('privateChatArea-' + otherUser).children).map(function(messageDiv) {
+            privateChatsData[otherUser] = Array.from(document.getElementById('privateChatArea-' + otherUser).children).map(function (messageDiv) {
                 return {
                     from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
                     text: messageDiv.querySelector('.message-content').textContent,
@@ -165,7 +182,7 @@
         }
         localStorage.setItem('privateChats', JSON.stringify(privateChatsData));
 
-        var publicMessages = Array.from(document.getElementById('publicChatArea').children).map(function(messageDiv) {
+        var publicMessages = Array.from(document.getElementById('publicChatArea').children).map(function (messageDiv) {
             return {
                 from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
                 text: messageDiv.querySelector('.message-content').textContent,
@@ -196,10 +213,10 @@
         var socket = new SockJS('https://a5a6-46-6-26-62.ngrok-free.app/chat');
         stompClient = Stomp.over(socket);
 
-        stompClient.connect({}, function(frame) {
+        stompClient.connect({}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/messages', function(messageOutput) {
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
                 var message = JSON.parse(messageOutput.body);
                 showMessageOutput(message, 'publicChatArea');
                 saveData();
@@ -219,7 +236,7 @@
                 saveData();
             });
             saveuserinfo();
-        }, function(error) {
+        }, function (error) {
             console.log('STOMP error ' + error);
             disconnect();
         });
@@ -244,7 +261,7 @@
     }
 
     function disconnect() {
-        if(stompClient != null) {
+        if (stompClient != null) {
             stompClient.disconnect();
         }
         setConnected(false);
@@ -254,7 +271,7 @@
     function sendMessage() {
         var from = document.getElementById('from').value;
         var text = document.getElementById('publicText').value;
-        stompClient.send("/app/chat", {}, JSON.stringify({'from':from, 'text':text}));
+        stompClient.send("/app/chat", {}, JSON.stringify({'from': from, 'text': text}));
         document.getElementById('publicText').value = '';
     }
 
@@ -264,7 +281,7 @@
         var to = document.getElementById('to').value;
 
         if (to && text) {
-            var message = {'from':from, 'to':to, 'text':text, time: new Date().toLocaleTimeString()};
+            var message = {'from': from, 'to': to, 'text': text, time: new Date().toLocaleTimeString()};
             stompClient.send("/app/private-message", {}, JSON.stringify(message));
             document.getElementById('privateText').value = '';
             handlePrivateMessage(message);
@@ -373,7 +390,7 @@
         var sendButton = document.createElement('button');
         sendButton.className = 'btn btn-primary';
         sendButton.textContent = 'Send';
-        sendButton.onclick = function() {
+        sendButton.onclick = function () {
             var from = document.getElementById('from').value;
             var text = inputField.value;
             if (text) {
@@ -427,7 +444,7 @@
     function updateMemberList(members) {
         var memberList = document.getElementById('memberList');
         memberList.innerHTML = '';
-        members.forEach(function(member) {
+        members.forEach(function (member) {
             var memberDiv = document.createElement('div');
             memberDiv.className = 'mb-2';
             memberDiv.textContent = member;
@@ -437,7 +454,7 @@
     }
 
     // Add event listener for when the page is about to unload
-    window.addEventListener('beforeunload', function() {
+    window.addEventListener('beforeunload', function () {
         saveData();
     });
 
