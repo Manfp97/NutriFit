@@ -24,9 +24,9 @@
             </div>
 
             <div class="row g-5">
-                <div class="col-lg-4" th:each="usuario : ${usuarios}">
+                <div class="col-lg-4" th:each="usuario, iterStat : ${usuarios}">
                     <div class="card h-100 wow fadeInUp" data-wow-delay="0.1s">
-                        <img src="img/nutricionista.jpg" class="card-img-top img-fluid max-height-225" alt="Nutricionista">
+                        <img th:src="@{'/img/nutricionista' + ${iterStat.count % 3 + 1} + '.jpg'}" class="card-img-top img-fluid max-height-225">
                         <div class="card-body text-center">
                             <h5 th:text="${usuario.detalleUsuario.nombre}" class="card-title"></h5>
                             <p th:text="${usuario.detalleUsuario.email}" class="card-text"></p>
