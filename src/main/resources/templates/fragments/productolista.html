@@ -39,9 +39,9 @@
 
         <!-- Lista de productos -->
         <div class="row g-4">
-            <div class="col-md-6 col-lg-4 col-xl-3" th:each="producto : ${productos}">
+            <div class="col-md-6 col-lg-4 col-xl-3" th:each="producto, iterStat : ${productos}">
                 <div class="producto-lista-card producto-lista-fadeInUp" data-wow-delay="0.1s">
-                    <img th:src="@{img/Creatina-Creapure-Justloading-2.jpg}" class="producto-lista-card-img" alt="Imagen del producto">
+                    <img th:src="@{'/img/producto' + ${iterStat.count % 4 + 1} + '.jpg'}" class="producto-lista-card-img" alt="Imagen del producto">
                     <div class="producto-lista-card-body">
                         <h5 class="producto-lista-card-title" th:text="${producto.nombre}"></h5>
                         <p class="producto-lista-card-text" th:text="${#strings.abbreviate(producto.descripcion, 100)}"></p>
@@ -57,6 +57,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- Paginación -->
         <nav th:if="${pagina.totalPages > 0}" class="producto-lista-pagination producto-lista-fadeInUp" data-wow-delay="0.2s">

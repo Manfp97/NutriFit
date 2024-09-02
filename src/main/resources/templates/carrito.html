@@ -76,10 +76,10 @@
                         <h5 class="mb-0">Carrito - <span th:text="${carrito.size()}"></span> productos</h5>
                     </div>
                     <div class="card-body">
-                        <div th:each="productoCarrito : ${carrito}" class="row mb-4">
+                        <div th:each="productoCarrito, iterStat : ${carrito}" class="row mb-4 align-items-center">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-light hover-overlay hover-zoom ripple rounded">
-                                    <img th:src="@{/img/Creatina-Creapure-Justloading-2.jpg}" class="w-100 rounded" alt="Producto"/>
+                                    <img th:src="@{'/img/producto' + ${iterStat.count % 4 + 1} + '.jpg'}" class="w-100 h-auto rounded" alt="Imagen del producto">
                                 </div>
                             </div>
                             <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
