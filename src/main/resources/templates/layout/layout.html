@@ -35,11 +35,410 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/fontawesome.min.js" integrity="sha512-NeFv3hB6XGV+0y96NVxoWIkhrs1eC3KXBJ9OJiTFktvbzJ/0Kk7Rmm9hJ2/c2wJjy6wG0a0lIgehHjCTDLRwWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/sockjs-0.3.4.js}"></script>
+    <script th:src="@{/js/stomp.js}"></script>
+
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div layout:fragment="content">
 </div>
 <div th:replace="fragments/footer :: footer"></div>
+<a onclick="mostrarToast()" class="btn btn-success">mostrar toast</a>
+
+<div id="toast" class="toast toast-container position-fixed top-0 end-0 p-3 " role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="..." class="rounded mr-2" alt="...">
+        <strong id="toast-title" class="mr-auto">Bootstrap</strong>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div id="toast-body" class="toast-body">
+
+    </div>
+</div>
+<input type="hidden" id="from" class="form-control" placeholder="Your nickname" th:value="${#authentication.getName()}" readonly="">
+<script type="text/javascript">
+
+    function mostrarToast(messageOutput) {
+         console.log(messageOutput);
+         $("#toast").toast("show");
+         $("#toast-title").html(messageOutput.from);
+         $("#toast-body").html(messageOutput.text);
+    }
+
+    var stompClient = null;
+    var notificationCount = 0;
+    var privateChats = {}; // Object to track private chat tabs
+
+    // Load saved data when the page loads
+    window.onload = function () {
+        loadSavedData();
+    };
+
+    function loadSavedData() {
+        // Load notification count
+        var savedNotificationCount = localStorage.getItem('notificationCount');
+        if (savedNotificationCount) {
+            notificationCount = parseInt(savedNotificationCount);
+        }
+
+        // Load private chats
+        var savedPrivateChats = JSON.parse(localStorage.getItem('privateChats') || '{}');
+        for (var otherUser in savedPrivateChats) {
+            createPrivateChatTab(otherUser);
+            var messages = savedPrivateChats[otherUser];
+            messages.forEach(function (message) {
+                showMessageOutput(message, 'privateChatArea-' + otherUser);
+            });
+        }
+
+        // Load public chat messages
+        var publicMessages = JSON.parse(localStorage.getItem('publicMessages') || '[]');
+        publicMessages.forEach(function (message) {
+            showMessageOutput(message, 'publicChatArea');
+        });
+
+        // Load connection status and reconnect if necessary
+        var wasConnected = localStorage.getItem('wasConnected') === 'true';
+        if (wasConnected) {
+            connect();
+        }
+    }
+
+    function saveData() {
+        localStorage.setItem('notificationCount', notificationCount);
+        localStorage.setItem('wasConnected', stompClient !== null);
+
+        var privateChatsData = {};
+        for (var otherUser in privateChats) {
+            privateChatsData[otherUser] = Array.from(document.getElementById('privateChatArea-' + otherUser).children).map(function (messageDiv) {
+                return {
+                    from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
+                    text: messageDiv.querySelector('.message-content').textContent,
+                    time: messageDiv.querySelector('.message-info').textContent.split(' • ')[1]
+                };
+            });
+        }
+        localStorage.setItem('privateChats', JSON.stringify(privateChatsData));
+
+        var publicMessages = Array.from(document.getElementById('publicChatArea').children).map(function (messageDiv) {
+            return {
+                from: messageDiv.querySelector('.message-info').textContent.split(' • ')[0],
+                text: messageDiv.querySelector('.message-content').textContent,
+                time: messageDiv.querySelector('.message-info').textContent.split(' • ')[1]
+            };
+        });
+        localStorage.setItem('publicMessages', JSON.stringify(publicMessages));
+    }
+
+    function setConnected(connected) {
+        document.getElementById('connect').disabled = connected;
+        document.getElementById('disconnect').disabled = !connected;
+        document.getElementById('publicChatArea').style.visibility = connected ? 'visible' : 'hidden';
+        document.getElementById('privateChatArea').style.visibility = connected ? 'visible' : 'hidden';
+        if (!connected) {
+            document.getElementById('publicChatArea').innerHTML = '';
+            document.getElementById('privateChatArea').innerHTML = '';
+            for (var key in privateChats) {
+                document.getElementById('chatTabContent').removeChild(privateChats[key]);
+                document.getElementById('chatTabs').removeChild(document.getElementById('tab-' + key));
+            }
+            privateChats = {};
+        }
+        saveData();
+    }
+
+    function connect() {
+        //var socket = new SockJS('https://a5a6-46-6-26-62.ngrok-free.app/chat');
+        var socket = new SockJS('http://localhost:8091/chat');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            //setConnected(true);
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
+                var message = JSON.parse(messageOutput.body);
+                showMessageOutput(message, 'publicChatArea');
+                saveData();
+            });
+            stompClient.subscribe('/user/topic/private-messages', function (messageOutput) {
+                handlePrivateMessage(JSON.parse(messageOutput.body));
+                saveData();
+            });
+
+            stompClient.subscribe('/topic/global-notifications', function (messageOutput) {
+                notificationCount = notificationCount + 1;
+                saveData();
+            });
+
+            stompClient.subscribe('/user/topic/private-notifications', function (message) {
+                notificationCount = notificationCount + 1;
+                saveData();
+            });
+            //saveuserinfo();
+        }, function (error) {
+            console.log('STOMP error ' + error);
+            disconnect();
+        });
+    }
+
+    function saveuserinfo() {
+        var from = document.getElementById('from').value;
+        //var url = 'https://a5a6-46-6-26-62.ngrok-free.app/registerwebsocket/' + from
+        var url = 'http://localhost:8091/registerwebsocket/' + from
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        //setConnected(false);
+        console.log("Disconnected");
+    }
+
+ function sendMessage() {
+        var from = document.getElementById('from').value;
+        var text = document.getElementById('publicText').value;
+        $.post( "/notificaciones/crear", { to:"administrador",message: "loquequiera" } );
+        alert("enviando")
+        stompClient.send("/app/chat", {}, JSON.stringify({'from': from, 'text': text}));
+        document.getElementById('publicText').value = '';
+    }
+
+
+    function sendPrivateMessage() {
+        alert("enviando");
+
+        var from = document.getElementById('from').value;
+        var text = document.getElementById('privateText').value;
+        var to = document.getElementById('to').value;
+
+        $.post( "/notificaciones/crear", { to: to ,message: text } );
+        if (to && text) {
+            var message = {'from': from, 'to': to, 'text': text, time: new Date().toLocaleTimeString()};
+            stompClient.send("/app/private-message", {}, JSON.stringify(message));
+            document.getElementById('privateText').value = '';
+            handlePrivateMessage(message);
+        } else {
+            console.error("Recipient or message is empty");
+        }
+    }
+
+
+
+    function handlePrivateMessage(messageOutput) {
+
+
+        var from = messageOutput.from;
+        var to = messageOutput.to;
+        var currentUser = document.getElementById('from').value;
+
+        mostrarToast(messageOutput);
+
+        console.log('handlePrivateMessage:', messageOutput);
+        console.log('currentUser:', currentUser);
+
+        // Determine the other user (not the current user)
+        var otherUser = (from === currentUser) ? to : from;
+        console.log('otherUser:', otherUser);
+
+        if (otherUser && otherUser !== "undefined") {
+            // Create chat tab if it doesn't exist
+            if (!privateChats[otherUser]) {
+                createPrivateChatTab(otherUser);
+            }
+
+            // Show message in the correct tab
+            showMessageOutput(messageOutput, 'privateChatArea-' + otherUser);
+
+            // If this user is the recipient, show a notification
+            if (to === currentUser) {
+                notifyNewMessage(from);
+            }
+        } else {
+            console.error("Invalid otherUser:", otherUser);
+        }
+        saveData();
+        actualizarNotificaciones();
+    }
+
+    function notifyNewMessage(from) {
+        // Find the tab for this sender
+        var tab = document.getElementById('private-tab-' + from);
+        if (tab) {
+            // Highlight the tab or show a notification indicator
+            tab.classList.add('new-message');
+            tab.innerHTML += ' <span class="badge bg-danger">New</span>';
+        }
+
+        // You could also show a browser notification here
+        if ("Notification" in window && Notification.permission === "granted") {
+            new Notification("New message from " + from);
+        }
+    }
+
+    function createPrivateChatTab(otherUser) {
+        if (!otherUser || otherUser === "undefined" || otherUser === document.getElementById('from').value || privateChats[otherUser]) {
+            console.log("Not creating tab for:", otherUser);
+            return; // Don't create a tab for invalid users, self, or if it already exists
+        }
+
+        console.log("Creating tab for:", otherUser);
+
+        var tab = document.createElement('li');
+        tab.className = 'nav-item';
+        tab.role = 'presentation';
+        tab.id = 'tab-' + otherUser;
+
+        var tabButton = document.createElement('button');
+        tabButton.className = 'nav-link';
+        tabButton.id = 'private-tab-' + otherUser;
+        tabButton.setAttribute('data-bs-toggle', 'tab');
+        tabButton.setAttribute('data-bs-target', '#private-' + otherUser);
+        tabButton.type = 'button';
+        tabButton.role = 'tab';
+        tabButton.ariaControls = 'private-' + otherUser;
+        tabButton.ariaSelected = 'false';
+        tabButton.textContent = 'Chat with ' + otherUser;
+
+        tab.appendChild(tabButton);
+        document.getElementById('chatTabs').appendChild(tab);
+
+        var tabPane = document.createElement('div');
+        tabPane.className = 'tab-pane fade';
+        tabPane.id = 'private-' + otherUser;
+        tabPane.role = 'tabpanel';
+        tabPane.ariaLabelledby = 'private-tab-' + otherUser;
+
+        var card = document.createElement('div');
+        card.className = 'card';
+
+        var cardBody = document.createElement('div');
+        cardBody.className = 'card-body chat-container';
+        cardBody.id = 'privateChatArea-' + otherUser;
+
+        var cardFooter = document.createElement('div');
+        cardFooter.className = 'card-footer';
+
+        var inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group';
+
+        var inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.className = 'form-control';
+        inputField.placeholder = 'Write a private message...';
+
+        var sendButton = document.createElement('button');
+        sendButton.className = 'btn btn-primary';
+        sendButton.textContent = 'Send';
+        sendButton.onclick = function () {
+            var from = document.getElementById('from').value;
+            var text = inputField.value;
+            if (text) {
+                console.log('Enviando mensaje desde ' + from + ' a ' + otherUser);
+                var message = {'from': from, 'to': otherUser, 'text': text, time: new Date().toLocaleTimeString()};
+                stompClient.send("/app/private-message", {}, JSON.stringify(message));
+                console.log('Mensaje enviado');
+                inputField.value = '';
+                handlePrivateMessage(message);
+            }
+        };
+
+        inputGroup.appendChild(inputField);
+        inputGroup.appendChild(sendButton);
+        cardFooter.appendChild(inputGroup);
+        card.appendChild(cardBody);
+        card.appendChild(cardFooter);
+        tabPane.appendChild(card);
+
+        document.getElementById('chatTabContent').appendChild(tabPane);
+
+        privateChats[otherUser] = tabPane;
+
+        // Activate the new tab
+        var bootstrapTab = new bootstrap.Tab(document.getElementById('private-tab-' + otherUser));
+        bootstrapTab.show();
+        saveData();
+    }
+
+    function showMessageOutput(messageOutput, chatAreaId) {
+        var chatArea = document.getElementById(chatAreaId);
+        var messageDiv = document.createElement('div');
+        messageDiv.className = 'message ' + (messageOutput.from === document.getElementById('from').value ? 'message-sent' : 'message-received');
+
+        var contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        contentDiv.textContent = messageOutput.text;
+
+        var infoDiv = document.createElement('div');
+        infoDiv.className = 'message-info';
+        infoDiv.textContent = messageOutput.from + ' • ' + messageOutput.time;
+
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(infoDiv);
+        chatArea.appendChild(messageDiv);
+
+        chatArea.scrollTop = chatArea.scrollHeight;
+        saveData();
+    }
+
+    function updateMemberList(members) {
+        var memberList = document.getElementById('memberList');
+        memberList.innerHTML = '';
+        members.forEach(function (member) {
+            var memberDiv = document.createElement('div');
+            memberDiv.className = 'mb-2';
+            memberDiv.textContent = member;
+            memberList.appendChild(memberDiv);
+        });
+        saveData();
+    }
+
+    // Add event listener for when the page is about to unload
+    window.addEventListener('beforeunload', function () {
+        saveData();
+    });
+
+    // Attempt to reconnect if the connection is lost
+    function attemptReconnect() {
+        if (stompClient === null || !stompClient.connected) {
+            console.log('Attempting to reconnect...');
+            connect();
+        }
+    }
+
+    // Check connection status periodically
+    setInterval(attemptReconnect, 5000);
+    function actualizarNotificaciones() {
+     $.get( "/notificaciones/contar", function( data ) {
+           $("#countNotificaciones").html(data);
+        });
+    }
+
+    $( document ).ready(function() {
+        connect();
+        actualizarNotificaciones()
+
+
+
+    });
+
+</script>
 </body>
 </html>

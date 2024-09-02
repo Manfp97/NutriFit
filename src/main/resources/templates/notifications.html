@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
   <title>Chat Notifications</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,21 +9,25 @@
   <script src="/js/chat.js"></script>
 </head>
 <body>
-<div class="container">
-  <h1>Chat Notifications</h1>
-  <ul id="notification-list" class="list-group">
-    <!-- Las notificaciones aparecerán aquí -->
-  </ul>
-  <div id="chat-container" style="display:none;">
-    <!-- Aquí puedes agregar la interfaz de chat -->
-    <input type="text" id="message-input" placeholder="Escribe un mensaje...">
-    <button onclick="sendMessage()">Enviar</button>
+<div class="container" layout:fragment="content">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>From</th>
+        <th>Mensaje</th>
+      </tr>
+      </thead>
+      <tbody >
+      <tr th:each="notificacion : ${notificaciones}">
+        <td th:text="${notificacion.from}"></td>
+        <td th:text="${notificacion.message}"></td>
+        <!-- Add other fields -->
+      </tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- Campo oculto para currentUserId -->
-  <script>
-    var currentUserId = /*[[${currentUserId}]]*/ 'defaultUserId'; // Reemplaza 'defaultUserId' con el valor adecuado si es necesario
-  </script>
 </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +53,7 @@
     </style>
 </head>
 <body onload="disconnect()">
-<div class="container py-5">
+<div class="container py-5" layout:fragment="content">
     <div class="row">
         <!-- Member List Column -->
         <div class="col-md-4 mb-4">
@@ -285,9 +285,12 @@
     }
 
     function sendPrivateMessage() {
+        alert("enviando");
         var from = document.getElementById('from').value;
         var text = document.getElementById('privateText').value;
         var to = document.getElementById('to').value;
+        $.post( "/notificaciones/crear", { to: to ,message: text } );
+
 
         if (to && text) {
             var message = {'from': from, 'to': to, 'text': text, time: new Date().toLocaleTimeString()};
