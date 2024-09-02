@@ -217,7 +217,8 @@
     }
 
     function connect() {
-        var socket = new SockJS('https://a5a6-46-6-26-62.ngrok-free.app/chat');
+        //var socket = new SockJS('https://a5a6-46-6-26-62.ngrok-free.app/chat');
+        var socket = new SockJS('http://localhost:8091/chat');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
@@ -251,7 +252,8 @@
 
     function saveuserinfo() {
         var from = document.getElementById('from').value;
-        var url = 'https://a5a6-46-6-26-62.ngrok-free.app/registerwebsocket/' + from
+        //var url = 'https://a5a6-46-6-26-62.ngrok-free.app/registerwebsocket/' + from
+        var url = 'http://localhost:8091/registerwebsocket/' + from
         fetch(url)
             .then(response => {
                 if (!response.ok) {
