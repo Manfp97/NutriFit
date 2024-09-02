@@ -30,7 +30,7 @@
                         <div class="card-body text-center">
                             <h5 th:text="${usuario.detalleUsuario.nombre}" class="card-title"></h5>
                             <p th:text="${usuario.detalleUsuario.email}" class="card-text"></p>
-                            <a href="#" class="btn btn-primary rounded-pill">Ver más</a>
+                            <a th:href="@{/chat}" class="btn btn-primary rounded-pill">Ver más</a>
                         </div>
                     </div>
                 </div>
