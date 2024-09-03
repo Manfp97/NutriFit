@@ -1,29 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
   <title>Chat Notifications</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-  <script src="/js/chat.js"></script>
+  <style>
+    /* Asegura que la página ocupe toda la altura de la ventana */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Hace que el body use flexbox para el layout */
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Contenedor principal que crece para llenar el espacio disponible */
+    .main-container {
+      flex: 1;
+      padding: 20px;
+    }
+
+    /* Ajustes para pantallas anchas */
+    @media (min-width: 1000px) {
+      .main-container {
+        padding: 40px;
+      }
+    }
+
+    /* Footer siempre en la parte inferior */
+    footer {
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 10px 0;
+      border-top: 1px solid #e7e7e7;
+      font-size: 0.9em;
+      color: #6c757d;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1>Chat Notifications</h1>
-  <ul id="notification-list" class="list-group">
-    <!-- Las notificaciones aparecerán aquí -->
-  </ul>
-  <div id="chat-container" style="display:none;">
-    <!-- Aquí puedes agregar la interfaz de chat -->
-    <input type="text" id="message-input" placeholder="Escribe un mensaje...">
-    <button onclick="sendMessage()">Enviar</button>
+<!-- Contenedor principal -->
+<div class="container main-container" layout:fragment="content">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>De</th>
+        <th>Mensaje</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="notificacion : ${notificaciones}">
+        <td th:text="${notificacion.from}"></td>
+        <td th:text="${notificacion.message}"></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-
-  <!-- Campo oculto para currentUserId -->
-  <script>
-    var currentUserId = /*[[${currentUserId}]]*/ 'defaultUserId'; // Reemplaza 'defaultUserId' con el valor adecuado si es necesario
-  </script>
 </div>
+
+<!-- Footer -->
+<footer class="mt-auto">
+  © 2024 Chat Notifications - Todos los derechos reservados
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/chat.js"></script>
 </body>
 </html>

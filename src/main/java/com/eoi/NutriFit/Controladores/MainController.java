@@ -16,6 +16,7 @@ public class MainController {
 
     @GetMapping({"/", "/index"})
     public String index() {
+
         return "index";
     }
 
@@ -28,7 +29,6 @@ public class MainController {
     public String contact() {
         return "contact";
     }
-    
 
     @GetMapping({"/feature"})
     public String feature() {
