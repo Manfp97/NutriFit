@@ -14,7 +14,10 @@ import java.util.Set;
  *
  * La entidad Carrito establece una relación bidireccional uno a uno con {@link Cliente}
  * y una relación bidireccional muchos a muchos con {@link Producto}.
- */
+ *  * @author Francisco José Conejo Barranco, Juan María Avecilla Parrilla, Manuel Fernández Pernía
+ *  * @version 1.0
+ *  * @since 2024
+ *  */
 @Entity
 @Getter
 @Setter

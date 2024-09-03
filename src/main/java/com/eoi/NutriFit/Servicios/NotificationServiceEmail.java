@@ -3,16 +3,38 @@ package com.eoi.NutriFit.Servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Servicio para el envío de notificaciones por correo electrónico.
+ * <p>
+ * Esta clase se encarga de crear y enviar correos electrónicos de notificación a los usuarios,
+ * como correos de bienvenida y de restablecimiento de contraseña.
+ * </p>
+ *
+ * <p>
+ * Autores: Francisco José Conejo Barranco, Juan María Avecilla Parrilla, Manuel Fernández Pernía
+ * </p>
+ */
 @Service
 public class NotificationServiceEmail {
 
     private final EmailService emailService;
 
+    /**
+     * Constructor que inyecta el servicio de correo electrónico.
+     *
+     * @param emailService El servicio de correo electrónico que se utilizará para enviar los correos.
+     */
     @Autowired
     public NotificationServiceEmail(EmailService emailService) {
         this.emailService = emailService;
     }
 
+    /**
+     * Envía un correo de bienvenida a un nuevo usuario.
+     *
+     * @param userEmail La dirección de correo electrónico del usuario.
+     * @param userName El nombre del usuario.
+     */
     public void sendNotification(String userEmail, String userName) {
         String subject = "¡Bienvenido a Nutrifit, " + userName + "!";
         String body = createWelcomeEmailBody(userEmail, userName);
@@ -20,6 +42,12 @@ public class NotificationServiceEmail {
         emailService.sendEmail(userEmail, subject, body);
     }
 
+    /**
+     * Envía un correo para el restablecimiento de la contraseña del usuario.
+     *
+     * @param email La dirección de correo electrónico del usuario.
+     * @param resetUrl La URL de restablecimiento de la contraseña.
+     */
     public void sendPasswordResetEmail(String email, String resetUrl) {
         String subject = "Restablecimiento de contraseña";
         String body = createPasswordResetEmailBody(email, resetUrl);
@@ -27,6 +55,13 @@ public class NotificationServiceEmail {
         emailService.sendEmail(email, subject, body);
     }
 
+    /**
+     * Crea el cuerpo del correo de bienvenida en formato HTML.
+     *
+     * @param userEmail La dirección de correo electrónico del usuario.
+     * @param userName El nombre del usuario.
+     * @return El cuerpo del correo en formato HTML.
+     */
     private String createWelcomeEmailBody(String userEmail, String userName) {
         return "<html>" +
                 "<body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>" +
@@ -49,6 +84,13 @@ public class NotificationServiceEmail {
                 "</html>";
     }
 
+    /**
+     * Crea el cuerpo del correo de restablecimiento de contraseña en formato HTML.
+     *
+     * @param email La dirección de correo electrónico del usuario.
+     * @param resetUrl La URL de restablecimiento de la contraseña.
+     * @return El cuerpo del correo en formato HTML.
+     */
     private String createPasswordResetEmailBody(String email, String resetUrl) {
         return "<html>" +
                 "<body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>" +

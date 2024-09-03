@@ -19,6 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+
+
+/**
+ * Controlador para manejar la autenticación y el restablecimiento de contraseña.
+ *
+ * Esta clase proporciona endpoints para el proceso de "Olvidé mi contraseña",
+ * incluyendo la solicitud de restablecimiento, la validación del token y
+ * el restablecimiento efectivo de la contraseña.
+ *
+ * @author Francisco José Conejo Barranco
+ * @author Juan María Avecilla Parrilla
+ * @author Manuel Fernández Pernía
+ * @version 1.0
+ * @since 2024-03-03
+ */
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -26,12 +41,19 @@ public class AuthController {
     @Value("${app.reset-password-url}")
     private String resetPasswordBaseUrl;
 
-
     private final NotificationServiceEmail notificationServiceEmail;
     private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
+    /**
+     * Constructor para la inyección de dependencias.
+     *
+     * @param notificationServiceEmail Servicio para enviar notificaciones por email.
+     * @param usuarioRepository Repositorio para operaciones de base de datos con usuarios.
+     * @param passwordEncoder Codificador para encriptar contraseñas.
+     * @param emailService Servicio para enviar emails.
+     */
     @Autowired
     public AuthController(NotificationServiceEmail notificationServiceEmail, UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, EmailService emailService) {
         this.notificationServiceEmail = notificationServiceEmail;
@@ -40,12 +62,26 @@ public class AuthController {
         this.emailService = emailService;
     }
 
-    // Método GET para mostrar el formulario de "Olvidé mi contraseña"
+    /**
+     * Muestra el formulario de "Olvidé mi contraseña".
+     *
+     * @return El nombre de la vista del formulario.
+     */
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
-        return "forgot-password-form"; // Nombre de la vista del formulario
+        return "forgot-password-form";
     }
 
+    /**
+     * Procesa la solicitud de restablecimiento de contraseña.
+     *
+     * Este método busca al usuario por email, genera un token de restablecimiento,
+     * lo guarda en la base de datos y envía un email con el enlace para restablecer la contraseña.
+     *
+     * @param email El email del usuario que solicita el restablecimiento.
+     * @param model El modelo para añadir atributos a la vista.
+     * @return El nombre de la vista de confirmación.
+     */
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestParam String email, Model model) {
         System.out.println("Recibida solicitud de restablecimiento de contraseña para: " + email);
@@ -80,44 +116,56 @@ public class AuthController {
         return "forgot-password-confirmation";
     }
 
-    // Método GET para mostrar el formulario de restablecimiento de contraseña
+    /**
+     * Muestra el formulario de restablecimiento de contraseña.
+     *
+     * @param token El token de restablecimiento.
+     * @param model El modelo para añadir atributos a la vista.
+     * @return El nombre de la vista del formulario de restablecimiento o de error.
+     */
     @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam String token, Model model) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findByResetToken(token);
 
         if (optionalUsuario.isPresent()) {
-            model.addAttribute("token", token); // Pasar el token al modelo
-            return "reset-password-form"; // Renderizar la vista para introducir la nueva contraseña
+            model.addAttribute("token", token);
+            return "reset-password-form";
         } else {
             model.addAttribute("error", "Token inválido o expirado.");
-            return "error"; // Mostrar una vista de error
+            return "error";
         }
     }
 
-    // Método POST para procesar el restablecimiento de contraseña
+    /**
+     * Procesa el restablecimiento de contraseña.
+     *
+     * Este método verifica el token, comprueba su validez temporal y, si es correcto,
+     * actualiza la contraseña del usuario.
+     *
+     * @param token El token de restablecimiento.
+     * @param newPassword La nueva contraseña del usuario.
+     * @param model El modelo para añadir atributos a la vista.
+     * @return El nombre de la vista de éxito o de error.
+     */
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam String token,
                                 @RequestParam String newPassword,
                                 Model model) {
-        // Buscar el usuario por token
         Optional<Usuario> optionalUsuario = usuarioRepository.findByResetToken(token);
 
         if (optionalUsuario.isPresent()) {
             Usuario usuario = optionalUsuario.get();
 
-            // Verificar si el token ha expirado
             if (usuario.getTokenExpiration().isBefore(LocalDateTime.now())) {
                 model.addAttribute("error", "El token ha expirado. Por favor, solicita un nuevo restablecimiento de contraseña.");
                 return "error";
             }
 
-            // Restablecer la contraseña del usuario
             usuario.setPassword(passwordEncoder.encode(newPassword));
-            usuario.setResetToken(null); // Limpiar el token
-            usuario.setTokenExpiration(null); // Limpiar la expiración del token
-            usuarioRepository.save(usuario); // Guardar los cambios
+            usuario.setResetToken(null);
+            usuario.setTokenExpiration(null);
+            usuarioRepository.save(usuario);
 
-            // Agregar mensaje de éxito al modelo
             model.addAttribute("message", "Tu contraseña ha sido restablecida con éxito.");
             return "reset-password-success";
         } else {
