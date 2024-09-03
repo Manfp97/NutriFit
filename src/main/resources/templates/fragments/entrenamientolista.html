@@ -7,22 +7,41 @@
                     <p class="entrenamiento-subtitle">No se trata de ser el mejor, se trata de ser mejor que ayer. Cada esfuerzo cuenta, cada repetición suma.</p>
                 </div>
             </div>
+
+
             <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                <ul class="entrenamiento-category-buttons nav nav-pills d-inline-flex justify-content-end mb-5 flex-wrap">
+                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5 flex-wrap">
+
+                    <!-- Botones de administración solo para usuarios con roles específicos -->
+                    <li class="nav-item me-2 mb-2" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}">
+                        <a class="btn btn-primary" th:href="@{/entrenamiento/list}" th:text="'Lista de entrenamientos'"></a>
+                    </li>
+                    <li class="nav-item me-2 mb-2" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}">
+                        <a class="btn btn-success" th:href="@{/entrenamiento/nuevo}" th:text="'Nuevo Entrenamiento'"></a>
+                    </li>
+
+                    <!-- Espacio entre botones de administración y categorías -->
+                    <li class="nav-item me-2 mb-2" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}">
+                        <span class="d-inline-block" style="width: 20px;"></span>
+                    </li>
+
+                    <!-- Botones de categoría para todos los usuarios -->
                     <li class="nav-item me-2 mb-2">
-                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=0)}" th:text="'Musculación'" th:classappend="${categoria == 'musculacion'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='musculacion', size=${pagina.size}, page=0)}" th:text="'Musculación'" th:classappend="${categoria == 'musculacion'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2 mb-2">
-                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=0)}" th:text="'Mantenimiento'" th:classappend="${categoria == 'mantenimiento'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='mantenimiento', size=${pagina.size}, page=0)}" th:text="'Mantenimiento'" th:classappend="${categoria == 'mantenimiento'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2 mb-2">
-                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=0)}" th:text="'Peso Corporal'" th:classappend="${categoria == 'pesocorporal'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='pesocorporal', size=${pagina.size}, page=0)}" th:text="'Peso Corporal'" th:classappend="${categoria == 'pesocorporal'} ? 'active'"></a>
                     </li>
                     <li class="nav-item me-2 mb-2">
-                        <a class="btn btn-outline-primary border-2 entrenamiento-category-btn" th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=0)}" th:text="'Cardio'" th:classappend="${categoria == 'cardio'} ? 'active'"></a>
+                        <a class="btn btn-outline-primary border-2" th:href="@{/entrenamiento(categoria='cardio', size=${pagina.size}, page=0)}" th:text="'Cardio'" th:classappend="${categoria == 'cardio'} ? 'active'"></a>
                     </li>
+
                 </ul>
             </div>
+
         </div>
         <div class="tab-content">
             <!-- Sección Musculacion -->

@@ -13,12 +13,12 @@
                     <li class="nav-item me-2">
                         <a class="btn btn-primary dieta-admin-btn" th:href="@{/dietaUsuario/list}"
                            th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"
-                           th:text="'Lista de productos'"></a>
+                           th:text="'Lista de dietas'"></a>
                     </li>
                     <li class="nav-item me-2">
                         <a class="btn btn-success dieta-admin-btn" th:href="@{/dietaUsuario/nuevo}"
                            th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}"
-                           th:text="'Nuevo producto'"></a>
+                           th:text="'Nueva Dieta'"></a>
                     </li>
                 </ul>
             </div>

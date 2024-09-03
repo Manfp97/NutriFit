@@ -32,11 +32,21 @@
                                 <input type="text" id="objetivos" th:field="*{objetivos}" class="form-control" placeholder="Objetivos del entrenamiento" step="0.01" />
                                 <label for="objetivos">Objetivos:</label>
                             </div>
-                            <!-- Botón para actualizar el entrenamiento -->
+                            <div class="form-floating mb-3">
+                                <select id="categoria" th:field="*{categoria}" class="form-select">x
+                                    <option value="">Seleccione una categoría</option>
+                                    <option value="musculacion">musculacion</option>
+                                    <option value="mantenimiento">mantenimiento</option>
+                                    <option value="pesocorporal">peso corporal</option>
+                                    <option value="cardio">cardio</option>
+                                </select>
+                                <label for="categoria">Categoría:</label>
+                            </div>
                             <div class="text-center mb-3">
                                 <button type="submit" class="btn btn-primary rounded-3 px-5 py-2">Actualizar Entrenamiento</button>
                             </div>
                         </form>
+
 
                         <!-- Formulario para eliminar el entrenamiento -->
                         <form th:action="@{/entrenamiento/delete/{id}(id=${entrenamiento.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este entrenamiento?');">
