@@ -1210,3 +1210,54 @@
     text-align: center;
 }
 
+/* Asegura que la página ocupe toda la altura de la ventana */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Define un layout flex para el body, con una disposición en columna */
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenedor principal para el contenido */
+.main-container {
+    flex: 1; /* Hace que este contenedor ocupe el espacio disponible */
+    padding: 20px; /* Espaciado alrededor del contenido */
+}
+
+/* Estilos para la tabla */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Asegura que la tabla sea desplazable en pantallas pequeñas */
+    margin-bottom: 20px; /* Espaciado debajo de la tabla */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1; /* Cambio de color al pasar el ratón sobre una fila */
+}
+
+/* Estilo del footer */
+#page-footer {
+    background-color: #f8f9fa; /* Color de fondo del footer */
+    text-align: center; /* Centra el texto */
+    padding: 10px 0; /* Espaciado interno del footer */
+    border-top: 1px solid #e7e7e7; /* Borde superior para separar el footer del contenido */
+    font-size: 0.9em; /* Tamaño de fuente ligeramente reducido */
+    color: #6c757d; /* Color del texto */
+}
+
+/* Opcional: Asegura que los enlaces en el footer se vean bien */
+#page-footer a {
+    color: #007bff; /* Color de los enlaces */
+    text-decoration: none; /* Sin subrayado */
+}
+
+#page-footer a:hover {
+    text-decoration: underline; /* Subrayado al pasar el ratón sobre un enlace */
+}
+

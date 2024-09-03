@@ -43,8 +43,8 @@
 <div th:replace="fragments/header :: header"></div>
 <div layout:fragment="content">
 </div>
+<a onclick="mostrarToast()" class="btn btn-success" style="visibility: hidden;">mostrar toast</a>
 <div th:replace="fragments/footer :: footer"></div>
-<a onclick="mostrarToast()" class="btn btn-success">mostrar toast</a>
 
 <div id="toast" class="toast toast-container position-fixed top-0 end-0 p-3 " role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">

@@ -14,8 +14,8 @@
 
 <div class="card">
     <div class="card-body">
-        <form th:method="get" th:action="@{/notificaciones(queryTo, queryFrom)}">
-            <div class="form-group">
+        <form th:method="get" th:action="@{/notificaciones(queryTo=${queryTo}, queryFrom=${queryFrom})}">
+        <div class="form-group">
                 <label for="filtradoDestinatario">Filtrar por Destinatario</label>
                 <input  class="form-control" th:value="${queryTo}" id="filtradoDestinatario" type="text" name="queryTo">
                 <button class="btn btn-primary" type="submit">Filtrar</button>
@@ -83,7 +83,7 @@
             <li  class="page-item" th:each="pageNumber : ${pageNumbers}">
                 <a class="page-link"
                    th:href="@{/notificaciones(size=${pagina.size}, page=${pageNumber}, filtro=${filtradoNombre} )}"
-                   th:text=${pageNumber}
+                   th:text="${pageNumber}"
                    th:classappend="${pageNumber==pagina.number + 1} ? active"></a>
             </li>
         </ul>
