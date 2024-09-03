@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.eoi.NutriFit.Servicios.NotificationServiceEmail;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -82,41 +83,69 @@ public class UsuarioController {
         return "entrenadoresfreelance";
     }
 
+
     @GetMapping("/perfil")
-    public String mostrarPerfil(Model model, Authentication authentication) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
+    public String redirigirPerfil(Authentication authentication) {
         String username = authentication.getName();
-        Usuario usuario = service.findByUsername(username);
-        model.addAttribute("usuario", usuario);
-        return "perfil";
+        Usuario usuario = usuarioRepo.findUsuarioByUsernameAndActivoTrue(username)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+
+        return "redirect:/usuario/perfil/" + usuario.getId();
     }
 
-    @PostMapping("/perfil")
-    public String actualizarPerfil(@ModelAttribute Usuario usuario, @RequestParam(required = false) String password) {
+
+    @GetMapping("/perfil/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
+    public String mostrarPerfilPorId(@PathVariable Integer id, Model model) {
+        Usuario usuario = usuarioRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+
+        model.addAttribute("usuario", usuario);
+        return "perfil";  // Vista para mostrar el perfil del usuario
+    }
+
+    @PostMapping("/perfil/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLEADO')")
+    public String actualizarPerfil(@PathVariable Integer id, @ModelAttribute("usuario") Usuario usuario,
+                                   @RequestParam(value = "password", required = false) String newPassword,
+                                   Model model, RedirectAttributes redirectAttributes) {
         try {
-            Usuario usuarioExistente = service.encuentraPorId(usuario.getId())
+            // Buscar el usuario existente
+            Usuario existingUsuario = service.encuentraPorId(id)
                     .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-            // Actualizar campos
-            usuarioExistente.setUsername(usuario.getUsername());
-            if (password != null && !password.isEmpty()) {
-                usuarioExistente.setPassword(passwordEncoder.encode(password));
+            // Actualizar los campos del perfil
+            DetalleUsuario detalleUsuario = existingUsuario.getDetalleUsuario();
+            if (detalleUsuario == null) {
+                detalleUsuario = new DetalleUsuario();
+                detalleUsuario.setUsuario(existingUsuario);
             }
 
-            // Actualizar detalles del usuario
-            DetalleUsuario detalles = usuarioExistente.getDetalleUsuario();
-            detalles.setNombre(usuario.getDetalleUsuario().getNombre());
-            detalles.setApellidos(usuario.getDetalleUsuario().getApellidos());
-            detalles.setDireccion(usuario.getDetalleUsuario().getDireccion());
-            detalles.setDni(usuario.getDetalleUsuario().getDni());
-            detalles.setEmail(usuario.getDetalleUsuario().getEmail());
+            detalleUsuario.setNombre(usuario.getDetalleUsuario().getNombre());
+            detalleUsuario.setApellidos(usuario.getDetalleUsuario().getApellidos());
+            detalleUsuario.setDireccion(usuario.getDetalleUsuario().getDireccion());
+            detalleUsuario.setDni(usuario.getDetalleUsuario().getDni());
+            detalleUsuario.setEmail(usuario.getDetalleUsuario().getEmail());
 
-            service.guardar(usuarioExistente);
-            return "redirect:/usuario/perfil";
+            existingUsuario.setDetalleUsuario(detalleUsuario);
+
+            // Actualizar la contraseña si se proporcionó una nueva
+            if (newPassword != null && !newPassword.isEmpty()) {
+                existingUsuario.setPassword(passwordEncoder.encode(newPassword));
+            }
+
+            // Guardar el usuario actualizado
+            service.guardar(existingUsuario);
+
+            redirectAttributes.addFlashAttribute("mensaje", "Perfil actualizado con éxito");
+        } catch (EntityNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", "Usuario no encontrado");
         } catch (Exception e) {
-            // Manejar la excepción aquí
-            // Por ejemplo, puedes agregar un mensaje de error al modelo y volver a la página de perfil
-            return "redirect:/usuario/perfil?error=true";
+            redirectAttributes.addFlashAttribute("error", "Error al actualizar perfil: " + e.getMessage());
         }
+
+        return "redirect:/usuario/perfil/" + id;
     }
 
 

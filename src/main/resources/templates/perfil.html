@@ -35,12 +35,12 @@
         }
         .sidebar {
             background-color: var(--off-white);
-            height: calc(100vh - 56px);
-            position: fixed;
-            top: 56px;
+            height: calc(83vh - 56px);
+            position: absolute;
+            top: 45px;
             left: 0;
             width: 250px;
-            padding-top: 20px;
+
             box-shadow: 2px 0 5px rgba(0,0,0,0.05);
             border-right: 1px solid var(--light-border);
         }
@@ -102,7 +102,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -111,12 +111,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/progresionesEntrenamientos}">
+                            <a class="nav-link" href="/progresionesEntrenamientos">
                                 <i class="fas fa-chart-line"></i> Progresiones
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/chat}">
+                            <a class="nav-link" href="/chat">
                                 <i class="bi bi-envelope"></i> Mis Chats
                             </a>
                         </li>
@@ -145,7 +145,7 @@
                                 <h5 class="card-title mb-0">Editar Perfil</h5>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/usuario/{id}(id=${usuario.id})}" method="post" th:object="${usuario}">
+                                <form th:action="@{/usuario/perfil/{id}(id=${usuario.id})}" method="post" th:object="${usuario}">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="password" class="form-label">Nueva contraseña</label>
@@ -155,25 +155,25 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="nombre" th:field="*{detalleUsuario.nombre}" th:placeholder="*{detalleUsuario.nombre}" required>
+                                            <input type="text" class="form-control" id="nombre" th:field="*{detalleUsuario.nombre}" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="apellidos" class="form-label">Apellidos</label>
-                                            <input type="text" class="form-control" id="apellidos" th:field="*{detalleUsuario.apellidos}" th:placeholder="*{detalleUsuario.apellidos}" required>
+                                            <input type="text" class="form-control" id="apellidos" th:field="*{detalleUsuario.apellidos}" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="direccion" class="form-label">Dirección</label>
-                                        <input type="text" class="form-control" id="direccion" th:field="*{detalleUsuario.direccion}" th:placeholder="*{detalleUsuario.direccion}">
+                                        <input type="text" class="form-control" id="direccion" th:field="*{detalleUsuario.direccion}">
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="dni" class="form-label">DNI</label>
-                                            <input type="text" class="form-control" id="dni" th:field="*{detalleUsuario.dni}" th:placeholder="*{detalleUsuario.dni}">
+                                            <input type="text" class="form-control" id="dni" th:field="*{detalleUsuario.dni}">
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" th:field="*{detalleUsuario.email}" th:placeholder="*{detalleUsuario.email}" required>
+                                            <input type="email" class="form-control" id="email" th:field="*{detalleUsuario.email}" required>
                                         </div>
                                     </div>
                                     <div class="text-end">
