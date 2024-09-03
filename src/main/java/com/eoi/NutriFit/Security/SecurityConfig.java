@@ -59,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                         .requestMatchers(HttpMethod.POST, "/dietaUsuario/nuevo").hasAnyRole("ADMIN", "EMPLEADO")
                         .requestMatchers(HttpMethod.POST, "/dietaUsuario/**").hasRole("ADMIN")
+                        .requestMatchers("/usuario/perfil/**").permitAll()
                         .requestMatchers("/notificaciones/**", "/chat/**").authenticated()
                         .requestMatchers("/ws/**", "/chat/**").permitAll()
                         .anyRequest().authenticated()
