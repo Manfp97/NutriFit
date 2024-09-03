@@ -13,6 +13,8 @@
                 <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_EMPLEADO'')')}">
                     <a class="btn btn-primary me-2 mb-2" th:href="@{/producto/list}">Lista de productos</a>
                     <a class="btn btn-success mb-2" th:href="@{/producto/nuevo}">Nuevo producto</a>
+                    <a class="btn btn-success mb-2" th:href="@{/proveedores/list}">Lista de proveedores</a>
+                    <a class="btn btn-success mb-2" th:href="@{/proveedores/nuevo}">Nuevo proveedor</a>
                 </div>
             </div>
         </div>
